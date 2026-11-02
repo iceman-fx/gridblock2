@@ -27,6 +27,22 @@ Gridblock² ist der Nachfolger von Gridblock 1.x und läuft parallel dazu, sodas
 
 <br>
 
+## Screenshots
+
+**Live-Vorschau im Builder** - Sektion, Spalten und Elemente direkt im Backend zusammenstellen.
+
+![Gridblock² Builder mit Live-Vorschau](docs/screenshots/builder-live-vorschau.png)
+
+**Element bearbeiten** - Das Bearbeiten-Fenster öffnet in einer Seitenleiste, die Vorschau bleibt daneben sichtbar.
+
+![Hero-Banner in der Seitenleiste bearbeiten](docs/screenshots/hero-bearbeiten-sidebar.webp)
+
+**Contentsettings der Spalten-Zeile** - Layout, Hintergrund, Design, Größen und Abstände je Spalten-Zeile.
+
+![Contentsettings der Spalten-Zeile](docs/screenshots/spalten-contentsettings.png)
+
+<br>
+
 ## Voraussetzungen
 
 - REDAXO 5.20 oder neuer

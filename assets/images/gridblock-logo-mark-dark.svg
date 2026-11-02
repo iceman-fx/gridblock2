@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Gridblock Logo">
+  <!-- Dunkle Variante für den aktiven Hauptmenü-Zustand (analog Addon "Builder") - gleiches Motiv,
+       hellere Töne für Kontrast auf dunklem Chip-Hintergrund. -->
+  <rect x="12" y="12" width="104" height="104" rx="22" fill="#12241c"/>
+  <rect x="28" y="28" width="72" height="32" rx="8" fill="#8fd6ab"/>
+  <rect x="28" y="68" width="32" height="32" rx="8" fill="#8fc3ea"/>
+  <rect x="68" y="68" width="32" height="32" rx="8" fill="#6fa8d8"/>
+</svg>

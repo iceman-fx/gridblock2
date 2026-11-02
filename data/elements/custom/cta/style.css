@@ -1,0 +1,220 @@
+/* FontAwesome-Icon in der Backend-Vorschau: be_style liefert die kompletten FA6-Webfont-Dateien bereits
+   mit (fuer seine eigenen rex-icon-*-Klassen), aber keine CSS-Zuordnung fuer generische fa-*-Namen -
+   daher hier keine neue Abhaengigkeit, nur die Zuordnung fuer die im Element genutzten Icons ergaenzen.
+   Weiteres Icon noetig? Eigene Zeile "._gb-el-cta-icon-<name>::before { content: '\fXXX'; }" mit dem
+   FA6-Codepoint ergaenzen (echtes FA-Cheatsheet nutzen). Betrifft NUR die Backend-Vorschau - auf der
+   echten Website laedt weiterhin das eigene Projekt-FontAwesome. */
+@font-face {
+	font-family: "Font Awesome 6 Free";
+	font-style: normal;
+	font-weight: 900;
+	font-display: block;
+	src: url("/assets/addons/be_style/webfonts/fa-solid-900.woff2") format("woff2");
+}
+.fas, .fa-solid { font-family: "Font Awesome 6 Free"; font-weight: 900; font-style: normal; }
+.fa-arrow-right::before { content: "\f061"; }
+
+.gb-el-cta-align {
+	--gb-cta-gap: 12px;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--gb-cta-gap);
+}
+.gb-el-cta-align-links { text-align: left; justify-content: flex-start; }
+.gb-el-cta-align-mitte { text-align: center; justify-content: center; }
+.gb-el-cta-align-rechts { text-align: right; justify-content: flex-end; }
+
+.gb-el-cta {
+	--cta-fill-a: #3a76b2;
+	--cta-fill-b: #2c6196;
+	--cta-accent: #2c6196;
+	--cta-radius: 999px;
+	--cta-shadow: rgba(44, 97, 150, 0.35);
+	--cta-shadow-hover: rgba(44, 97, 150, 0.45);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	padding: 10px 26px;
+	border: 2px solid transparent;
+	border-radius: var(--cta-radius);
+	text-decoration: none;
+	font-weight: 600;
+	font-size: 15px;
+	letter-spacing: 0.01em;
+	box-shadow: 0 4px 12px var(--cta-shadow);
+	transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease, background-color 0.15s ease;
+}
+.gb-el-cta-default {
+	background: #2f6a9f;
+	background: linear-gradient(135deg, var(--cta-fill-a), var(--cta-fill-b));
+	color: #fff;
+}
+.gb-el-cta:hover,
+.gb-el-cta:focus-visible {
+	text-decoration: none;
+	transform: translateY(-1px);
+	box-shadow: 0 6px 16px var(--cta-shadow-hover);
+}
+.gb-el-cta-default:hover,
+.gb-el-cta-default:focus-visible { color: #fff; }
+.gb-el-cta:active { transform: translateY(0); box-shadow: 0 3px 8px var(--cta-shadow); }
+.gb-el-cta:focus-visible { outline: 2px solid #2c6ea3; outline-offset: 2px; }
+
+.gb-el-cta i { font-size: 0.9em; }
+
+.gb-el-cta-style-outline {
+	background: transparent;
+	color: var(--cta-accent);
+	border-color: currentColor;
+	box-shadow: none;
+}
+.gb-el-cta-style-outline:hover,
+.gb-el-cta-style-outline:focus-visible,
+.gb-el-cta-style-outline:active {
+	background: rgba(44, 97, 150, 0.1);
+	color: var(--cta-accent);
+	box-shadow: none;
+	transform: none;
+}
+
+.gb-el-cta-style-link {
+	background: transparent;
+	color: var(--cta-accent);
+	padding-left: 0;
+	padding-right: 0;
+	box-shadow: none;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+.gb-el-cta-style-link:hover,
+.gb-el-cta-style-link:focus-visible,
+.gb-el-cta-style-link:active {
+	color: var(--cta-accent);
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	box-shadow: none;
+	transform: none;
+}
+
+.gb-el-cta-radius-abgerundet .gb-el-cta { --cta-radius: 8px; }
+.gb-el-cta-radius-eckig .gb-el-cta { --cta-radius: 0; }
+
+.gb-el-cta-shadow-off .gb-el-cta,
+.gb-el-cta-shadow-off .gb-el-cta:hover,
+.gb-el-cta-shadow-off .gb-el-cta:focus-visible,
+.gb-el-cta-shadow-off .gb-el-cta:active { box-shadow: none; }
+
+.gb-el-cta-full .gb-el-cta {
+	flex: 1 1 100%;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.gb2-be-dark .gb-el-cta { --cta-accent: #8fc1ee; --cta-shadow: rgba(0, 0, 0, 0.45); --cta-shadow-hover: rgba(0, 0, 0, 0.55); }
+.gb2-be-dark .gb-el-cta:focus-visible { outline-color: #8fc1ee; }
+.gb2-be-dark .gb-el-cta-style-outline:hover,
+.gb2-be-dark .gb-el-cta-style-outline:focus-visible,
+.gb2-be-dark .gb-el-cta-style-outline:active { background: rgba(143, 193, 238, 0.14); }
+
+@media (prefers-color-scheme: dark) {
+	.gb-el-cta:not(.gb2-be-light .gb-el-cta) { --cta-accent: #8fc1ee; --cta-on-accent: #10243a; --cta-shadow: rgba(0, 0, 0, 0.45); --cta-shadow-hover: rgba(0, 0, 0, 0.55); }
+	.gb-el-cta:not(.gb2-be-light .gb-el-cta):focus-visible { outline-color: #8fc1ee; }
+	.gb-el-cta-style-outline:not(.gb2-be-light .gb-el-cta-style-outline):hover,
+	.gb-el-cta-style-outline:not(.gb2-be-light .gb-el-cta-style-outline):focus-visible,
+	.gb-el-cta-style-outline:not(.gb2-be-light .gb-el-cta-style-outline):active { background: rgba(143, 193, 238, 0.14); }
+}
+
+/* Hover-Effekte der CTA-Buttons: Modifier-Klasse am Wrapper (.gb-el-cta-fx-NAME), nur CSS, kein zusaetzliches Markup (::before/::after). */
+.gb-el-cta { --cta-on-accent: #fff; }
+.gb2-be-dark .gb-el-cta { --cta-on-accent: #10243a; }
+
+[class*="gb-el-cta-fx-"] .gb-el-cta:hover,
+[class*="gb-el-cta-fx-"] .gb-el-cta:focus-visible { transform: none; box-shadow: 0 4px 12px var(--cta-shadow); }
+[class*="gb-el-cta-fx-"] .gb-el-cta-style-outline:hover,
+[class*="gb-el-cta-fx-"] .gb-el-cta-style-outline:focus-visible,
+[class*="gb-el-cta-fx-"] .gb-el-cta-style-link:hover,
+[class*="gb-el-cta-fx-"] .gb-el-cta-style-link:focus-visible { box-shadow: none; }
+
+.gb-el-cta.gb-el-cta-pal { transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+.gb-el-cta.gb-el-cta-pal.gb-el-cta-style-fill { background: var(--cta-bg, linear-gradient(135deg, var(--cta-fill-a), var(--cta-fill-b))); color: var(--cta-fg, #fff); }
+.gb-el-cta.gb-el-cta-pal.gb-el-cta-style-outline:hover:not(.gb-el-cta-hov), .gb-el-cta.gb-el-cta-pal.gb-el-cta-style-outline:focus-visible:not(.gb-el-cta-hov) { background: color-mix(in srgb, var(--cta-accent) 12%, transparent); }
+.gb-el-cta.gb-el-cta-hov.gb-el-cta-style-fill:not(.gb-el-cta-pal) { color: var(--cta-fg, inherit); }
+.gb-el-cta.gb-el-cta-hov.gb-el-cta-style-fill:hover, .gb-el-cta.gb-el-cta-hov.gb-el-cta-style-fill:focus-visible { background: var(--cta-hbg); color: var(--cta-hfg); }
+.gb-el-cta.gb-el-cta-hov.gb-el-cta-style-outline:hover, .gb-el-cta.gb-el-cta-hov.gb-el-cta-style-outline:focus-visible { background: var(--cta-hbg); color: var(--cta-hfg); border-color: var(--cta-hbd, currentColor); }
+.gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:hover, .gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:focus-visible { box-shadow: inset 0 0 0 2px var(--cta-bg), 0 4px 12px var(--cta-shadow); }
+.gb-el-cta-shadow-off .gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:hover, .gb-el-cta-shadow-off .gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:focus-visible { box-shadow: inset 0 0 0 2px var(--cta-bg); }
+
+/* Vergroessern */
+.gb-el-cta-fx-vergroessern .gb-el-cta:hover, .gb-el-cta-fx-vergroessern .gb-el-cta:focus-visible { transform: scale(1.07); }
+
+/* Pulsieren (Textlink: Textschein statt Ring) */
+@keyframes gb-el-cta-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--cta-accent) 55%, transparent); } 100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--cta-accent) 0%, transparent); } }
+@keyframes gb-el-cta-pulse-text { 0% { text-shadow: 0 0 0 color-mix(in srgb, var(--cta-accent) 80%, transparent); } 100% { text-shadow: 0 0 16px color-mix(in srgb, var(--cta-accent) 0%, transparent); } }
+.gb-el-cta-fx-pulsieren .gb-el-cta:hover, .gb-el-cta-fx-pulsieren .gb-el-cta:focus-visible { animation: gb-el-cta-pulse 1.1s ease-out infinite; }
+.gb-el-cta-fx-pulsieren .gb-el-cta-style-link:hover, .gb-el-cta-fx-pulsieren .gb-el-cta-style-link:focus-visible { animation: gb-el-cta-pulse-text 1.1s ease-out infinite; }
+
+/* Huepfen */
+@keyframes gb-el-cta-bounce { 0%, 100% { transform: translateY(0); } 30% { transform: translateY(-9px); } 55% { transform: translateY(0); } 75% { transform: translateY(-4px); } }
+.gb-el-cta-fx-huepfen .gb-el-cta:hover, .gb-el-cta-fx-huepfen .gb-el-cta:focus-visible { animation: gb-el-cta-bounce 0.65s ease-out 1; }
+
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-fill, .gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline { position: relative; isolation: isolate; transition: color 0.35s ease, transform 0.15s ease, box-shadow 0.15s ease; }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline { border-color: var(--cta-accent); }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-fill::before, .gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline::before { content: ""; position: absolute; inset: -2px; z-index: -1; border-radius: var(--cta-radius); background: rgba(0, 0, 0, 0.3); clip-path: inset(0 100% 0 0); transition: clip-path 0.35s ease; }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline::before { background: var(--cta-accent); }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline:hover, .gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline:focus-visible { background: transparent; color: var(--cta-on-accent); }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-fill:hover::before, .gb-el-cta-fx-fuellung-links .gb-el-cta-style-fill:focus-visible::before,
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline:hover::before, .gb-el-cta-fx-fuellung-links .gb-el-cta-style-outline:focus-visible::before { clip-path: inset(0 0 0 0); }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-link { text-decoration: none; background-image: linear-gradient(color-mix(in srgb, currentColor 45%, transparent), color-mix(in srgb, currentColor 45%, transparent)), linear-gradient(currentColor, currentColor); background-repeat: no-repeat; background-position: left bottom 7px, left bottom 7px; background-size: 100% 1px, 0 2px; transition: background-size 0.35s ease; }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-style-link:hover, .gb-el-cta-fx-fuellung-links .gb-el-cta-style-link:focus-visible { text-decoration: none; background-size: 100% 1px, 100% 2px; }
+
+.gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-hov::before { background: var(--cta-hbg); }
+.gb-el-cta-fx-fuellung-links .gb-el-cta-ring::before { box-shadow: inset 0 0 0 2px var(--cta-bg); }
+.gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-hov.gb-el-cta-style-fill:hover, .gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-hov.gb-el-cta-style-fill:focus-visible { background: var(--cta-bg, linear-gradient(135deg, var(--cta-fill-a), var(--cta-fill-b))); }
+.gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-hov.gb-el-cta-style-outline:hover, .gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-hov.gb-el-cta-style-outline:focus-visible { background: transparent; }
+.gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:hover, .gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:focus-visible { box-shadow: 0 4px 12px var(--cta-shadow); }
+.gb-el-cta-shadow-off.gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:hover, .gb-el-cta-shadow-off.gb-el-cta-fx-fuellung-links .gb-el-cta.gb-el-cta-pal.gb-el-cta-ring:focus-visible { box-shadow: none; }
+
+/* Glanzstreifen: Gefuellt/Umrandet bekommen den Streifen, Textlink einen Textmarker, der von links hinter den Text laeuft */
+.gb-el-cta-fx-glanz .gb-el-cta-style-fill, .gb-el-cta-fx-glanz .gb-el-cta-style-outline { position: relative; overflow: hidden; isolation: isolate; }
+.gb-el-cta-fx-glanz .gb-el-cta-style-fill::after, .gb-el-cta-fx-glanz .gb-el-cta-style-outline::after { content: ""; position: absolute; top: 0; left: -110%; width: 75%; height: 100%; z-index: 1; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.62), transparent); transform: skewX(-20deg); transition: left 0.7s ease; }
+.gb-el-cta-fx-glanz .gb-el-cta-style-outline::after { background: linear-gradient(100deg, transparent, color-mix(in srgb, var(--cta-accent) 30%, transparent), transparent); }
+.gb-el-cta-fx-glanz .gb-el-cta-style-fill:hover::after, .gb-el-cta-fx-glanz .gb-el-cta-style-fill:focus-visible::after,
+.gb-el-cta-fx-glanz .gb-el-cta-style-outline:hover::after, .gb-el-cta-fx-glanz .gb-el-cta-style-outline:focus-visible::after { left: 150%; }
+.gb-el-cta-fx-glanz .gb-el-cta-style-link { background-image: linear-gradient(color-mix(in srgb, var(--cta-accent) 30%, transparent), color-mix(in srgb, var(--cta-accent) 30%, transparent)); background-repeat: no-repeat; background-position: left bottom 11px; background-size: 0 0.62em; transition: background-size 0.4s ease; }
+.gb-el-cta-fx-glanz .gb-el-cta-style-link:hover, .gb-el-cta-fx-glanz .gb-el-cta-style-link:focus-visible { background-size: 100% 0.62em; }
+
+/* Unterstreichung laeuft ein */
+.gb-el-cta-fx-unterstreichen .gb-el-cta { position: relative; overflow: hidden; isolation: isolate; text-decoration: none; }
+.gb-el-cta-fx-unterstreichen .gb-el-cta::after { content: ""; position: absolute; left: 50%; bottom: 5px; width: 0; height: 2px; background: currentColor; transition: width 0.3s ease, left 0.3s ease; }
+.gb-el-cta-fx-unterstreichen .gb-el-cta:hover::after, .gb-el-cta-fx-unterstreichen .gb-el-cta:focus-visible::after { left: 14%; width: 72%; }
+.gb-el-cta-fx-unterstreichen .gb-el-cta-style-link, .gb-el-cta-fx-unterstreichen .gb-el-cta-style-link:hover, .gb-el-cta-fx-unterstreichen .gb-el-cta-style-link:focus-visible { text-decoration: none; }
+.gb-el-cta-fx-unterstreichen .gb-el-cta-style-link::after { left: 0; bottom: 4px; }
+.gb-el-cta-fx-unterstreichen .gb-el-cta-style-link:hover::after, .gb-el-cta-fx-unterstreichen .gb-el-cta-style-link:focus-visible::after { left: 0; width: 100%; }
+
+/* Gummiband: elastisches Zusammendruecken und Dehnen */
+@keyframes gb-el-cta-jelly { 0%, 100% { transform: scale(1, 1); } 30% { transform: scale(1.16, 0.84); } 50% { transform: scale(0.9, 1.1); } 70% { transform: scale(1.05, 0.95); } }
+.gb-el-cta-fx-gummiband .gb-el-cta:hover, .gb-el-cta-fx-gummiband .gb-el-cta:focus-visible { animation: gb-el-cta-jelly 0.75s ease-out 1; }
+
+/* Schweben: sanftes Treiben wie bei den Infokarten. */
+@property --gb-cta-k { syntax: "<number>"; inherits: false; initial-value: 0; }
+@keyframes gb-el-cta-float { 0%, 100% { transform: translate(0, calc(-2px * var(--gb-cta-k))); } 25% { transform: translate(calc(2px * var(--gb-cta-k)), calc(-5px * var(--gb-cta-k))); } 50% { transform: translate(0, calc(-7px * var(--gb-cta-k))); } 75% { transform: translate(calc(-2px * var(--gb-cta-k)), calc(-4px * var(--gb-cta-k))); } }
+.gb-el-cta-fx-schweben .gb-el-cta { --gb-cta-k: 0; transition: --gb-cta-k 0.4s ease-out, box-shadow 0.4s ease-out; animation: gb-el-cta-float 6s ease-in-out infinite paused; }
+.gb-el-cta-fx-schweben .gb-el-cta:hover, .gb-el-cta-fx-schweben .gb-el-cta:focus-visible { --gb-cta-k: 1; transition: --gb-cta-k 1.2s ease-in-out, box-shadow 1.2s ease-in-out; animation-play-state: running; box-shadow: 0 12px 24px color-mix(in srgb, var(--cta-accent) 45%, transparent); }
+.gb-el-cta-fx-schweben .gb-el-cta-style-outline:hover, .gb-el-cta-fx-schweben .gb-el-cta-style-outline:focus-visible, .gb-el-cta-fx-schweben .gb-el-cta-style-link:hover, .gb-el-cta-fx-schweben .gb-el-cta-style-link:focus-visible { box-shadow: none; }
+
+/* Welle: ein heller Ring breitet sich einmal aus der Mitte aus; Textlink bekommt eine weiche Flaeche, die hinter dem Text einblendet */
+@keyframes gb-el-cta-ripple { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0.9; } 100% { transform: translate(-50%, -50%) scale(42); opacity: 0; } }
+.gb-el-cta-fx-welle .gb-el-cta-style-fill, .gb-el-cta-fx-welle .gb-el-cta-style-outline { position: relative; overflow: hidden; isolation: isolate; }
+.gb-el-cta-fx-welle .gb-el-cta-style-fill::after, .gb-el-cta-fx-welle .gb-el-cta-style-outline::after { content: ""; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; border-radius: 50%; z-index: 1; pointer-events: none; opacity: 0; background: rgba(255, 255, 255, 0.5); }
+.gb-el-cta-fx-welle .gb-el-cta-style-outline::after { background: color-mix(in srgb, var(--cta-accent) 35%, transparent); }
+.gb-el-cta-fx-welle .gb-el-cta-style-fill:hover::after, .gb-el-cta-fx-welle .gb-el-cta-style-fill:focus-visible::after,
+.gb-el-cta-fx-welle .gb-el-cta-style-outline:hover::after, .gb-el-cta-fx-welle .gb-el-cta-style-outline:focus-visible::after { animation: gb-el-cta-ripple 0.8s ease-out 1; }
+.gb-el-cta-fx-welle .gb-el-cta-style-link { position: relative; isolation: isolate; }
+.gb-el-cta-fx-welle .gb-el-cta-style-link::before { content: ""; position: absolute; inset: -4px -12px; z-index: -1; border-radius: 999px; background: color-mix(in srgb, var(--cta-accent) 15%, transparent); opacity: 0; transform: scale(0.85); transition: opacity 0.25s ease, transform 0.25s ease; }
+.gb-el-cta-fx-welle .gb-el-cta-style-link:hover::before, .gb-el-cta-fx-welle .gb-el-cta-style-link:focus-visible::before { opacity: 1; transform: scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+	[class*="gb-el-cta-fx-"] .gb-el-cta, [class*="gb-el-cta-fx-"] .gb-el-cta::before, [class*="gb-el-cta-fx-"] .gb-el-cta::after { transition: none !important; animation: none !important; }
+}

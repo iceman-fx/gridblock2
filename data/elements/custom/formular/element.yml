@@ -1,0 +1,5 @@
+label: Formular
+icon: rex-icon fa-envelope
+group: special
+description: Anfrageformular mit frei wählbaren Feldern, mehreren Schritten und E-Mail-Versand (YForm)
+requires: yform

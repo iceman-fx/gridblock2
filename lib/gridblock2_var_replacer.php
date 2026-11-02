@@ -1,0 +1,207 @@
+<?php
+/*
+	Redaxo-Addon Gridblock²
+	VAR-Replacer (REX-VARS und Widget-Buttons umschreiben)
+	v1.0
+	by Falko Müller @ 2026 (based gridblock 1.x)
+*/
+
+class rex_gridblock2_var_replacer
+{
+    public static function replaceVars($colID, $moduleContent, $uID, $rexVars = array())
+	{
+		if ($moduleContent === NULL):
+			return self::replaceModuleVars($moduleContent, $rexVars);
+		endif;
+
+		$result = '';
+		foreach (self::splitMblockSegments((string) $moduleContent) as $segment):
+			list($isMblock, $text) = $segment;
+			$text = self::replaceInput($colID, $text, $uID);
+			if (!$isMblock):
+				$text = self::replaceMedia($colID, $text, $uID);
+				$text = self::replaceMediaList($colID, $text, $uID);
+				$text = self::replaceLink($colID, $text, $uID);
+				$text = self::replaceLinkList($colID, $text, $uID);
+			endif;
+			$result .= $text;
+		endforeach;
+
+		return self::replaceModuleVars($result, $rexVars);
+    }
+
+
+	private static function splitMblockSegments($html)
+	{	$segments = array();
+		$pos = 0;
+		$len = strlen($html);
+
+		while (preg_match('/<div\b[^>]*\bclass="[^"]*\bmblock_wrapper\b[^"]*"[^>]*>/', $html, $m, PREG_OFFSET_CAPTURE, $pos)):
+			$start = $m[0][1];
+			$end = self::findDivEnd($html, $start + strlen($m[0][0]));
+			if ($end === null):
+				break;
+			endif;
+			if ($start > $pos):
+				$segments[] = array(false, substr($html, $pos, $start - $pos));
+			endif;
+			$segments[] = array(true, substr($html, $start, $end - $start));
+			$pos = $end;
+		endwhile;
+
+		if ($pos < $len):
+			$segments[] = array(false, substr($html, $pos));
+		endif;
+
+		return $segments ?: array(array(false, $html));
+	}
+
+
+	private static function findDivEnd($html, $from)
+	{	if (!preg_match_all('/<(\/?)div\b[^>]*>/i', $html, $tags, PREG_SET_ORDER | PREG_OFFSET_CAPTURE, $from)):
+			return null;
+		endif;
+
+		$depth = 1;
+		foreach ($tags as $tag):
+			$depth += ($tag[1][0] === '/') ? -1 : 1;
+			if ($depth === 0):
+				return $tag[0][1] + strlen($tag[0][0]);
+			endif;
+		endforeach;
+
+		return null;
+	}
+
+
+    private static function replaceInput($colID, $moduleContent, $uID)
+    {
+        if ($colID !== NULL && $uID !== NULL && $moduleContent !== NULL):
+			$moduleContent = preg_replace('/REX_INPUT_VALUE\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][VALUE][$1]', $moduleContent);																	//UID + COLID an alle Inputs anhängen
+			$moduleContent =  preg_replace('/REX_INPUT_VALUE\['.$colID.'\]\['.$uID.'\]\[VALUE\]\[(\d+)\]\[(\d+)\]\[/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][VALUE][$1_MBLOCK][$2][', $moduleContent);			//MBLOCK-VARS zusätzlich aufbereiten
+		endif;
+		
+        return $moduleContent;
+    }
+	
+
+    private static function replaceMedia($colID, $moduleContent, $uID)
+    {
+		if ($colID !== NULL && $uID !== NULL && $moduleContent !== NULL):
+			$moduleContent = preg_replace('/REX_INPUT_MEDIA\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][MEDIA][$1]', $moduleContent);
+			$moduleContent = preg_replace('/REXMedia\((\d+)/', 'REXMedia('.$colID.$uID.'00$1', $moduleContent);
+			$moduleContent = preg_replace('/id="REX_MEDIA_(\d+)"/', 'id="REX_MEDIA_'.$colID.$uID.'00$1"', $moduleContent);
+	
+			//zusätzliche Ersetzung der MP-Buttons im Media-Widget
+			$moduleContent = preg_replace('/openREXMedia\(\'(\d+)\'/',				'openREXMedia(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/addREXMedia\(\'(\d+)\'/',				'addREXMedia(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/deleteREXMedia\(\'(\d+)\'/',			'deleteREXMedia(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/viewREXMedia\(\'(\d+)\'/',				'viewREXMedia(\''.$colID.$uID.'00$1\'', $moduleContent);
+		endif;
+		
+        return $moduleContent;
+    }
+	
+
+    private static function replaceMediaList($colID, $moduleContent, $uID)
+    {
+       	if ($colID !== NULL && $uID !== NULL && $moduleContent !== NULL):
+			$moduleContent = preg_replace('/REX_MEDIALIST_SELECT\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][MEDIALIST_SELECT][$1]', $moduleContent);
+			$moduleContent = preg_replace('/REX_INPUT_MEDIALIST\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][MEDIALIST][$1]', $moduleContent);
+			$moduleContent = preg_replace('/REXMedialist\((\d+)/', 'REXMedialist('.$colID.$uID.'00$1', $moduleContent);
+			$moduleContent = preg_replace('/id="REX_MEDIALIST_(\d+)"/', 'id="REX_MEDIALIST_'.$colID.$uID.'00$1"', $moduleContent);
+			$moduleContent = preg_replace('/id="REX_MEDIALIST_SELECT_(\d+)"/', 'id="REX_MEDIALIST_SELECT_'.$colID.$uID.'00$1"', $moduleContent);
+			
+			//zusätzliche Ersetzung der Buttons im Medialist-Widget
+			$moduleContent = preg_replace('/openREXMedialist\(\'(\d+)\'/',			'openREXMedialist(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/addREXMedialist\(\'(\d+)\'/',			'addREXMedialist(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/deleteREXMedialist\(\'(\d+)\'/',		'deleteREXMedialist(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/viewREXMedialist\(\'(\d+)\'/',			'viewREXMedialist(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/moveREXMedialist\(\'(\d+)\'/',			'moveREXMedialist(\''.$colID.$uID.'00$1\'', $moduleContent);
+		endif;
+				
+        return $moduleContent;
+    }
+	
+
+    private static function replaceLink($colID, $moduleContent, $uID)
+    {
+		if ($colID !== NULL && $uID !== NULL && $moduleContent !== NULL):
+			$moduleContent = preg_replace('/REX_LINK_NAME\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][LINK_NAME][$1]', $moduleContent);
+			$moduleContent = preg_replace('/id="REX_LINK_(\d+)_NAME"/', 'id="REX_LINK_'.$colID.$uID.'00$1_NAME"', $moduleContent);
+	
+			$moduleContent = preg_replace('/REX_INPUT_LINK\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][LINK][$1]', $moduleContent);
+			$moduleContent = preg_replace('/openLinkMap\(\'REX_LINK_(\d+)\'/', 'openLinkMap(\'REX_LINK_'.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/REXLink\((\d+)/', 'REXLink('.$colID.$uID.'00$1', $moduleContent);
+			$moduleContent = preg_replace('/id="REX_LINK_(\d+)"/', 'id="REX_LINK_'.$colID.$uID.'00$1"', $moduleContent);
+	
+			//zusätzliche Ersetzung der Buttons im Link-Widget
+			$moduleContent = preg_replace('/openLinkMap\(\'REX_LINK_(\d+)\'/',		'openLinkMap(\'REX_LINK_'.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/deleteREXLink\(\'(\d+)\'/',				'deleteREXLink(\''.$colID.$uID.'00$1\'', $moduleContent);
+		endif;
+		
+        return $moduleContent;
+    }
+	
+
+    private static function replaceLinkList($colID, $moduleContent, $uID)
+    {
+		if ($colID !== NULL && $uID !== NULL && $moduleContent !== NULL):
+			$moduleContent = preg_replace('/REX_LINKLIST_SELECT\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][LINKLIST_SELECT][$1]', $moduleContent);
+			$moduleContent = preg_replace('/REX_INPUT_LINKLIST\[(\d+)\]/', 'REX_INPUT_VALUE['.$colID.']['.$uID.'][LINKLIST][$1]', $moduleContent);
+			$moduleContent = preg_replace('/REXLinklist\((\d+)/', 'REXLinklist('.$colID.$uID.'00$1', $moduleContent);
+			$moduleContent = preg_replace('/id="REX_LINKLIST_(\d+)"/', 'id="REX_LINKLIST_'.$colID.$uID.'00$1"', $moduleContent);
+			$moduleContent = preg_replace('/id="REX_LINKLIST_SELECT_(\d+)"/', 'id="REX_LINKLIST_SELECT_'.$colID.$uID.'00$1"', $moduleContent);
+	
+			//zusätzliche Ersetzung der Buttons im Linklist-Widget
+			$moduleContent = preg_replace('/openREXLinklist\(\'(\d+)\'/',			'openREXLinklist(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/deleteREXLinklist\(\'(\d+)\'/',			'deleteREXLinklist(\''.$colID.$uID.'00$1\'', $moduleContent);
+			$moduleContent = preg_replace('/moveREXLinklist\(\'(\d+)\'/',			'moveREXMedialist(\''.$colID.$uID.'00$1\'', $moduleContent);
+		endif;
+		
+        return $moduleContent;
+    }
+	
+
+    public static function replaceModuleVars($moduleContent, $rexVars)
+    {
+		//REX-Vars
+		$tmp = @$rexVars['ctypeID']; 		$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_CTYPE_ID/', 	$tmp, $moduleContent);
+			
+		$tmp = @$rexVars['sliceID']; 		$tmp = ($tmp !== NULL) ? $tmp : '';
+        $moduleContent = preg_replace('/REX_SLICE_ID/', 	$tmp, $moduleContent);
+
+		$tmp = @$rexVars['moduleID']; 		$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_MODULE_ID/',	$tmp, $moduleContent);
+
+		$tmp = @$rexVars['moduleKEY']; 		$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_MODULE_KEY/',	$tmp, $moduleContent);
+		
+		$tmp = @$rexVars['clangID']; 		$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_CLANG_ID/', 	$tmp, $moduleContent);
+		
+		$tmp = @$rexVars['artID']; 			$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_ARTICLE_ID/',	$tmp, $moduleContent);
+		
+		$tmp = @$rexVars['tmplID']; 		$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_TEMPLATE_ID/',	$tmp, $moduleContent);
+		
+		
+		//GRID-Vars
+		$tmp = @$rexVars['grid_tmplID']; 	$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_GRID_TEMPLATE_ID/', 	 $tmp, $moduleContent);
+		
+		$tmp = @$rexVars['grid_tmplPREV']; 	$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_GRID_TEMPLATE_PREVIEW/', $tmp, $moduleContent);
+		
+		$tmp = @$rexVars['grid_tmplCOLS']; 	$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_GRID_TEMPLATE_COLUMNS/', $tmp, $moduleContent);
+		
+		$tmp = @$rexVars['grid_colNR']; 	$tmp = ($tmp !== NULL) ? $tmp : '';
+		$moduleContent = preg_replace('/REX_GRID_COLUMN_NUMBER/', 	 $tmp, $moduleContent);
+		
+        return $moduleContent;
+    }
+}
+?>

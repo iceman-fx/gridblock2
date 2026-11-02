@@ -1,0 +1,5 @@
+label: Abstand
+icon: rex-icon fa-arrows-v
+group: demo
+description: Fügt einen einstellbaren vertikalen Abstand ein
+demoOnly: true

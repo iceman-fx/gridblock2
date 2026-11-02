@@ -1,0 +1,18 @@
+package: gridblock2
+version: '1.0.0-beta1'
+author: Falko Müller
+supportpage: https://github.com/iceman-fx/gridblock2
+
+page:
+    title: 'translate:a2034_title'
+    perm: gridblock2[]
+    icon: gridblock-icon-logo
+    subpages:
+        default: { title: 'translate:a2034_default', icon: rex-icon fa-table-columns }
+        demo: { title: 'translate:a2034_demo', icon: rex-icon fa-flask }
+
+        help: { title: 'translate:a2034_help', icon: rex-icon fa-info-circle, itemclass: pull-right }
+        config: { title: 'translate:a2034_config', icon: rex-icon fa-wrench, itemclass: pull-right, perm: 'gridblock2[config]' }
+
+requires:
+    redaxo: '^5.20.0'

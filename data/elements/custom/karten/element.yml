@@ -1,0 +1,5 @@
+label: Karten-Gruppe
+icon: rex-icon fa-th-large
+group: demo
+description: Gruppe aus Info-Karten mit Titel, Text und Link
+demoOnly: true

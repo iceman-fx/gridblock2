@@ -1,0 +1,8 @@
+label: Vector Map
+icon: rex-icon fa-map-marker
+group: special
+description: Interaktive Straßenkarte mit Adresssuche und Positionsmarker
+preview_css:
+  - addon:vector_maps/maplibre/maplibre-gl.css
+  - addon:vector_maps/build/vectormaps.css
+requires: vector_maps

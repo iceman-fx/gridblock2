@@ -1,0 +1,22 @@
+.gb-el-form { max-width: 640px; font-family: inherit; }
+.gb-el-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.gb-el-form-step-title { font-size: 1.15em; font-weight: 600; margin: 0 0 12px; padding: 0; border: 0; }
+.gb-el-form-progress { margin: 0 0 12px; font-size: 0.9em; opacity: 0.7; }
+.gb-el-form .form-group, .gb-el-form .yform-element { margin-bottom: 14px; }
+.gb-el-form label { display: block; font-weight: 600; margin-bottom: 4px; }
+.gb-el-form input[type="text"], .gb-el-form input[type="email"], .gb-el-form input[type="tel"], .gb-el-form input[type="url"],
+.gb-el-form input[type="number"], .gb-el-form input[type="date"], .gb-el-form input[type="file"], .gb-el-form select, .gb-el-form textarea {
+	width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #c4cad1; border-radius: 4px; font: inherit; background: #fff;
+}
+.gb-el-form .radio label, .gb-el-form .checkbox label { font-weight: 400; display: flex; gap: 8px; align-items: baseline; }
+.gb-el-form-info { margin: 0 0 14px; padding: 10px 12px; background: rgba(83, 145, 204, 0.08); border-radius: 4px; }
+.gb-el-form-nav { display: flex; gap: 10px; margin-top: 12px; }
+.gb-el-form button, .gb-el-form input[type="submit"] { padding: 8px 18px; border: 0; border-radius: 4px; background: #2c6fb0; color: #fff; font: inherit; cursor: pointer; }
+.gb-el-form .gb-el-form-prev { background: #e3e7eb; color: #2c3e50; }
+.gb-el-form-note { margin-top: 10px; font-size: 0.85em; opacity: 0.75; }
+.gb-el-form-error { padding: 12px 14px; background: #fdecea; border-radius: 4px; }
+.gb-el-form .gb-el-form-fieldset { border: 0; margin: 0 0 14px; padding: 0; min-width: 0; }
+.gb-el-form .gb-el-form-fieldset > legend { display: block; width: auto; margin: 0 0 4px; padding: 0; border: 0; font-size: inherit; font-weight: 600; }
+.gb-el-form-info-title { display: block; font-weight: 700; margin: 0 0 4px; }
+.gb-el-form .gb-el-form-info.gb-el-form-spacer { background: none; padding: 0; margin: 0; border: 0; }
+.gb-el-form .radio label, .gb-el-form .checkbox label { float: none; margin: 0 0 6px; }

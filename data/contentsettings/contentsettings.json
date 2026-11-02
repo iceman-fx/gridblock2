@@ -1,0 +1,119 @@
+{
+	"section": {
+		"showOptions": [
+			"bgColor", "bgImage", "bgImagePos", "paddingTop", "paddingBottom", "marginTop", "marginBottom", "class"
+		]
+	},
+
+	"template": {
+		"showOptions": [
+			"bgColor", "bgImage", "bgImagePos", "paddingTop", "paddingBottom", "marginTop", "marginBottom", "class"
+		]
+	},
+
+	"categories": [
+		{
+			"key": "design",
+			"label": "Design",
+			"icon": "fa fa-paint-brush"
+		},
+		{
+			"key": "general",
+			"label": "Allgemeine Einstellungen",
+			"icon": "fa fa-cog"
+		}
+	],
+
+	"options": [
+		{
+			"category": "design",
+			"key": "bgColor",
+			"label": "Hintergrundfarbe",
+			"type": "colorpicker",
+			"palette": true,
+			"mode": "both"
+		},
+		{
+			"category": "design",
+			"key": "bgImage",
+			"label": "Hintergrundbild",
+			"type": "media",
+			"preview": "1"
+		},
+		{
+			"category": "design",
+			"key": "bgImagePos",
+			"label": "Position des Hintergrundbilds",
+			"type": "select",
+			"data": {
+				"gb-bgpos-center": "Mitte",
+				"gb-bgpos-top": "Oben",
+				"gb-bgpos-bottom": "Unten"
+			},
+			"default": "gb-bgpos-center"
+		},
+		{
+			"category": "design",
+			"key": "paddingTop",
+			"label": "Innenabstand oben",
+			"type": "select",
+			"data": {
+				"": "Kein",
+				"gb-pt-s": "Klein",
+				"gb-pt-m": "Mittel",
+				"gb-pt-l": "Groß",
+				"gb-pt-xl": "Sehr groß"
+			},
+			"default": ""
+		},
+		{
+			"category": "design",
+			"key": "paddingBottom",
+			"label": "Innenabstand unten",
+			"type": "select",
+			"data": {
+				"": "Kein",
+				"gb-pb-s": "Klein",
+				"gb-pb-m": "Mittel",
+				"gb-pb-l": "Groß",
+				"gb-pb-xl": "Sehr groß"
+			},
+			"default": ""
+		},
+		{
+			"category": "design",
+			"key": "marginTop",
+			"label": "Außenabstand oben",
+			"type": "select",
+			"data": {
+				"": "Kein",
+				"gb-mt-s": "Klein",
+				"gb-mt-m": "Mittel",
+				"gb-mt-l": "Groß",
+				"gb-mt-xl": "Sehr groß"
+			},
+			"default": ""
+		},
+		{
+			"category": "design",
+			"key": "marginBottom",
+			"label": "Außenabstand unten",
+			"type": "select",
+			"data": {
+				"": "Kein",
+				"gb-mb-s": "Klein",
+				"gb-mb-m": "Mittel",
+				"gb-mb-l": "Groß",
+				"gb-mb-xl": "Sehr groß"
+			},
+			"default": ""
+		},
+		{
+			"category": "general",
+			"key": "class",
+			"label": "CSS-Klasse",
+			"placeholder": "beispiel-klasse",
+			"type": "text"
+		}
+	]
+}

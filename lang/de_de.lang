@@ -1,0 +1,471 @@
+# addon: gridblock de_de
+
+a2034_title = Gridblock²
+
+a2034_default = Spaltenvorlagen
+a2034_cat = Vorlagengruppen
+a2034_config = Einstellungen
+a2034_help = Hilfe
+a2034_demo = Demo
+
+a2034_demo_hero_kicker = Demobereich
+a2034_demo_hero_title = Gridblock-Builder ausprobieren
+a2034_demo_hero_lead = Testen Sie hier den Gridblock-Builder in Ruhe, bevor Sie ihn produktiv auf einer echten Seite einsetzen.
+a2034_demo_hero_fact_modules = {0} Elemente verfügbar
+a2034_demo_hero_fact_nesting = Verschachtelte Sektionen & Spalten
+a2034_demo_hero_fact_preview = Live-Vorschau in Echtzeit
+a2034_demo_intro_1 = Neugierig, wie sich der Gridblock²-Builder anfühlt?<br>Hier unten ist Platz zum Ausprobieren - ganz ohne Risiko oder Einbindung in bestehenden Artikel.
+a2034_demo_intro_2 = Über den "Hinzufügen"-Button fügen Sie Sektionen, Spalten oder Inhaltselemente ein, verschachteln sie beliebig und schauen sich die Live-Vorschau an.<br>Ein paar Beispielelemente sowie Ihre ausgewählten Redaxo-Module stehen schon bereit, damit Sie direkt loslegen können.
+a2034_demo_intro_3 = <b>WICHTIG:</b><br>Dieser Bereich speichert nicht. Alles, was Sie hier ändern, ist beim Verlassen oder Neuladen der Seite wieder weg - es kann also nichts kaputt gehen.
+a2034_demo_intro_4 = <b>Kleine Randnotiz:</b><br>Da hier kein echter Artikel im Hintergrund steht, greifen Redaxo-Module, die sich auf den umgebenden Artikel beziehen (z.B. "Artikel einbinden"), ersatzweise auf die Startseite dieses Projekts zu.<br><br>Das ist in der Demo völlig normal und kein Fehler.
+a2034_demo_intro_5 = <b>Design-Vorschau:</b><br>Echte Redaxo-Module übernehmen hier nur dann das Design Ihrer Website, wenn in den Einstellungen bereits CSS-Pfade hinterlegt sind.<br>Ist das nicht der Fall, erscheinen diese Module hier unformatiert.<br><br>Die mitgelieferten Demo-Elemente sehen davon unabhängig immer ordentlich aus.
+
+a2034_head_basics = Spaltenvorlage
+a2034_head_cat = Vorlagengruppe
+a2034_head_config = Einstellungen
+a2034_config_no_permission = Für diesen Bereich fehlt Ihnen die Berechtigung "gridblock2[config]".
+a2034_head_help = Onlinehilfe
+
+a2034_subheader_bas1 = Allgemein
+a2034_subheader_bas2 = Definition Spaltenvorlage
+
+a2034_text1 = Die Definition der zulässigen oder zu ignorierenden Inhaltsmodule kann auch direkt im Modul vorgenommen werden.<br>Weitere Informationen finden Sie in der Hilfe.
+
+# Migrations-/Einrichtungsassistent
+a2034_wizard_banner_title_gb1 = Willkommen beim Assistenten zur Gridblock 1.x-Übernahme
+a2034_wizard_banner_lead_gb1 = Es wurde eine bestehende Gridblock 1.x-Installation gefunden. Der Assistent hilft Ihnen dabei, Gridblock 1.x abzulösen und bestehende Einstellungen zu übernehmen.
+a2034_wizard_banner_title_fresh = Willkommen beim Einrichtungsassistenten
+a2034_wizard_banner_lead_fresh = Richten Sie die wichtigsten Grundeinstellungen bequem in einfachen Schritten ein, statt sie einzeln in den Einstellungen zu suchen.
+a2034_wizard_banner_start_btn = Assistent starten
+a2034_wizard_banner_dismiss_btn = Nicht mehr anzeigen
+a2034_wizard_modal_title = Einrichtungsassistent
+a2034_wizard_modal_title_gb1 = Migrationsassistent
+a2034_wizard_gb1_detected = Eine bestehende Gridblock 1.x-Installation (Addon "gridblock") wurde erkannt.
+a2034_wizard_gb1_deactivated = Gridblock 1.x deaktiviert.<br>Das Frontend wird ab sofort über Gridblock 2 ausgegeben.
+a2034_wizard_gb1_deactivate_error = Fehler beim Deaktivieren von Gridblock 1.x:
+a2034_wizard_gb1_not_active = Gridblock 1.x ist bereits nicht mehr aktiv.
+a2034_wizard_config_copied = Einstellungen von Gridblock 1.x übernommen.
+a2034_wizard_config_copy_none = Es wurden keine übernehmbaren Einstellungen bei Gridblock 1.x gefunden.
+a2034_wizard_contentsettings_copied = Die Contentsettings-Feldschema-Dateien von Gridblock 1.x wurden übernommen.
+a2034_wizard_templates_copied = Spaltenvorlagen von Gridblock 1.x übernommen.
+a2034_wizard_templates_copy_error = Fehler beim Übernehmen der Spaltenvorlagen:
+a2034_wizard_gb1_delete_warning = Gridblock² arbeitet mit einer eigenen Tabelle (rex_2034_gridtemplates) und ist von einer Löschung von GB1 nicht betroffen. Prüfen Sie vorher bitte selbst, ob Ihre eigenen Module, Templates oder sonstiger Code Bibliotheken bzw. Hilfsklassen des Gridblock 1.x-Addons verwenden - diese stehen nach dem Entfernen nicht mehr zur Verfügung.
+a2034_wizard_module_migrated = Bestehendes Redaxo-Eingabemodul auf Gridblock² umgestellt.
+a2034_wizard_module_none_found = Es wurde kein bestehendes Gridblock-Eingabemodul gefunden.
+a2034_wizard_default_templates_installed = Beispiel-Spaltenvorlagen wurden installiert.
+a2034_wizard_default_templates_error = Fehler beim Installieren der Beispiel-Spaltenvorlagen:
+a2034_wizard_default_templates_exists = Es sind bereits Spaltenvorlagen vorhanden - keine Beispiel-Spaltenvorlagen installiert.
+a2034_wizard_default_templates_skipped = Beispiel-Spaltenvorlagen wurden nicht installiert (nicht ausgewählt).
+a2034_wizard_settings_saved = Einstellungen gespeichert. Sie sind jederzeit auch über die normale Einstellungsseite änderbar.
+
+a2034_wizard_next_btn = Weiter
+a2034_wizard_back_btn = Zurück
+a2034_wizard_finish_btn = Speichern & abschließen
+
+a2034_wizard_step_intro_head = Willkommen im Migrationsassistenten von Gridblock²
+a2034_wizard_step_intro_lead = Der Assistent führt Sie Schritt für Schritt durch die Übernahme.<br>Legen Sie zunächst fest, was von Gridblock 1.x übernommen werden soll, danach folgen ein paar kurze Fragen zur Grundeinstellung von Gridblock².
+a2034_wizard_step_intro_note = Schließen Sie den Assistenten vollständig ab, um alle vorgenommenen Einstellungen auszuführen.
+a2034_wizard_step_gb1_actions_head = Übernahme von Gridblock 1.x
+a2034_wizard_step_gb1_actions_intro = Wählen Sie bitte aus, was durchgeführt bzw. übernommen werden soll.<br>Nichts davon passiert sofort - alle ausgewählten Aktionen laufen erst beim Speichern am Ende des Assistenten.
+a2034_wizard_gb1_action_deactivate = Gridblock 1.x deaktivieren
+a2034_wizard_gb1_action_deactivate_warning = Noch nicht <u>neu</u> gespeicherte Alt-Inhalte laufen weiterhin über den Legacy-Ausgabeweg.<br>Prüfen Sie vor dem Deaktivieren bitte selbst, ob Ihre bisherige Ausgabe Bibliotheken/Hilfsklassen des Gridblock 1.x-Addons nutzt.
+a2034_wizard_gb1_action_copy = Einstellungen, Contentsettings und Spaltenvorlagen übernehmen
+a2034_wizard_gb1_action_migrate = Eingabemodul auf Gridblock²-Aufrufe umstellen
+a2034_wizard_step_gb1_actions_modulehint = Hinweis: Das vorhandene Gridblock-Modul behält beim Umstellen seinen bisherigen Eingabe- und Ausgabecode. Neuere Funktionen (z. B. die Live-Vorschau in der Slice-Übersicht) stehen erst zur Verfügung, wenn der Modulcode durch die aktuelle Fassung ersetzt wird.
+a2034_wizard_gb1_action_replace_module = Modulcode komplett durch die aktuelle Gridblock²-Fassung ersetzen
+a2034_wizard_gb1_action_replace_module_warning = Ersetzt Eingabe- und Ausgabecode des Gridblock-Moduls vollständig - eigene Anpassungen am Modulcode gehen dabei verloren. Bestehende Slices bleiben erhalten. Hat Vorrang vor "Eingabemodul umstellen".
+a2034_wizard_module_replaced = Modulcode ersetzt: {0}
+a2034_wizard_module_replace_failed = Der Modulcode konnte nicht ersetzt werden (Quelldateien nicht lesbar).
+a2034_wizard_step_systemelements_head = Ausgabe der System-Elemente
+a2034_wizard_step_systemelements_intro = Sektion, Spalten-Zeile und Spalte sind die drei Bausteine, über die Gridblock² die eigentliche HTML-Ausgabe erzeugt.<br>Hatten Sie in Gridblock 1.x eigenen Ausgabecode (z.B. für Bootstrap, UIkit oder ein eigenes CSS-Grid), können Sie ihn hier direkt für die neue Struktur anpassen.<br>Das lässt sich auch später jederzeit in den Elementen durchführen.
+a2034_wizard_action_edit_systemelements = Ausgabecode jetzt anpassen
+a2034_wizard_systemelements_section = Sektion (system/section/output.php)
+a2034_wizard_systemelements_columnsrow = Spalten-Zeile (system/column/columnsrow.php)
+a2034_wizard_systemelements_column = Spalte (system/column/column.php)
+a2034_wizard_systemelements_info = Änderungen werden in Ihrem Datenordner gespeichert und bleiben bei Addon-Updates unangetastet.<br>Die Dateien lassen sich jederzeit auch später noch direkt im Dateisystem anpassen, unter redaxo/data/addons/gridblock2/elements/system/.
+a2034_wizard_systemelements_saved = Ausgabecode der System-Elemente gespeichert.
+a2034_wizard_systemelements_skipped = Ausgabecode der System-Elemente unverändert gelassen.
+a2034_wizard_step_templates_head = Beispiel-Spaltenvorlagen
+a2034_wizard_step_templates_intro = Es sind noch keine Spaltenvorlagen vorhanden.<br>Ohne mindestens eine Vorlage lässt sich das Spalten-Element im Builder nicht anlegen.
+a2034_wizard_action_install_default_templates = Beispiel-Spaltenvorlagen installieren
+a2034_wizard_step_modules_head = Inhaltsmodule (Redaxo)
+a2034_wizard_step_modules_intro = Legen Sie fest, welche Inhaltsmodule sich im Builder als Gridblock-Inhaltselement einfügen lassen.
+a2034_wizard_step_gap_head = Spaltenabstand
+a2034_wizard_step_gap_question = Soll der Spaltenabstand über die native Auswahl vorgegeben oder einem bestehenden Contentsettings-Feld zugeordnet werden?
+a2034_wizard_step_gap_mode_label = Modus für Spaltenabstand
+a2034_wizard_step_gap_native = Native Auswahl nutzen
+a2034_wizard_step_gap_native_info = Native Spaltenabstände
+a2034_wizard_step_gap_native_format_info = Format je Zeile: Schlüssel = Bezeichnung = Wert (z.B. "md = Mittel = 24px")
+a2034_wizard_step_gap_cs = Contentsettings-Feld zuordnen
+a2034_wizard_step_gap_cs_info = Auswahl des Contentsettings-Feldes, welches in Ihrem Gridblock 1.x-Projekt für die Spaltenaufteilung bisher genutzt wurde.
+a2034_wizard_step_preview_head = Live-Vorschau
+a2034_wizard_step_preview_intro = Legen Sie fest, wie Inhaltsmodule im Builder als Vorschau angezeigt werden sollen und welche Frontend-CSS dafür eingebunden werden.
+a2034_wizard_step_preview_question = Auswahl Vorschaumodus
+a2034_wizard_step_palette_head = Projektfarben (optional)
+a2034_wizard_step_palette_intro = Hinterlegen Sie hier Ihre globalen Projektfarben. Leer lassen überspringt den Schritt - die Farben können jederzeit unter Einstellungen geändert werden.
+a2034_wizard_step_preview_hint = Weicht die Vorschau vom Frontend ab (Schriftgrößen, body-Regeln, Wrapper-Klasse), finden Sie die Lösungen in der Onlinehilfe unter "Vorschau".
+a2034_wizard_step_css_head = Frontend-CSS für die Vorschau
+
+a2034_wizard_thanks_title = Fertig eingerichtet!
+a2034_wizard_thanks_text = Die Grundeinstellungen sind gespeichert.<br><br>Weitere Einstellungen können Sie jederzeit in den Einstellungen vornehmen. Beachten Sie auch die weiterführenden Erklärungen in der Onlinehilfe des Addons.
+a2034_wizard_thanks_text_newinstall = Passen Sie als Nächstes in den System-Elementen das gewünschte Ausgabe-Markup an, damit die Vorschau und Ihr Frontend korrekt dargestellt werden.
+a2034_wizard_thanks_systemelements = Vergessen Sie nicht, Ihr bisheriges Ausgabe-Markup in den neuen System-Elementen zu hinterlegen.
+a2034_wizard_thanks_frontend_css_hint = Passen Sie die Ausgabe der System-Elemente (Sektion/Spalten) noch an Ihr eigenes Frontend-CSS an.<br>Ein Beispiel-Snippet finden Sie in der Onlinehilfe unter "Der Builder".
+a2034_wizard_thanks_help_link = Zur Onlinehilfe
+a2034_wizard_thanks_config_link = Zu den Einstellungen
+
+
+# Globale Felder
+a2034_std_status = Sichtbar / Aktiv
+
+
+# Seite: Default
+a2034_bas_title = Titel / Bezeichnung
+a2034_bas_description = Kurzbeschreibung
+a2034_bas_columns = Anzahl Spalten
+a2034_bas_cssclass = CSS-Klasse(n) für die Spalten-Ausgabe
+a2034_bas_cssclass_info = Wird von den Ausgabedateien (columnsrow.php) unverändert mit ausgegeben, z.B. "gridtemplate-2col gridtemplate-60-40"
+a2034_bas_template = Template-Ausgabecode (Gridblock1-Ausgabe)
+a2034_bas_template_placeholder = Mögliche Platzhalter: REX_GRID[1] ... REX_GRID[12]
+a2034_bas_preview = Definition Spaltenvorschau (JSON)
+a2034_bas_preview_example = Beispiel einfügen ...
+a2034_bas_priority = Priorität
+a2034_bas_cat = Vorlagengruppe
+a2034_bas_cat_empty = - keine Vorlagengruppe ausgewählt -
+
+a2034_bas_list_name = Titel / Bezeichnung
+a2034_bas_list_columns = Spalten
+a2034_bas_list_preview = Spaltenvorschau
+a2034_bas_list_priority = Prio
+a2034_bas_list_inuse = In Verwendung
+
+a2034_bas_list_btn_createtemplate = Beispieltemplates erstellen
+a2034_bas_list_btn_importtemplate = Vorlagen importieren
+a2034_bas_list_btn_exporttemplate = Vorlagen exportieren
+a2034_bas_list_modal_import = Importieren
+a2034_bas_list_modal_text = Wählen Sie das ZIP-Archiv mit Ihren Templatedefinitionen aus und starten den Vorgang mit "Importieren".
+
+
+# Seite: Einstellungen
+a2034_config_modules_head = Inhaltsmodule (Redaxo)
+a2034_config_moresettings = Weitere Einstellungen
+
+a2034_config_modulesmode = Modus für Inhaltsmodule
+a2034_config_modulesmode_allow = Zulässige Inhaltsmodule
+a2034_config_modulesmode_deny = Zu ignorierende Inhaltsmodule
+a2034_config_modules = Auswahl Inhaltsmodule
+a2034_config_display_head = Anzeige
+a2034_config_hidepreviewcoltitles = Spaltenvorschau
+a2034_config_hidepreviewcoltitles_info = Spaltenbezeichnungen in Spaltenvorschau verbergen
+a2034_config_hideinfotexts = Einleitungstexte
+a2034_config_hideinfotexts_info = Einleitungs- & Informationstexte im Modul verbergen
+a2034_config_gb_builder_templates_import_export_info = Import/Export für Spaltenvorlagen & Contentsettings aktivieren
+a2034_config_gb_builder_synchronizer_enabled_info = Synchronizer aktivieren (Datei-Abgleich von Spaltenvorlagen & Contentsettings)
+a2034_config_gb_builder_synchronizer_enabled_hint = <b>Hinweis:</b> Solange eine alte Gridblock 1.x-Struktur noch aktiv ist, wird die Contentsettings-Datei laufend automatisch aus deren Daten aktualisiert. Unschädlich, aber während dieser Übergangszeit normal.
+a2034_config_showcontentsettingsbe = Contentsettings
+a2034_config_showcontentsettingsbe_info = Zeige Zusammenfassung der Contentsettings im Backend
+
+a2034_config_gb_builder_head = Builder
+a2034_config_gb_builder_basic_head = Allgemein
+a2034_config_gb_builderstyle_head = Builder-Vorschau (CSS & JavaScripte)
+a2034_config_functions_head = Weitere Funktionen
+a2034_config_gb_builder_multisite_info = Multi-Site-Unterstützung für Live-Vorschau aktivieren
+a2034_config_gb_builder_multisite_hint = Benötigt das Addon YRewrite mit mindestens einer eigenen Domain. Danach erscheinen unter "Builder-Vorschau" Reiter je Domain.
+a2034_config_gb_builder_multisite_noyrewrite = Hinweis: YRewrite ist nicht installiert oder nicht aktiv - die Funktion bleibt wirkungslos.
+a2034_config_ms_head = Multi-Site-Unterstützung
+a2034_config_ms_info = Benötigt mit mind. zwei angelegten Domains in YRewrite. Weitere Konfiguration unter "Builder-Vorschau".
+a2034_config_ms_box_head = Domain-Einstellungen (Vorschau-Werte und Elementauswahl je Domain)
+a2034_config_ms_general_head = Allgemeine Einstellungen (gelten für alle Domains)
+a2034_config_ms_tab_default = Standard
+a2034_config_gb_builder_multisite_elements_info = Multi-Site-Unterstützung für Inhaltselemente aktivieren
+a2034_config_gb_builder_multisite_elements_hint = Legt je YRewrite-Domain fest, welche Module, Custom-Elemente und die Sektion im Builder verfügbar sind. Benötigt YRewrite.
+a2034_config_ms_avail_head = Verfügbare Module und Elemente (gilt auch für Admins)
+a2034_config_ms_avail_overview_toggle = Übersicht der verfügbaren Module und Elemente ein-/ausblenden
+a2034_config_ms_avail_all = Alle Module & Elemente zulassen
+a2034_config_ms_avail_items = Verfügbare Module & Elemente
+a2034_config_ms_avail_deny = Nicht verfügbar
+a2034_config_ms_avail_mode = Auswahl dieser Domain
+a2034_config_ms_avail_mode_merge = Wie global (abzüglich "Nicht verfügbar")
+a2034_config_ms_avail_mode_replace = Komplett eigene Auswahl
+a2034_config_ms_avail_group_modules = REDAXO-Module
+a2034_config_ms_avail_group_elements = Custom-Elemente und Sektion
+a2034_config_ms_avail_overview = Das sieht diese Domain (gespeicherter Stand)
+a2034_config_ms_tab_individual = Individuell
+a2034_config_ms_domain = Domain
+a2034_config_ms_orphan_short = nicht mehr vorhanden
+a2034_config_ms_mode = Werte dieser Domain
+a2034_config_ms_mode_merge = Standard-Werte + eigene Werte
+a2034_config_ms_mode_replace = Komplett eigene Werte
+a2034_config_ms_mode_info = "Standard + eigene": zuerst gelten die Werte des Reiters "Standard", die Werte dieser Domain kommen dazu bzw. haben bei Modul-Überschreibungen Vorrang. "Komplett eigene": nur die Werte dieses Reiters gelten.
+a2034_config_ms_copy = Übernehmen aus Hauptdomain
+a2034_config_ms_copy_confirm = Die Werte dieses Reiters werden durch die Werte des Reiters "Standard" ersetzt. Fortfahren?
+a2034_config_ms_orphan = Diese Domain existiert in YRewrite nicht mehr. Ihre Einstellungen werden nicht mehr verwendet.
+a2034_config_ms_orphan_remove = Einstellungen dieser Domain beim Speichern entfernen
+a2034_config_gb_builder_slicelist_preview = Live-Vorschau in der Slice-Übersicht
+a2034_config_gb_builder_slicelist_preview_info = Live-Vorschau auch in der Slice-Übersicht anzeigen
+a2034_config_gb_builder_slicelist_fullscreen = Vollbild-Button in der Slice-Übersicht
+a2034_config_gb_builder_slicelist_fullscreen_info = Button "Im Vollbild editieren" an jedem Gridblock der Slice-Übersicht anzeigen
+a2034_config_gb_builder_modalstyle = Darstellung der Fenster (Bearbeiten/Einstellungen)
+a2034_config_gb_builder_modalstyle_modal = Modal (zentriert)
+a2034_config_gb_builder_modalstyle_sidebar = Sidebar (rechts)
+a2034_config_gb_builder_modal_narrow = Schmale Sidebar
+a2034_config_gb_builder_modal_narrow_info = Sidebar als Standard schmaler anzeigen
+a2034_config_gb_builder_slicelist_maxheight = Max. Höhe von aktiven Live-Vorschauen in der Slice-Übersicht
+a2034_config_gb_builder_slicelist_maxheight_auto = Auto (volle Höhe)
+a2034_config_gb_builder_slicelist_maxheight_small = Klein (300 px)
+a2034_config_gb_builder_slicelist_maxheight_medium = Mittel (500 px)
+a2034_config_gb_builder_slicelist_maxheight_large = Groß (800 px)
+a2034_config_gb_builder_preview_block_links = Links in der Vorschau sperren
+a2034_config_gb_builder_preview_block_links_info = Klicks auf Links und das Absenden von Formularen in der Live-Vorschau (Builder und Slice-Übersicht) unterbinden
+a2034_config_gb_builder_viewport_buttons = Viewport-Buttons
+a2034_config_gb_builder_viewport_buttons_info = Desktop, Tablet und Smartphone in der Kopfzeile des Builders anzeigen
+a2034_config_gb_builder_live_preview = Sidebar Live-Edit-Vorschau
+a2034_config_gb_builder_live_preview_info = Sofortige Live-Vorschau der geänderten Inhalte & Einstellungen bei Sidebar-Nutzung aktivieren
+a2034_slicelist_fullscreen = Im Vollbild editieren
+a2034_config_gb_builder_fullscreen_apply = Speichern-Button
+a2034_config_gb_builder_fullscreen_apply_info = "Block übernehmen"-Button im Vollbild-Modus aktivieren
+a2034_config_gb_builder_preview_mode = Vorschau-Modus (Inhaltsmodule)
+a2034_config_gb_builder_preview_mode_iframe = iFrame (CSS & JavaScript)
+a2034_config_gb_builder_preview_mode_shadowdom = Shadow-DOM (nur CSS - schnellere Darstellung; eingeschränkte Viewport-Simulation)
+a2034_config_gb_builder_preview_mode_modules = Vorschau-Modus: Module ohne iFrame (Ausnahmen)
+a2034_config_gb_builder_preview_mode_modules_info = Die gewählten Inhaltsmodule werden NICHT als iFrame, sondern als Shadow-DOM dargestellt (schneller, ohne JavaScript). Alle übrigen als iFrame.
+a2034_config_gb_builder_element_preview_iframe_info = Custom-Elemente auch als iFrame in der Vorschau anzeigen
+a2034_config_gb_builder_native_grid_css_frontend_info = Generierte CSS-Basis für die native Sektion-/Spalten-Ausgabe automatisch im Frontend einbinden
+a2034_config_gb_elements_css_frontend = Element-CSS im Frontend
+a2034_config_gb_elements_css_frontend_info = CSS der Custom-Elemente (style.css) automatisch im Frontend einbinden
+a2034_config_gb_builder_preview_wrapper_class = Wrapper-Klasse der Vorschau
+a2034_config_gb_builder_preview_wrapper_class_info = Klasse(n) eines Wrapper-Elements um den Vorschau-Inhalt, z. B. content (mit oder ohne Punkt, mehrere durch Leerzeichen) - nötig, wenn Ihr Theme seine Regeln auf einen Content-Container begrenzt.
+a2034_config_gb_builder_native_grid_css_backend_info = Native CSS-Basis für Sektion-/Spalten-Ausgabe in Backend-Vorschau nutzen (ausschalten für eigenes Grid-Framework)
+a2034_config_gb_builder_preview_media_to_container = Media-Queries in der Vorschau
+a2034_config_gb_builder_preview_media_to_container_info = Breitenbasierte Media-Queries auf Container-Queries umstellen
+a2034_config_gb_builder_toolbar_head = Toolbar
+a2034_config_gb_builder_slicelist_head = Slice-Übersicht
+a2034_config_gb_builder_fullscreen_head = Vollbild-Modus
+
+
+a2034_config_gb_builder_draghandle_info = Drag&Drop aktivieren
+a2034_config_gb_builder_columns_quickswitch_info = Schnellumschalter für Spalten-Aufteilung anzeigen
+a2034_config_gb_builder_nested_addbutton_info = "Element hinzufügen"-Button auch in Sektion/Spalten anzeigen
+a2034_config_gb_builder_offlinetoggle_info = Online/Offline aktivieren
+a2034_config_gb_builder_copypaste_info = Kopieren/Einfügen aktivieren
+a2034_config_gb_builder_hidelabel_info = Elementlabel ausblenden
+a2034_config_gb_builder_compacttoolbox_info = Kompakte Toolbox aktivieren
+
+a2034_config_gb_builder_maxdepth = Verschachtelungstiefe
+a2034_config_gb_builder_maxdepth_info = Maximale Verschachtelungstiefe von Sektionen-/Spalten-Elementen (Standard: 3)
+
+a2034_config_gb_builder_modaledit = Editmode bei geringer Breite
+a2034_config_gb_builder_modaledit_info = Inhaltsbearbeitung im Modal/Sidebar öffnen, wenn der verfügbare Platz die Mindestbreite unterschreitet
+a2034_config_gb_builder_modaledit_minwidth = Mindestbreite (Editmode)
+a2034_config_gb_builder_modaledit_minwidth_info = Verfügbare Breite, ab der inline statt im Modal editiert wird (Standard: 560)
+
+a2034_config_gb_builder_content_stylesheets = Frontend-CSS für Backend-Vorschau
+a2034_config_gb_builder_content_stylesheets_info = Ein CSS-Pfad pro Zeile (ab Projekt-Root, z.B. /assets/style.css).
+a2034_config_gb_builder_content_scripts = Frontend-Javascript für Backend-Vorschau
+a2034_config_gb_builder_content_scripts_info = Ein Javascript-Pfad pro Zeile (ab Projekt-Root, z.B. /assets/script.js).<br>Nur in der iframe-Vorschau verfügbar. Nicht für Sektion- und Spalten-Elemente verfügbar.
+a2034_config_gb_builder_module_css_overrides = CSS-Override für Inhaltsmodule
+a2034_config_gb_builder_module_css_overrides_info = Zusätzliches Vorschau-CSS für einzelne Module (Sonderfälle)<br><b>Format (zeilenweise):</b> moduleID_oder_key = /pfad/zu/datei.css
+
+a2034_config_gb_builder_preview_visibility_fixes = Sichtbarkeits-Korrekturen für die Vorschau
+a2034_config_gb_builder_preview_visibility_fixes_info = CSS-Gegenregeln für Bibliotheken, die z.B. Inhalte per CSS verstecken (z.B. AOS).<br>CSS hier direkt eintragen oder über "Frontend-CSS für Backend-Vorschau" einbinden.
+a2034_config_gb_builder_palette = Projektfarben (Palette)
+a2034_config_gb_builder_palette_info = <b>Format (JSON):</b> { "primary": {"label": "Primärfarbe", "class": ".bgCol-primary", "color": "var(--col-primary)", "text_color": "#FFFFFF", "hover_color": "rgb(100,100,100)", "hover_text_color": "rgba(250,250,250, 0.85)"} }<br>Je Farbe ein fest definierter Key, darunter label (Pflicht), class, color, text_color, hover_color und hover_text_color. color ist Pflicht, wenn keine class angegeben ist.
+a2034_palette_field_bg = Hauptfarbe (color)
+a2034_palette_field_fg = Textfarbe (text_color)
+a2034_palette_field_hbg = Hover-Hauptfarbe (hover_color)
+a2034_palette_field_hfg = Hover-Textfarbe (hover_text_color)
+a2034_palette_err_head = Die Projektfarben sind fehlerhaft, es wurde nichts gespeichert.
+a2034_palette_err_domain = Domain {0}:
+a2034_palette_err_json = Das JSON ist ungültig. Bitte Klammern, Kommas und Anführungszeichen prüfen. Erwartet wird ein Objekt der Form {"key": {"label": "Bezeichnung", "color": "..."}}.
+a2034_palette_err_key = Eintrag "{0}": Der Key ist ungültig (erlaubt: Kleinbuchstaben, Ziffern, - und _, höchstens 40 Zeichen).
+a2034_palette_err_entry = Eintrag "{0}": Erwartet wird ein Objekt mit den Feldern label, class, color, text_color, hover_color und hover_text_color.
+a2034_palette_err_field = Eintrag "{0}": Unbekanntes Feld "{1}" (erlaubt: label, class, color, text_color, hover_color, hover_text_color).
+a2034_palette_err_type = Eintrag "{0}": Das Feld "{1}" muss Text sein.
+a2034_palette_err_label = Eintrag "{0}": Die Bezeichnung (label) fehlt.
+a2034_palette_err_color = Eintrag "{0}": Die Hauptfarbe (color) fehlt (Pflicht, wenn keine Klasse angegeben ist).
+a2034_palette_err_value = Eintrag "{0}": {1} ist weder eine gültige Variable (--name oder var(--name)) noch ein gültiger Farbwert (Hex, rgb, rgba, hsl, hsla) oder transparent.
+a2034_palette_err_dup = Der Key "{0}" kommt mehrfach vor.
+a2034_palette_err_class = Eintrag "{0}": Die Klasse ist ungültig (erlaubt: Buchstaben, Ziffern, - und _, z. B. .uk-background-primary).
+
+a2034_config_gb_builder_gap_cs_field = Contentsettings-Feld für Spalten-Abstand
+a2034_config_gb_builder_gap_cs_field_none = - kein Contentsettings-Feld zuordnen -
+a2034_config_gb_builder_gap_cs_field_scope_template = Template-Einstellungen
+a2034_config_gb_builder_gap_cs_field_scope_columns = Spalten-Einstellungen
+a2034_config_gb_builder_gap_cs_field_scope_section = Sektion-Einstellungen
+a2034_config_gb_builder_gap_cs_field_info = Auswahl des gewünschten Contentsettings-Feldes für den Spalten-Abstand, um dieses anstatt des nativen Spalten-Abstand zu nutzen.
+a2034_config_gb_builder_gap_native_fallback = Werte für nativen Spalten-Abstand
+a2034_config_gb_builder_gap_native_fallback_info = Definition der nativen Spalten-Abstände, falls kein Contentsettings-Feld genutzt werden soll.<br><b>Format (zeilenweise):</b> schlüssel = Bezeichnung = Wert (z.B. "md = Mittel = 24px")
+
+
+# Modulausgabe
+a2034_mod_template_empty = - keine Vorlage ausgewählt -
+a2034_mod_template_notselected = Bisher wurde keine Spaltenvorlage ausgewählt.
+a2034_mod_template = Spaltenvorlage
+a2034_mod_template_options = Weitere Blockoptionen ...
+a2034_mod_template_modal = Spaltenvorlage wählen
+a2034_mod_templatelist = Spaltenvorlage wählen
+a2034_mod_templatelist_noentrys = <strong>Es wurden noch keine Spaltenvorlagen angelegt.</strong><br>Bitte hinterlegen Sie Ihre Vorlagen über die Addon-Verwaltung.
+a2034_mod_totalcolumns = 12
+
+a2034_mod_columnintro = Hinterlegen Sie hier Ihre Spalteninhalte durch Auswahl eines Inhaltsblockes.
+
+a2034_mod_column = Spalte
+a2034_mod_column_options = Weitere Spaltenoptionen ...
+
+a2034_mod_choose_modul = - Inhaltsblock wählen -
+a2034_mod_choose_template = Spaltenvorlage auswählen
+a2034_mod_choose = wählen
+a2034_mod_add_modul = Weiteres Element hinzufügen
+a2034_mod_copy_modul = Kopieren
+a2034_mod_delete_modul = Löschen
+a2034_mod_status_modul = Online/Offline schalten
+a2034_mod_move_modul_up = Nach oben verschieben
+a2034_mod_move_modul_down = Nach unten verschieben
+a2034_mod_move_modul_drag = Verschieben mit Drag´n´Drop 
+a2034_mod_confirm_delete = Element wirklich löschen?
+a2034_mod_edit_modul = Bearbeiten
+a2034_mod_edit_disabled = Dieses Modul ist nicht mehr freigegeben und kann nicht mehr bearbeitet werden
+
+a2034_builder_section = Abschnitt (Sektion)
+a2034_builder_columns = Spalten-Layout
+a2034_builder_columns_quickswitch = Spaltenverteilung ändern
+a2034_builder_add = Element hinzufügen
+a2034_builder_empty = Noch keine Inhaltselemente vorhanden.<br><button type="button" class="btn gb-builder-add-toggle gb-builder-add-toggle-animated" aria-haspopup="true" aria-expanded="false"><i class="rex-icon fa-plus" aria-hidden="true"></i></button>
+a2034_builder_settings = Einstellungen
+a2034_builder_block_settings = Blockeinstellungen
+a2034_perm_elements = Gridblock-Elemente
+a2034_perm_elements_all = Alle Gridblock-Elemente
+a2034_perm_system_element = System-Element
+a2034_builder_columnsettings = Spalten-Einstellungen
+a2034_builder_columnslot_settings = Spalten-Einstellungen
+a2034_builder_search_placeholder = Suchen...
+a2034_builder_add_search = Element suchen …
+a2034_builder_add_close = Schließen
+a2034_builder_add_noresults = Keine Treffer
+a2034_builder_add_failed = Das Element konnte nicht eingefügt werden.
+a2034_builder_add_target = Einfügen in
+a2034_builder_add_target_root = Hauptebene
+a2034_builder_add_target_slot = Spalte
+a2034_builder_add_target_after = nach
+a2034_builder_add_target_end = am Ende
+a2034_builder_group_standard = Module
+a2034_builder_group_special = Weitere Elemente
+a2034_builder_group_core = Layout
+a2034_builder_more = Mehr
+a2034_builder_setonline = Online schalten
+a2034_builder_setoffline = Offline schalten
+a2034_builder_fullscreen = Vollbild
+a2034_builder_fullscreen_exit = Vollbild beenden
+a2034_builder_fullscreen_locked = Zum Beenden zuerst die Seitenleiste schließen
+a2034_builder_edit_locked = Zuerst die Seitenleiste schließen (speichern oder abbrechen)
+a2034_builder_fullscreen_apply_locked = Zum Speichern zuerst die Seitenleiste schließen
+a2034_builder_fullscreen_apply_title = Speichert den Block und öffnet das Vollbild danach wieder
+a2034_builder_modal_width = Fensterbreite ändern
+a2034_builder_preview_loading = Vorschau wird geladen …
+a2034_builder_columns_ratio = Spaltenvorlage
+a2034_builder_columns_gap = Abstand zwischen den Spalten
+a2034_builder_columns_disabled_hint = Erst eine Spaltenvorlage anlegen
+a2034_builder_columns_gap_none = - kein Abstand -
+a2034_builder_columns_gap_xs = Sehr klein
+a2034_builder_columns_gap_sm = Klein
+a2034_builder_columns_gap_md = Mittel
+a2034_builder_columns_gap_lg = Groß
+a2034_builder_columns_gap_xl = Sehr groß
+a2034_builder_save_element = Übernehmen
+a2034_builder_cancel_element = Abbrechen
+a2034_builder_element_unavailable = Element "{0}" ist nicht verfügbar (Addon oder Elementordner fehlt). Die gespeicherten Inhalte bleiben erhalten, das Element kann verschoben oder gelöscht werden.
+a2034_builder_element_requires_addon = Element "{0}" benötigt das Addon "{1}", das nicht installiert oder nicht aktiv ist. Die gespeicherten Inhalte bleiben erhalten, das Element kann verschoben oder gelöscht werden.
+a2034_builder_pasteelement = Kopie einfügen
+a2034_builder_iscopied = Kopiert
+a2034_mod_copy_insertmodul = Inhaltsblock &raquo;###modname###&laquo; mit der ID ####modid### einfügen
+a2034_mod_noeditpermission = Keine Editiererlaubnis
+
+a2034_mod_error_loadmodule = Beim Laden ist ein Fehler aufgetreten.
+a2034_mod_error_loadcontentoptions = Beim Laden der Optionen ist ein Fehler aufgetreten.
+a2034_mod_error_loadmoduleselector = Beim Laden der Modulauswahl ist ein Fehler aufgetreten.
+
+
+# Sonstige Vorgaben
+a2034_settoday = heutiges Datum einfügen
+a2034_example = Beispiel
+a2034_examples = Beispiele...
+a2034_days = Tage
+a2034_clock = Uhr
+a2034_overview = Übersicht:
+
+a2034_search_all = alle
+a2034_search_noselection = - keine Auswahl -
+a2034_search_sort = Ansicht
+a2034_search_sort_onlyactive = nur aktive Einträge (online)
+a2034_search_sort_onlyinactive = nur deaktivierte Einträge (offline)
+a2034_search_keyword = Suchbegriff
+a2034_search_submit = suchen
+a2034_search_reset = Suche zurücksetzen
+a2034_search_notfound = Es wurden keine Einträge zu Ihrer Suchanfrage gefunden.
+a2034_search_more = mehr Optionen
+a2034_search_cat = Kategorie
+a2034_search_archive = Nur Archiveinträge anzeigen
+
+a2034_edit = ändern
+a2034_duplicate = duplizieren
+a2034_delete = löschen
+a2034_online = online
+a2034_offline = offline
+a2034_new = hinzufügen
+a2034_new_template = Neue Spaltenvorlage
+a2034_create = erstellen
+a2034_save = Speichern
+a2034_apply = Übernehmen
+a2034_abort = Abbrechen
+a2034_close = Schließen
+a2034_accept = übernehmen
+a2034_open= öffnen
+a2034_remove = entfernen
+a2034_copiedname = _Kopie
+a2034_yes = ja
+a2034_no = nein
+a2034_all = alle
+a2034_details = Details
+a2034_statusfunc = Funktionen
+a2034_setstatus = Status ändern
+a2034_showhide = anzeigen/ausblenden
+a2034_showbox = anzeigen/ausblenden
+
+a2034_notice = Hinweis
+a2034_error = Es ist ein Fehler aufgetreten!
+a2034_settings_saved = Die Einstellungen wurden gespeichert
+a2034_entry_saved = Eintrag gespeichert
+a2034_entry_deleted = Eintrag gelöscht
+a2034_entry_used = Eintrag ist einem anderen Datensatz zugeordnet.
+a2034_entry_exists = Ein Eintrag mit dieser Bezeichnung/Kennung existiert bereits.
+a2034_entry_emptyfields = Es wurden nicht alle Pflichtfelder ausgefüllt.
+a2034_entry_emptyfield = Ein zusätzlich benötigtes Feld wurde nicht ausgefüllt
+a2034_entry_badchars = Es wurden unzulässige Zeichen eingegeben
+a2034_error_saved = Fehler beim Speichern
+a2034_error_deleted = Fehler beim Löschen
+a2034_error_setstatus = Fehler beim Statusändern
+a2034_error_setstatus_info = Hinweis: Status wegen bestehender Zuweisung nicht geändert!
+a2034_error_noentrys = Es liegen bisher keine Einträge vor. Bitte erstellen Sie Ihren ersten Eintrag.
+
+a2034_templates_imported = Templatearchiv erfolgreich importiert
+a2034_templates_exported = Templatearchiv erfolgreich exportiert
+a2034_error_templates_notimported = Das Templatearchiv konnte nicht importiert werden.
+a2034_error_templates_notimported_file_missing = Das Templatearchiv konnte nicht importiert werden, da mindestens eine Datei (template.php, template.json, definition.json) fehlt.
+a2034_error_templates_import_limits = Das Templatearchiv wurde nicht importiert: Es überschreitet die Grenzen (höchstens 20 MB entpackt, 200 Dateien) oder enthält ungültige Pfade.
+a2034_import_limits = Grenzen: höchstens 20 MB (entpackt) und 200 Dateien. Berücksichtigt werden nur template.json, definition.json, contentsettings.json und contentsettings.global.json, andere Dateien im Archiv werden ignoriert.
+a2034_import_info_head = Informationen zur Struktur des Importarchives
+a2034_import_info_zip = Die Importdatei muss als ZIP-Archiv vorliegen.
+a2034_import_info_intro = Um den Import korrekt durchführen zu können, wird folgende Struktur der zu importierenden Templates erwartet:
+a2034_import_info_folder = Jedes Template befindet sich in einem eigenen Ordner (z.B. template_1)
+a2034_import_info_files = Im Templateordner müssen sich folgende Dateien befinden:
+a2034_import_info_definition = definition.json = enthält die Definition der Layoutvorschau (Spaltenanzahl/-breiten sowie die CSS-Klasse der Vorlage)
+a2034_import_info_template = template.json = enthält die allgemeinen Definitionen des Templates (Titel, Kurzbeschreibung & Priorität)
+a2034_import_info_optional = OPTIONAL:
+a2034_import_info_cs = contentsettings.json = enthält die Definition der individuellen Template-Einstellungen
+a2034_import_info_example = Beispiel herunterladen ...
+a2034_import_info_note = <strong>Hinweis:</strong> Beim Import werden <strong>keine</strong> vorhandenen Templates überschrieben.
+a2034_error_templates_fileerror = Beim Übertragen des Templatearchives trat ein Fehler auf.
+a2034_error_templates_notexported = Das Templatearchiv konnte nicht exportiert werden.
+
+
+gridblockcontentsettings_default_option = (Standardwert)

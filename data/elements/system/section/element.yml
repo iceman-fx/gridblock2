@@ -1,0 +1,9 @@
+# System-Element (feste Gruppe "Layout", nicht änderbar) - kein zwingend benötigtes System-Element
+# (Spalten rendert seine eigene Box unabhängig davon), daher hier abschaltbar.
+
+label: Abschnitt (Sektion)
+icon: rex-icon fa-object-group
+description: Container für beliebige Inhalte mit Definition von Hintergrundfarben, Abständen, etc.
+
+# offline = Sektion wird im "Element hinzufügen"-Menü nicht mehr angeboten (fehlender Schlüssel = online)
+status: online

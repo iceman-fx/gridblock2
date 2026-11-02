@@ -1,0 +1,7 @@
+# System-Element, zwingend fuer den Gridblock-Baum benötigt (feste Gruppe "Layout", nicht änderbar)
+# Ausgabedateien (columnsrow.php = Zeilen-Wrapper, column.php = einzelne Spalte), da eine Spalten-
+# Zeile aus einem Wrapper + N Spalten besteht
+
+label: Spalten
+icon: rex-icon fa-columns
+description: Inhalte in mehrere Spalten aufteilen und gruppieren

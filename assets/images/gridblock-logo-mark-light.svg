@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Gridblock Logo">
+  <!-- Motiv: Sektion (grün, oben, volle Breite) enthält Spalten (blau, unten, zwei Module nebeneinander) -
+       spiegelt direkt Gridblock 2.0s Kernelemente + Farbcodierung wider (siehe gb-builder.css: Sektion/
+       Spalten grün #5bb585, Module blau #5391cc), kein generisches Raster-Icon. -->
+  <rect x="12" y="12" width="104" height="104" rx="22" fill="#eef7f1"/>
+  <rect x="28" y="28" width="72" height="32" rx="8" fill="#5bb585"/>
+  <rect x="28" y="68" width="32" height="32" rx="8" fill="#5391cc"/>
+  <rect x="68" y="68" width="32" height="32" rx="8" fill="#4a80b8"/>
+</svg>

@@ -1,0 +1,163 @@
+<?php
+/*
+	Redaxo-Addon Gridblock²
+	Verwaltung: AJAX Loader - Template-Liste
+	v1.0
+	by Falko Müller @ 2026 (based gridblock 1.x)
+*/
+
+/** RexStan: Vars vom Check ausschließen */
+/** @var rex_addon $this */
+/** @var array $config */
+/** @var string $func */
+/** @var string $page */
+/** @var string $gbCsrfUrl */
+/** @var string $subpage */
+
+
+//Variablen deklarieren
+$page = (string) preg_replace('#[^A-Za-z0-9_/\-]#', '', rex_request('page', 'string'));
+$subpage = "";																						//ggf. manuell setzen
+$subpage2 = rex_be_controller::getCurrentPagePart(3);												//2. Unterebene = dritter Teil des page-Parameters
+	$subpage2 = (!empty($subpage2)) ? preg_replace("/.*-([0-9])$/i", "$1", $subpage2) : '';			//Auslesen der ClangID
+
+$sbeg = trim(urldecode(rex_request('sbeg')));
+$id = rex_request('id', 'int');
+
+$order = (strtolower(rex_request('order')) == 'desc') ? 'DESC' : 'ASC';
+
+$limStart = rex_request('limStart', 'int');
+
+
+//Sessionwerte zurücksetzen
+$_SESSION['as_sbeg_gridtemplatelist'] = $_SESSION['as_id_gridtemplatelist'] = "";
+
+
+//AJAX begin
+echo '<!-- ###AJAX### -->';
+
+
+//SQL erstellen und Filterung berücksichtigen
+$sql = "SELECT id, prio, title, description, columns, preview, status FROM ".rex::getTable('2034_gridtemplates');
+$sql_where = " WHERE 1";
+
+
+if (!empty($sbeg)):
+	$_SESSION['as_sbeg_gridtemplatelist'] = $sbeg;
+	$sql_where .= " AND (
+					BINARY LOWER(title) like LOWER('%".rex_gridblock2_helper::maskSql($sbeg)."%')
+					OR BINARY LOWER(description) like LOWER('%".rex_gridblock2_helper::maskSql($sbeg)."%')
+					)";
+endif;
+
+
+//Sortierung
+$sql_where .= " ORDER BY prio ".$order.", columns ASC, title ASC, id ASC";
+
+
+//Limit
+$limStart = ($limStart > 0) ? $limStart : 0;
+$limCount = 25;
+$sql_limit = " LIMIT ".($limStart * $limCount).",".$limCount;
+
+
+//SQL zwischenspeichern
+//$_SESSION['as_sql_gridblock'] = $sql.$sql_where;
+
+
+//Ergebnisse nachladen
+$db = rex_sql::factory();
+$db->setQuery($sql.$sql_where.$sql_limit);
+$addPath = "index.php?page=".$page;
+
+
+            if ($db->getRows() > 0):
+                //Liste ausgeben
+                for ($i=0; $i < $db->getRows(); $i++):
+					$eid = intval($db->getValue('id'));
+					$editPath = $addPath.'&amp;func=update&amp;id='.$eid;
+						
+					$status = ($db->getValue('status') == "checked") ? 'online' : 'offline';
+
+					$prio = (int) $db->getValue('prio');
+					$title = rex_escape(rex_gridblock2_helper::textOnly($db->getValue('title'), true));
+					$desc = rex_escape(rex_gridblock2_helper::textOnly($db->getValue('description'), true));
+					$columns = (int) $db->getValue('columns');
+					$preview = $db->getValue('preview');
+						$preview = (!empty($preview)) ? json_decode($preview, TRUE) : '';
+						
+					$preview = rex_gridblock2_helper::generatePreview($preview, $eid, $columns, $title, $desc);
+					
+					$dbu = rex_sql::factory();
+					$dbu->setQuery("SELECT id FROM ".rex::getTable('article_slice')." WHERE value17 like '%selectedTemplate\":\"".$eid."\"%'");
+					$inuse = ($dbu->getRows() > 0) ? '<i class="rex-icon rex-icon-active-true"></i> '.$this->i18n('a2034_yes') : '<i class="rex-icon rex-icon-active-false"></i> '.$this->i18n('a2034_no');;
+						
+					
+					//Ausgabe
+                    ?>
+                        
+                    <tr id="entry<?php echo $eid; ?>">
+                        <td class="rex-table-icon"><a href="<?php echo $editPath; ?>" title="<?php echo $this->i18n('a2034_edit'); ?>"><i class="rex-icon rex-icon-article"></i></a></td>
+                        <td class="rex-table-id"><?php echo $eid; ?></td>
+                        <td data-title="<?php echo $this->i18n('a2034_bas_list_name'); ?>"><a href="<?php echo $editPath; ?>"><?php echo $title; ?></a></td>
+                        <td data-title="<?php echo $this->i18n('a2034_bas_list_columns'); ?>"><?php echo $columns; ?></td>
+                        <td data-title="<?php echo $this->i18n('a2034_bas_list_preview'); ?>"><?php echo $preview; ?></td>
+                        <td data-title="<?php echo $this->i18n('a2034_bas_list_inuse'); ?>"><?php echo $inuse; ?></td>
+                        <td data-title="<?php echo $this->i18n('a2034_bas_list_priority'); ?>"><?php echo $prio; ?></td>
+						
+                        <td class="rex-table-action" style="white-space: nowrap;">
+							<div class="btn-group btn-group-xs" style="display: inline-flex;">
+								<a href="<?php echo $editPath; ?>" class="btn btn-edit" title="<?php echo $this->i18n('a2034_edit'); ?>"><i class="rex-icon rex-icon-edit"></i> <?php echo $this->i18n('a2034_edit'); ?></a>
+								<a href="<?php echo $addPath; ?>&func=delete&id=<?php echo $eid; ?>&<?php echo $gbCsrfUrl; ?>" data-confirm="<?php echo $this->i18n('a2034_delete'); ?> ?" class="btn btn-delete" title="<?php echo $this->i18n('a2034_delete'); ?>"><i class="rex-icon rex-icon-delete"></i> <?php echo $this->i18n('a2034_delete'); ?></a>
+								<a href="<?php echo $addPath; ?>&func=duplicate&id=<?php echo $eid; ?>&<?php echo $gbCsrfUrl; ?>" class="btn btn-default" title="<?php echo $this->i18n('a2034_duplicate'); ?>"><i class="rex-icon rex-icon-duplicate"></i></a>
+							</div>
+							
+							<div class="btn-group btn-group-xs">
+								<a href="<?php echo $addPath; ?>&func=status&id=<?php echo $eid; ?>&<?php echo $gbCsrfUrl; ?>" class="btn btn-default rex-<?php echo $status; ?>" title="<?php echo $this->i18n('a2034_std_status'); ?>"><?php echo ($status == "online") ? $this->i18n('a2034_online') : $this->i18n('a2034_offline'); ?></a>
+							</div>
+						</td>
+						
+						<!--
+                        <td class="rex-table-action"><a href="<?php echo $editPath; ?>"><i class="rex-icon rex-icon-edit"></i> <?php echo $this->i18n('a2034_edit'); ?></a></td>
+                        <td class="rex-table-action"><a href="<?php echo $addPath; ?>&func=duplicate&id=<?php echo $eid; ?>&<?php echo $gbCsrfUrl; ?>"><i class="rex-icon rex-icon-duplicate"></i> <?php echo $this->i18n('a2034_duplicate'); ?></a></td>
+                        <td class="rex-table-action"><a href="<?php echo $addPath; ?>&func=delete&id=<?php echo $eid; ?>&<?php echo $gbCsrfUrl; ?>" data-confirm="<?php echo $this->i18n('a2034_delete'); ?> ?"><i class="rex-icon rex-icon-delete"></i> <?php echo $this->i18n('a2034_delete'); ?></a></td>
+                        <td class="rex-table-action"><a href="<?php echo $addPath; ?>&func=status&id=<?php echo $eid; ?>&<?php echo $gbCsrfUrl; ?>" class="rex-<?php echo $status; ?>"><i class="rex-icon rex-icon-<?php echo $status; ?>"></i> <?php echo ($status == "online") ? $this->i18n('a2034_online') : $this->i18n('a2034_offline'); ?></a></td>
+						-->
+                    </tr>
+
+                    <?php
+					$db->next();
+                endfor;
+
+
+				//Seitenschaltung generieren
+				$dbl = rex_sql::factory();
+				$dbl->setQuery($sql.$sql_where);
+					$maxEntry = $dbl->getRows();
+					$maxSite = ceil($maxEntry / $limCount);
+
+				if ($dbl->getRows() > $limCount):
+					echo '<tr><td colspan="10" align="center"><ul class="addon_list-pagination pagination">';
+					
+					for ($i=0; $i<$maxSite; $i++):
+						$sel = ($i == $limStart) ? 'ajaxNavSel' : '';
+						$selLI = ($i == $limStart) ? 'active' : '';
+						echo '<li class="rex-page '.$selLI.'"><span class="ajaxNav '.$sel.'" data-navsite="'.$i.'">'.($i+1).'</span></li>';
+					endfor;
+					
+					echo '</ul></td></tr>';
+				endif;
+				
+            else:
+                ?>
+                
+                    <tr>
+                        <td colspan="10" align="center">- <?php echo (!empty($sbeg)) ? $this->i18n('a2034_search_notfound') : $this->i18n('a2034_error_noentrys'); ?>	-</td>
+                    </tr>
+                
+                <?php
+            endif;
+
+//AJAX end
+echo '<!-- ###/AJAX### -->';
+?>

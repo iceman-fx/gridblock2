@@ -1,0 +1,26 @@
+/* Hilfsklassen der System-Elemente (Abstände und Hintergrundbild). Wird an die generierte Grid-CSS angehängt (Vorschau und optional Frontend). */
+
+.gb-pt-s { padding-top: 12px; }
+.gb-pt-m { padding-top: 24px; }
+.gb-pt-l { padding-top: 48px; }
+.gb-pt-xl { padding-top: 80px; }
+
+.gb-pb-s { padding-bottom: 12px; }
+.gb-pb-m { padding-bottom: 24px; }
+.gb-pb-l { padding-bottom: 48px; }
+.gb-pb-xl { padding-bottom: 80px; }
+
+.gb-mt-s { margin-top: 12px; }
+.gb-mt-m { margin-top: 24px; }
+.gb-mt-l { margin-top: 48px; }
+.gb-mt-xl { margin-top: 80px; }
+
+.gb-mb-s { margin-bottom: 12px; }
+.gb-mb-m { margin-bottom: 24px; }
+.gb-mb-l { margin-bottom: 48px; }
+.gb-mb-xl { margin-bottom: 80px; }
+
+.gb-bg-image { background-repeat: no-repeat; background-size: cover; }
+.gb-bgpos-center { background-position: center; }
+.gb-bgpos-top { background-position: center top; }
+.gb-bgpos-bottom { background-position: center bottom; }

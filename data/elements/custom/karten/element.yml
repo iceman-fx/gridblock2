@@ -1,5 +1,4 @@
-label: Karten-Gruppe
+label: Karten
 icon: rex-icon fa-th-large
-group: demo
-description: Gruppe aus Info-Karten mit Titel, Text und Link
-demoOnly: true
+group: special
+description: Karten mit Bild, Label, Titel, Text und Link - in fünf Darstellungen

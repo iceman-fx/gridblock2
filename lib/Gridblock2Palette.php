@@ -224,6 +224,20 @@ class Gridblock2Palette
 		return self::$cache[$cacheKey];
 	}
 
+	//Fuer Felder mit "palette": "colors" (Rahmen, Trenner u. a.): jeder Eintrag liefert seine Farbe statt der Klasse; Eintraege ohne Farbe entfallen
+	public static function colorEntries(array $entries): array
+	{	$result = [];
+		foreach ($entries as $key => $entry) {
+			if ((string) $entry['bg'] === '') {
+				continue;
+			}
+			$entry['value'] = $entry['bg'];
+			$result[$key] = $entry;
+		}
+
+		return $result;
+	}
+
 	public static function findByKey(string $key): ?array
 	{	return self::getEntries()[$key] ?? null;
 	}

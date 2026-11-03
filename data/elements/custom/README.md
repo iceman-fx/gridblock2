@@ -229,6 +229,7 @@ echo Gridblock2Builder_Tree::renderRepeater('cards', $v['cards'] ?? '', $rowMark
 - `titleFallback`: Text, wenn kein Feld einen Wert liefert (Standard "Eintrag", ergibt "Eintrag 1", "Eintrag 2", ...).
 - `collapsed`: bestehende Zeilen starten eingeklappt. Neue und duplizierte Zeilen sind immer offen; ein ungültiges Pflichtfeld klappt seine Zeile beim Absenden automatisch auf.
 - `maxRows`: höchste Zeilenzahl (0 oder ohne Angabe = unbegrenzt). Ist die Grenze erreicht, sind "Hinzufügen" und "Duplizieren" gesperrt und ein Hinweis erscheint unter der Liste. Bereits vorhandene Zeilen bleiben erhalten. Die Ausgabe sollte trotzdem selbst begrenzen (z. B. `array_slice`), falls ältere Daten mehr Zeilen enthalten.
+- `minRows`: kleinste Zeilenzahl (0 oder ohne Angabe = keine Vorgabe). Fehlende Zeilen werden beim Öffnen leer ergänzt, "Entfernen" ist gesperrt, solange nur so viele Zeilen vorhanden sind.
 
 ## Dark Mode in `style.css`
 

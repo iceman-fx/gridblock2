@@ -103,6 +103,7 @@
 						<li data-topic="import-export" data-group="admin"><a href="#import-export"><i class="rex-icon fa-file-import"></i> Import &amp; Export</a></li>
 						<li data-topic="synchronizer" data-group="admin"><a href="#synchronizer"><i class="rex-icon fa-rotate"></i> Synchronizer</a></li>
 						<li data-topic="einstellungen" data-group="admin"><a href="#einstellungen"><i class="rex-icon fa-wrench"></i> Einstellungen</a></li>
+						<li data-topic="api" data-group="admin"><a href="#api"><i class="rex-icon fa-code"></i> API</a></li>
 					</ul>
 
 				</div>
@@ -603,6 +604,7 @@ font-size: clamp(24px, 4vw, 2.2rem);
 					<p>In der <code>contentsettings.json</code> bekommt ein Feld vom Typ <code>colorpicker</code> die Option <code>"palette": true</code>, zum Beispiel <code>{"key": "bgColor", "type": "colorpicker", "palette": true, "mode": "both"}</code>. Der Redakteur sieht dann ein Auswahlfeld mit Suche und Farbfeldern: "- keine Farbe -", die Projektfarben und "Individuell". "Individuell" öffnet den normalen Colorpicker. Mit <code>"mode": "both"</code> kann der Picker auch Verläufe (Standard ist nur eine Farbe). Ohne die Option oder ohne Palette bleibt es beim normalen Picker.</p>
 					<ul>
 					  <li><strong>Gespeichert</strong> wird der Rückgabewert des Eintrags (Klasse oder <code>color</code>), nicht der Key. Ändert sich eine Klasse später, behalten schon gespeicherte Inhalte die alte Klasse. Ältere Werte werden wiedererkannt, wenn sie einem Rückgabewert entsprechen (z.&nbsp;B. <code>bgCol-primary</code> zu einer Zeile mit dieser Klasse). Ein unbekannter Klassenwert erscheint oben als "Alt: ...", ein anderer Wert (Hex, Verlauf) als "Individuell". Es geht nichts verloren, solange der Redakteur nichts ändert.</li>
+					  <li><strong>Immer die Farbe statt der Klasse:</strong> Mit <code>"palette": "colors"</code> statt <code>true</code> liefert jeder Eintrag seine <code>color</code> (z.&nbsp;B. <code>var(--col-primary)</code>) und nie die Klasse. Das ist für Felder gedacht, deren Wert als echte CSS-Farbe ausgegeben wird, etwa Rahmenfarbe oder Trennerfarbe (<code>borderColorHEX</code>, <code>formDivTopColorHEX</code>): Eine Hintergrundklasse wie <code>bgCol-primary</code> wäre dort wirkungslos. Einträge ohne <code>color</code> erscheinen in solchen Feldern nicht. Bereits gespeicherte Klassenwerte, die zu einem Eintrag gehören, werden in der Auswahl wiedererkannt.</li>
 					  <li><strong>Zentral ändern:</strong> Klassen und Variablen (<code>var(--col-primary)</code>) lassen sich im CSS zentral anpassen. Ein reiner Hex-Wert wird dagegen als Kopie im Inhalt gespeichert: Ändert der Admin ihn später in der Palette, behalten schon gespeicherte Inhalte den alten Wert. Für zentrale Pflege daher Klassen oder Variablen nutzen.</li>
 					  <li><strong>Ausgabe:</strong> Die mitgelieferte Datei <code>data/elements/system/_gbOutputHelper.php</code> (Klasse <code>GbOutputKit</code>) gibt das Feld <code>bgColor</code> der Systemelemente richtig aus: Eine Klasse geht ins <code>class</code>-Attribut, ein Verlauf als <code>background-image</code> und jede andere Farbe als <code>background-color</code> in den Style. Eigene Templates oder Module, die das Feld selbst ausgeben, brauchen dieselbe Unterscheidung.</li>
 					  <li>Module, die den Farbwert in PHP weiterverarbeiten (z.&nbsp;B. Hex in RGB), kommen mit Klassen und <code>var(...)</code> nicht klar. Die Palette deshalb nur bei Feldern einschalten, deren Wert direkt in CSS oder als Klasse landet.</li>
@@ -655,17 +657,20 @@ font-size: clamp(24px, 4vw, 2.2rem);
 
 					<h3>Eigene Abstufungen ohne Zuordnung (Einstellung "Eigene Werte für den nativen Spalten-Abstand")</h3>
 
-					<p>Nur relevant ohne obige Zuordnung. Ersetzt die mitgelieferten Standardabstufungen durch eigene, eine Zeile je Abstufung:</p>
-					<pre>xs = Sehr klein = 8px
-sm = Klein = 16px
-md = Mittel = 24px
-lg = Groß = 40px
-xl = Sehr groß = 64px</pre>
-					<p>Was von den drei Angaben wo landet:</p>
+					<p>Nur relevant ohne obige Zuordnung. Ersetzt die mitgelieferten Standardabstufungen durch eigene, als JSON-Objekt mit einem Eintrag je Abstufung:</p>
+					<pre>{
+  "xs": {"label": "Sehr klein", "value": "8px"},
+  "sm": {"label": "Klein", "value": "16px"},
+  "md": {"label": "Mittel", "value": "24px"},
+  "lg": {"label": "Groß", "value": "40px"},
+  "xl": {"label": "Sehr groß", "value": "64px"}
+}</pre>
+					<p>Das ältere Zeilenformat (<code>md = Mittel = 24px</code>, eine Zeile je Abstufung) wird weiterhin gelesen. Beim JSON-Format prüft das Speichern die Eingabe: Ungültiges JSON, ein ungültiger Schlüssel oder ein fehlendes <code>label</code> bzw. <code>value</code> werden gemeldet und nichts wird gespeichert.</p>
+					<p>Was von den Angaben wo landet:</p>
 					<ul>
-					  <li><strong>Schlüssel</strong> - das ist der Teil, der tatsächlich im Frontend ankommt: Er wird 1:1 zur CSS-Klasse <code>gb-el-columns-gap-&lt;schlüssel&gt;</code> am Element. Dein eigenes Website-CSS muss auf genau diese Klasse reagieren, damit sich am Abstand wirklich etwas ändert.</li>
-					  <li><strong>Bezeichnung</strong> - nur die sichtbare Beschriftung im Auswahlfeld. Statt festem Text kann sie auch ein <code>rex_i18n</code>-Sprachschlüssel aus einem eigenen Sprachpaket sein - dann erscheint automatisch die Übersetzung in der jeweiligen Backend-Sprache; ohne passenden Schlüssel wird der Text unverändert angezeigt.</li>
-					  <li><strong>Wert</strong> - eine gültige CSS-<code>gap</code>-Einheit (<code>px</code>, <code>%</code>, <code>vw</code>, ...), aber <strong>nur für die Editor-Vorschau</strong> (Shadow-DOM-Annäherung im Backend). Die echte Ausgabe im Frontend hängt allein von deinem eigenen CSS ab, das auf die Schlüssel-Klasse reagiert - trägst du hier z.B. 24px ein, dein CSS für <code>.gb-el-columns-gap-md</code> setzt aber 32px, zeigt die Website 32px, nur die Vorschau im Backend würde mit 24px leicht abweichen.</li>
+					  <li><strong>Schlüssel</strong> (der Name des Eintrags, z.&nbsp;B. <code>md</code>; erlaubt: Buchstaben, Ziffern, <code>-</code> und <code>_</code>) - das ist der Teil, der tatsächlich im Frontend ankommt: Er wird 1:1 zur CSS-Klasse <code>gb-el-columns-gap-&lt;schlüssel&gt;</code> am Element. Dein eigenes Website-CSS muss auf genau diese Klasse reagieren, damit sich am Abstand wirklich etwas ändert.</li>
+					  <li><strong>Bezeichnung</strong> (<code>label</code>) - nur die sichtbare Beschriftung im Auswahlfeld. Statt festem Text kann sie auch ein <code>rex_i18n</code>-Sprachschlüssel aus einem eigenen Sprachpaket sein - dann erscheint automatisch die Übersetzung in der jeweiligen Backend-Sprache; ohne passenden Schlüssel wird der Text unverändert angezeigt.</li>
+					  <li><strong>Wert</strong> (<code>value</code>) - eine gültige CSS-<code>gap</code>-Einheit (<code>px</code>, <code>%</code>, <code>vw</code>, ...), aber <strong>nur für die Editor-Vorschau</strong> (Shadow-DOM-Annäherung im Backend). Die echte Ausgabe im Frontend hängt allein von deinem eigenen CSS ab, das auf die Schlüssel-Klasse reagiert - trägst du hier z.B. 24px ein, dein CSS für <code>.gb-el-columns-gap-md</code> setzt aber 32px, zeigt die Website 32px, nur die Vorschau im Backend würde mit 24px leicht abweichen.</li>
 					</ul>
 					</section>
 
@@ -942,7 +947,69 @@ document.addEventListener('gb2:beforeCancel', function (e) {
 					  <li><strong>Element-CSS im Frontend:</strong> bindet die gesammelte <code>style.css</code> aller Custom-Elemente automatisch im Frontend ein (Standard: aus), Details unter <a href="#builder">Der Builder</a>, "CSS der Custom-Elemente".</li>
 					  <li><strong>Contentsettings-Feld für Spalten-Abstand</strong> und <strong>Werte für nativen Spalten-Abstand:</strong> siehe <a href="#spaltenabstand">Spalten-Abstand</a>.</li>
 					</ul>
+
+					<h3 id="einstellungen-datei">Einstellungen vorgeben (install/settings.json)</h3>
+
+					<p>Für vorgefertigte Installationspakete lassen sich die Einstellungen schon bei der <strong>Erstinstallation</strong> des Addons vorgeben: Lege dafür die Datei <code>install/settings.json</code> in den Addon-Ordner (neben <code>install.sql</code>). Als Vorlage dient die mitgelieferte <code>install/settings.json.example</code>.</p>
+					<ul>
+					  <li><strong>Struktur:</strong> dieselben Schlüssel wie in den Einstellungen (z.&nbsp;B. <code>gb_builder_maxdepth</code>). Checkboxen als <code>true</code>/<code>false</code>, Listen (Module, Stylesheets, Zeilen für den Spaltenabstand) als Array, die Palette als JSON-Objekt oder als Text.</li>
+					  <li><strong>Nur bei der Erstinstallation:</strong> Die Datei wird einmal gelesen. Bei einer Neuinstallation über vorhandene Einstellungen und bei Updates bleiben die gespeicherten Werte unverändert. Später ändert man die Werte wie gewohnt unter "Einstellungen".</li>
+					  <li><strong>Prüfung:</strong> Unbekannte Schlüssel, ungültige Werte und eine fehlerhafte Palette werden ignoriert. Die Hinweise stehen im REDAXO-Log. Schlüssel mit einem Unterstrich am Anfang (z.&nbsp;B. <code>_hinweis</code>) sind für Kommentare gedacht und werden übersprungen.</li>
+					  <li><strong>Einrichtungsassistent:</strong> Wurden Werte aus der Datei übernommen, gilt der Assistent auf der Übersichtsseite als erledigt.</li>
+					  <li>Bei einem Addon-Update über den Installer wird der Addon-Ordner ersetzt, die Datei ist danach nicht mehr vorhanden. Das ist unproblematisch, weil sie nur bei der Erstinstallation gebraucht wird.</li>
+					</ul>
 					</section>
+
+					<section class="gb-help-topic" id="api">
+					<h2>API für Templates und Module</h2>
+
+					<p>Diese Methoden und Hooks sind für die Nutzung in Templates, Modulen und anderen Addons gedacht. Alles andere (die Klassen <code>Gridblock2Builder_*</code>, <code>Gridblock2Palette</code> und die internen <code>rex_api</code>-Aufrufe des Builders) ist intern und kann sich ändern.</p>
+
+					<h3>Projektfarben</h3>
+					<p>Liefern die Palette aus den Einstellungen (siehe <a href="#projektfarben">Projektfarben</a>), für den aktuellen Artikel und die aktuelle Domain, also auch mit Domain-Palette und dem Extension-Point <code>GRIDBLOCK2_PALETTE</code>.</p>
+					<ul>
+					  <li><code>rex_gridblock2::getPaletteColors(): array</code> - alle Farben, Schlüssel ist der Key der Palette.</li>
+					  <li><code>rex_gridblock2::getPaletteColor(string $key): ?array</code> - eine Farbe oder <code>null</code>, wenn es den Key nicht gibt.</li>
+					</ul>
+					<p>Jeder Eintrag hat dieselben Felder, nicht angegebene sind ein leerer Text:</p>
+					<pre>[
+  'key'              =&gt; 'primary',
+  'label'            =&gt; 'Primärfarbe',
+  'class'            =&gt; 'bgCol-primary',       // ohne Punkt
+  'color'            =&gt; 'var(--col-primary)',  // Variable oder Farbwert
+  'text_color'       =&gt; '#ffffff',
+  'hover_color'      =&gt; '',
+  'hover_text_color' =&gt; '',
+]</pre>
+					<p>Beispiel im Template: Die Projektfarben als CSS-Variablen ausgeben oder die Textfarbe zu einer Hintergrundfarbe verwenden:</p>
+					<pre>&lt;?php
+$primary = rex_gridblock2::getPaletteColor('primary');
+if ($primary !== null) {
+    echo '&lt;meta name="theme-color" content="'.rex_escape($primary['color']).'"&gt;';
+}</pre>
+					<p>Enthält <code>color</code> eine CSS-Variable, lässt sie sich in PHP nicht in einen Hex-Wert umrechnen. Dafür eignen sich nur Einträge mit festem Farbwert.</p>
+
+					<h3>CSS für die manuelle Einbindung</h3>
+					<p>Im Frontend bindet Gridblock² das generierte CSS automatisch ein, wenn die Einstellungen "Natives Grid-CSS im Frontend" bzw. "Element-CSS im Frontend" aktiv sind. Wer es selbst einbinden will (eigene Stelle im <code>&lt;head&gt;</code>, <code>preload</code>, eigener Asset-Ablauf), schaltet die jeweilige Einstellung aus und holt sich die URL:</p>
+					<ul>
+					  <li><code>rex_gridblock2::getNativeGridCssUrl(): string</code> - das native Grid-CSS (Spalten-Abstände).</li>
+					  <li><code>rex_gridblock2::getElementsCssUrl(): string</code> - das gesammelte CSS aller Custom-Elemente (<code>style.css</code>).</li>
+					</ul>
+					<p>Beide liefern einen Pfad ab Webroot mit Versionsparameter (<code>/assets/addons/gridblock2/css/...?v=...</code>) und erzeugen die Datei bei Bedarf neu. Sie liefern die URL unabhängig von den beiden Einstellungen. Ist die Einstellung aktiv und du gibst den Link zusätzlich selbst aus, steht er zweimal im Quelltext.</p>
+					<pre>&lt;?php
+echo '&lt;link rel="stylesheet" href="'.rex_escape(rex_gridblock2::getNativeGridCssUrl()).'"&gt;';
+echo '&lt;link rel="stylesheet" href="'.rex_escape(rex_gridblock2::getElementsCssUrl()).'"&gt;';</pre>
+
+					<h3>Weitere öffentliche Stellen</h3>
+					<ul>
+					  <li><strong>Kontext:</strong> <code>rex_gridblock2::isBuilderEdit()</code>, <code>isBuilderPreview()</code> und <code>isBackend()</code> - Module können damit in der Builder-Vorschau anders rendern als im Frontend (siehe <a href="#modul">Modul &amp; Platzhalter</a>).</li>
+					  <li><strong>Einstellungen:</strong> <code>rex_gridblock2::getConfig($key = null)</code> liest eine Einstellung oder alle.</li>
+					  <li><strong>Ausgabe-Helfer für Contentsettings:</strong> <code>rex_gridblock2_helper::getSectionClasses/-Styles/-Data</code>, <code>getColumnClasses/-Styles/-Data</code> und <code>getTemplateClasses/-Styles/-Data</code> (siehe <a href="#contentsettings">Contentsettings</a>).</li>
+					  <li><strong>Extension-Points:</strong> <code>GRIDBLOCK2_PALETTE</code> (siehe <a href="#projektfarben">Projektfarben</a>) und <code>GRIDBLOCK2_PREVIEW_CSS</code> (siehe <a href="#vorschau">Vorschau-Technik</a>).</li>
+					  <li><strong>JavaScript-Events im Builder:</strong> <code>gb2:beforeEdit</code>, <code>gb2:afterOpen</code>, <code>gb2:beforeApply</code>, <code>gb2:afterApply</code>, <code>gb2:beforeCancel</code>, <code>gb2:afterCancel</code>, <code>gb2:afterRestore</code> (siehe <a href="#edit-events">Events für Tools</a>).</li>
+					</ul>
+					</section>
+
 
 
 					<p>&nbsp;</p>

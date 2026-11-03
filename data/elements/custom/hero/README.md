@@ -47,7 +47,7 @@ Die Bereiche "Pluspunkte" und "Position und Ausrichtung des Textes" sind beim Ö
 
 **Farbfelder mit Projektfarben:** Sind Projektfarben gepflegt, hat jedes Farbfeld (Überschrift, Hervorhebung, Text, Abdunklung, Kartenhintergrund, Kartentext) ein Auswahlfeld mit den Projektfarben, "- keine Farbe -" und "Individuell" (öffnet den Colorpicker). Je Feld wird das passende Feld des Eintrags genutzt: Überschrift, Hervorhebung, Text, Abdunklung und Kartenhintergrund nehmen `color`, der Kartentext `text_color`. Klassen spielen bei diesen Feldern keine Rolle. Gespeichert wird der Key des Eintrags (`@key`), die Farbe wird erst bei der Ausgabe eingesetzt, eine Änderung der Palette wirkt also auf alle Heros. Schon gespeicherte freie Farben bleiben als "Individuell" erhalten.
 
-Die Reihenfolge der Felder entspricht der Ausgabe (Überschrift, Text, Buttons, Pluspunkte; die Pluspunkte können über die Position auch vor die Überschrift wandern).
+Die Reihenfolge der Felder entspricht der Ausgabe (Überschrift, Text, Buttons, Pluspunkte; die Pluspunkte können über die Position auch zwischen Text und Buttons oder vor die Überschrift wandern).
 
 | Feld | Wirkung |
 |---|---|
@@ -62,7 +62,8 @@ Die Reihenfolge der Felder entspricht der Ausgabe (Überschrift, Text, Buttons, 
 | Hover-Effekt der Buttons | "- keine -" (Standard-Hover) oder einer der Effekte des CTA-Elements (Vergrößern, Pulsieren, Hüpfen, Gummiband, Schweben, Füllung von links, Glanzstreifen, Welle, Unterstreichung) |
 | Kurze Pluspunkte | eine pro Zeile, erscheinen unter den Buttons (oder über der Überschrift, siehe Position) |
 | Darstellung der Pluspunkte | "Mit Häkchen oder Icon" (Standard) oder "Nur Text, durch Punkte getrennt" (ohne Häkchen/Icon, Trennzeichen • in der Hervorhebungsfarbe) |
-| Position der Pluspunkte | "Unter den Buttons" (Standard) oder "Über der Überschrift" als Dachzeile (mit etwas Abstand zur Überschrift) |
+| Position der Pluspunkte | "Unter den Buttons" (Standard), "Zwischen Text und Buttons" oder "Über der Überschrift" als Dachzeile (mit etwas Abstand zur Überschrift) |
+| Anordnung der Pluspunkte | "Nebeneinander" (Standard, umbrechend) oder "Untereinander" als Liste. Nur bei "Mit Häkchen oder Icon" |
 | Icon der Pluspunkte | optional, ein Icon für alle Pluspunkte (Icon-Auswahl wie bei den Buttons). Leer = Häkchen. Nur bei "Mit Häkchen oder Icon" |
 | Position des Textblocks | neun Positionen: Oben, Mitte oder Unten jeweils links, mitte oder rechts (ein Auswahlfeld). Die vertikale Position (oben, unten) wirkt nur bei "Vollflächig", bei "Zentriert" zählt nur die horizontale. Ältere Werte (links, Mitte, rechts) bleiben gültig und entsprechen "Mitte links", "Mitte" und "Mitte rechts" |
 | Textausrichtung | links, Mitte oder rechts (nur "Zentriert" und "Vollflächig") |

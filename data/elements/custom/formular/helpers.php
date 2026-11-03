@@ -129,6 +129,10 @@ if (!class_exists('GbFormKit')) {
 					}
 				}
 
+				if ($type === 'date') {
+					$field['datemode'] = in_array((string) ($row['datemode'] ?? ''), ['week', 'month'], true) ? (string) $row['datemode'] : 'date';
+				}
+
 				if ($type === 'file') {
 					$exts = [];
 					foreach (preg_split('/[\s,;]+/', strtolower((string) ($row['fexts'] ?? ''))) ?: [] as $ext) {
@@ -313,7 +317,7 @@ if (!class_exists('GbFormKit')) {
 				case 'date':
 				case 'time':
 					if ($field['type'] !== 'text') {
-						$attributes['type'] = $field['type'];
+						$attributes['type'] = ($field['type'] === 'date') ? $field['datemode'] : $field['type'];
 					}
 					$yform->setValueField('text', [$name, $label, '', '1', $attributes ? json_encode($attributes) : '', $notice]);
 					break;
@@ -552,8 +556,15 @@ if (!class_exists('GbFormKit')) {
 			if ($field['type'] === 'checkbox') {
 				return $field['checkvalue'];
 			}
-			if ($field['type'] === 'date' && preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value, $m)) {
+			$dateMode = ($field['type'] === 'date') ? ($field['datemode'] ?? 'date') : '';
+			if ($dateMode === 'date' && preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value, $m)) {
 				return $m[3].'.'.$m[2].'.'.$m[1];
+			}
+			if ($dateMode === 'week' && preg_match('/^(\d{4})-W(\d{2})$/', $value, $m)) {
+				return 'KW '.$m[2].' / '.$m[1];
+			}
+			if ($dateMode === 'month' && preg_match('/^(\d{4})-(\d{2})$/', $value, $m)) {
+				return $m[2].'/'.$m[1];
 			}
 
 			return $value;

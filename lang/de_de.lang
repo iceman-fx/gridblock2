@@ -95,7 +95,7 @@ a2034_wizard_step_gap_question = Soll der Spaltenabstand über die native Auswah
 a2034_wizard_step_gap_mode_label = Modus für Spaltenabstand
 a2034_wizard_step_gap_native = Native Auswahl nutzen
 a2034_wizard_step_gap_native_info = Native Spaltenabstände
-a2034_wizard_step_gap_native_format_info = Format je Zeile: Schlüssel = Bezeichnung = Wert (z.B. "md = Mittel = 24px")
+a2034_wizard_step_gap_native_format_info = Format: JSON-Objekt, je Abstufung ein Eintrag mit Bezeichnung (label) und Wert (value), z.B. {"md": {"label": "Mittel", "value": "24px"}}. Das ältere Zeilenformat (schlüssel = Bezeichnung = Wert) wird weiterhin gelesen.
 a2034_wizard_step_gap_cs = Contentsettings-Feld zuordnen
 a2034_wizard_step_gap_cs_info = Auswahl des Contentsettings-Feldes, welches in Ihrem Gridblock 1.x-Projekt für die Spaltenaufteilung bisher genutzt wurde.
 a2034_wizard_step_preview_head = Live-Vorschau
@@ -246,6 +246,7 @@ a2034_config_gb_builder_fullscreen_head = Vollbild-Modus
 a2034_config_gb_builder_draghandle_info = Drag&Drop aktivieren
 a2034_config_gb_builder_columns_quickswitch_info = Schnellumschalter für Spalten-Aufteilung anzeigen
 a2034_config_gb_builder_nested_addbutton_info = "Element hinzufügen"-Button auch in Sektion/Spalten anzeigen
+a2034_config_gb_builder_between_addbutton_info = Hinzufügen-Button zwischen den Elementen bei aktiven Layouthilfen anzeigen
 a2034_config_gb_builder_offlinetoggle_info = Online/Offline aktivieren
 a2034_config_gb_builder_copypaste_info = Kopieren/Einfügen aktivieren
 a2034_config_gb_builder_hidelabel_info = Elementlabel ausblenden
@@ -274,6 +275,10 @@ a2034_palette_field_bg = Hauptfarbe (color)
 a2034_palette_field_fg = Textfarbe (text_color)
 a2034_palette_field_hbg = Hover-Hauptfarbe (hover_color)
 a2034_palette_field_hfg = Hover-Textfarbe (hover_text_color)
+a2034_gap_err_head = Die Werte für den nativen Spalten-Abstand sind fehlerhaft, es wurde nichts gespeichert.
+a2034_gap_err_json = Das JSON ist ungültig. Bitte Klammern, Kommas und Anführungszeichen prüfen. Erwartet wird ein Objekt der Form {"md": {"label": "Mittel", "value": "24px"}}.
+a2034_gap_err_key = Eintrag "{0}": Der Schlüssel ist ungültig (erlaubt: Buchstaben, Ziffern, - und _, höchstens 40 Zeichen).
+a2034_gap_err_entry = Eintrag "{0}": Erwartet wird ein Objekt mit Bezeichnung (label) und Wert (value, ohne { } < > ;).
 a2034_palette_err_head = Die Projektfarben sind fehlerhaft, es wurde nichts gespeichert.
 a2034_palette_err_domain = Domain {0}:
 a2034_palette_err_json = Das JSON ist ungültig. Bitte Klammern, Kommas und Anführungszeichen prüfen. Erwartet wird ein Objekt der Form {"key": {"label": "Bezeichnung", "color": "..."}}.
@@ -294,7 +299,7 @@ a2034_config_gb_builder_gap_cs_field_scope_columns = Spalten-Einstellungen
 a2034_config_gb_builder_gap_cs_field_scope_section = Sektion-Einstellungen
 a2034_config_gb_builder_gap_cs_field_info = Auswahl des gewünschten Contentsettings-Feldes für den Spalten-Abstand, um dieses anstatt des nativen Spalten-Abstand zu nutzen.
 a2034_config_gb_builder_gap_native_fallback = Werte für nativen Spalten-Abstand
-a2034_config_gb_builder_gap_native_fallback_info = Definition der nativen Spalten-Abstände, falls kein Contentsettings-Feld genutzt werden soll.<br><b>Format (zeilenweise):</b> schlüssel = Bezeichnung = Wert (z.B. "md = Mittel = 24px")
+a2034_config_gb_builder_gap_native_fallback_info = Definition der nativen Spalten-Abstände, falls kein Contentsettings-Feld genutzt werden soll.<br><b>Format (JSON):</b> je Abstufung ein Eintrag mit <code>label</code> und <code>value</code>, z.B. <code>{"md": {"label": "Mittel", "value": "24px"}}</code>. Das ältere Zeilenformat (<code>md = Mittel = 24px</code>) wird weiterhin gelesen.
 
 
 # Modulausgabe

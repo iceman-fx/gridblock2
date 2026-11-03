@@ -1,0 +1,33 @@
+{
+	"_hinweis": "Beispiel. Zum Verwenden in settings.json umbenennen und nur die Schluessel behalten, die vorgegeben werden sollen. Die Datei wird einmalig bei der ERSTINSTALLATION des Addons gelesen (nicht bei einer Neuinstallation ueber vorhandene Einstellungen). Schluessel mit Unterstrich am Anfang werden ignoriert. Es gelten dieselben Schluessel wie in den Einstellungen.",
+
+	"modulesmode": "allow",
+	"modules": [3, 7],
+
+	"gb_builder_preview_mode": "shadowdom",
+	"gb_builder_content_stylesheets": ["/assets/css/style.css"],
+	"gb_builder_content_scripts": [],
+
+	"gb_builder_gap_mode": "native",
+	"gb_builder_gap_native_fallback": {
+		"sm": {"label": "Klein", "value": "8px"},
+		"md": {"label": "Mittel", "value": "24px"},
+		"lg": {"label": "Gross", "value": "48px"}
+	},
+	"gb_builder_native_grid_css_frontend": true,
+
+	"gb_builder_maxdepth": 3,
+	"gb_builder_modalstyle": "sidebar",
+	"gb_builder_live_preview": true,
+	"gb_builder_between_addbutton": true,
+	"gb_builder_hidelabel": false,
+
+	"gb_builder_palette": {
+		"primary": {
+			"label": "Primaerfarbe",
+			"class": ".bgCol-primary",
+			"color": "var(--col-primary)",
+			"text_color": "#ffffff"
+		}
+	}
+}

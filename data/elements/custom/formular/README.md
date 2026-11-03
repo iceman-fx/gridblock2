@@ -42,7 +42,7 @@ Titelzeile zeigt die Bezeichnung des Feldes.
 | Textfeld, E-Mail, Telefon, Website | einzeilige Eingabe (E-Mail und Website werden zusätzlich auf das Format geprüft) |
 | Mehrzeiliger Text | Textarea |
 | Zahl | Zahlenfeld (Format wird geprüft) |
-| Datum, Uhrzeit | Auswahl über den Browser |
+| Datum, Uhrzeit | Auswahl über den Browser. Beim Datum wählt „Datumsart“ zwischen Tag, Kalenderwoche und Monat (in der E-Mail: `TT.MM.JJJJ`, `KW 45 / 2026`, `11/2026`) |
 | Auswahlliste | Select mit Leer-Option "Bitte wählen" |
 | Einzelauswahl (Radio) | Radio-Buttons |
 | Mehrfachauswahl (Checkboxen) | mehrere Checkboxen, mehrere Werte wählbar |

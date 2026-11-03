@@ -221,6 +221,50 @@ class rex_gridblock2 {
 	}
 	
 
+	/* ── Öffentliche API (siehe Onlinehilfe, Thema "API") ── */
+
+	//Alle Projektfarben als [key => [key, label, class, color, text_color, hover_color, hover_text_color]]; Felder ohne Angabe sind leer ('').
+	//Die Palette gilt für den aktuellen Artikel/die aktuelle Domain, wie in den Einstellungen bzw. über GRIDBLOCK2_PALETTE festgelegt.
+	public static function getPaletteColors(): array
+	{	$colors = [];
+		foreach (Gridblock2Palette::getEntries() as $key => $entry) {
+			$colors[(string) $key] = [
+				'key' => (string) $key,
+				'label' => (string) $entry['label'],
+				'class' => (string) $entry['class'],
+				'color' => (string) $entry['bg'],
+				'text_color' => (string) $entry['fg'],
+				'hover_color' => (string) $entry['hbg'],
+				'hover_text_color' => (string) $entry['hfg'],
+			];
+		}
+
+		return $colors;
+	}
+
+
+	//Eine Projektfarbe anhand ihres Keys (Format wie bei getPaletteColors()) oder null
+	public static function getPaletteColor(string $key): ?array
+	{	return self::getPaletteColors()[$key] ?? null;
+	}
+
+
+	//URL des gesammelten Element-CSS (style.css aller Custom-Elemente), mit Versionsparameter; wird bei Bedarf neu erzeugt
+	public static function getElementsCssUrl(): string
+	{	return Gridblock2Builder_Tree::getElementsCssUrl();
+	}
+
+
+	//URL des nativen Grid-CSS (Spalten-Abstände), mit Versionsparameter; wird bei Bedarf neu erzeugt
+	public static function getNativeGridCssUrl(): string
+	{	if (Gridblock2Builder_Tree::nativeGridCssIsOutdated()) {
+			Gridblock2Builder_Tree::writeNativeGridCssFile();
+		}
+
+		return rex_gridblock2_helper::getTimebuster(Gridblock2Builder_Tree::getNativeGridCssUrl());
+	}
+
+
 	//prüfen ob im Editmode des Gridblock (BE)
 	public static function isBackend($override = false)
 	{

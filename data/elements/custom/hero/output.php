@@ -47,7 +47,9 @@ $vtt = ($video !== '' && $layout !== 'vollflaechig') ? $val('vtt') : '';
 $vttLang = GbHeroKit::pick($val('vtt_lang'), array_keys(GbHeroKit::SUBTITLE_LANGS), 'de');
 
 $bulletText = GbHeroKit::pick($val('bullet_style'), ['icon', 'text'], 'icon') === 'text';
-$bulletTop = GbHeroKit::pick($val('bullet_pos'), ['unten', 'oben'], 'unten') === 'oben';
+$bulletPos = GbHeroKit::pick($val('bullet_pos'), ['unten', 'mitte', 'oben'], 'unten');
+$bulletTop = $bulletPos === 'oben';
+$bulletStack = !$bulletText && GbHeroKit::pick($val('bullet_layout'), ['inline', 'stack'], 'inline') === 'stack';
 $bulletIcon = $bulletText ? '' : $val('bullet_icon');
 $bullets = [];
 foreach (preg_split('/\R/', (string) ($values['bullets'] ?? '')) ?: [] as $line) {
@@ -110,7 +112,7 @@ if ($layout === 'karten') {
 			break;
 		}
 		$cardsHtml .= '<div class="gb-el-hero-card">'
-			.($cardImg !== '' ? '<img class="gb-el-hero-card-img" src="'.rex_escape(GbHeroKit::mediaUrl($cardImg)).'" alt="" decoding="async">' : '')
+			.($cardImg !== '' ? '<span class="gb-el-hero-card-media'.((strtolower(pathinfo($cardImg, PATHINFO_EXTENSION)) === 'svg') ? ' gb-el-hero-card-media-icon' : '').'"><img class="gb-el-hero-card-img" src="'.rex_escape(GbHeroKit::mediaUrl($cardImg)).'" alt="" decoding="async"></span>' : '')
 			.($cardText !== '' ? '<p>'.nl2br(GbHeroKit::bold($cardText)).'</p>' : '')
 			.'</div>';
 	}
@@ -187,7 +189,7 @@ $titleStyle = ($color('title_color') !== '') ? ' style="color:'.rex_escape($colo
 $textStyle = ($color('text_color') !== '') ? ' style="color:'.rex_escape($color('text_color')).';"' : '';
 $bulletsHtml = '';
 if ($bullets !== []) {
-	$bulletsClass = 'gb-el-hero-bullets'.($bulletText ? ' gb-el-hero-bullets-text' : '').(($bulletIcon !== '') ? ' gb-el-hero-bullets-icon' : '').($bulletTop ? ' gb-el-hero-bullets-top' : '');
+	$bulletsClass = 'gb-el-hero-bullets'.($bulletText ? ' gb-el-hero-bullets-text' : '').(($bulletIcon !== '') ? ' gb-el-hero-bullets-icon' : '').($bulletTop ? ' gb-el-hero-bullets-top' : '').($bulletStack ? ' gb-el-hero-bullets-stack' : '');
 	$bulletsHtml = '<ul class="'.$bulletsClass.'"'.$textStyle.'>';
 	foreach ($bullets as $bullet) {
 		$bulletsHtml .= '<li>'.(($bulletIcon !== '') ? '<i class="'.rex_escape($bulletIcon).'" aria-hidden="true"></i> ' : '').rex_escape($bullet).'</li>';
@@ -208,10 +210,11 @@ if ($bullets !== []) {
 			<?php if ($text !== ''): ?>
 			<p class="gb-el-hero-lead"<?php echo $textStyle; ?>><?php echo nl2br(rex_escape($text)); ?></p>
 			<?php endif; ?>
+			<?php echo ($bulletPos === 'mitte') ? $bulletsHtml : ''; ?>
 			<?php if ($buttonsHtml !== ''): ?>
 			<div class="gb-el-hero-buttons<?php echo $buttonEffect !== '' ? ' gb-el-hero-fx-'.$buttonEffect : ''; ?>"><?php echo $buttonsHtml; ?></div>
 			<?php endif; ?>
-			<?php echo $bulletTop ? '' : $bulletsHtml; ?>
+			<?php echo ($bulletPos === 'unten') ? $bulletsHtml : ''; ?>
 		</div>
 		<?php if ($layout !== 'vollflaechig' && ($mediaHtml !== '' || $cardsHtml !== '')): ?>
 		<div class="gb-el-hero-media">

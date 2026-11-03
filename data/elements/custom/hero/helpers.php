@@ -229,7 +229,7 @@ if (!class_exists('GbHeroKit')) {
 			if ($hbg !== '' || $hfg !== '') {
 				return [
 					'hbg' => $hbg !== '' ? $hbg : ($fill ? 'var(--gb-hero-btn-bg, linear-gradient(135deg, var(--gb-hero-btn-a), var(--gb-hero-btn-b)))' : 'transparent'),
-					'hfg' => $hfg !== '' ? $hfg : ($fill ? 'var(--gb-hero-btn-fg, #fff)' : 'var(--gb-hero-btn-accent)'),
+					'hfg' => $hfg !== '' ? $hfg : ($fill ? 'var(--gb-hero-btn-fg, #fff)' : (($hbg !== '' && $hbg !== 'transparent') ? (($autoSwap && $fg !== '') ? $fg : 'var(--gb-hero-btn-on)') : 'var(--gb-hero-btn-accent)')),
 					'hbd' => (!$fill && $hbg !== '' && $hbg !== 'transparent') ? $hbg : '',
 					'ring' => false,
 				];

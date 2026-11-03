@@ -919,6 +919,8 @@ class Gridblock2Builder_Tree
 
 	public const ELEMENT_PERM_KEY = 'gridblock2_elements';
 
+	public const GAP_NATIVE_EXAMPLE = "{\n  \"sm\": {\"label\": \"Klein\", \"value\": \"8px\"},\n  \"md\": {\"label\": \"Mittel\", \"value\": \"24px\"},\n  \"lg\": {\"label\": \"Groß\", \"value\": \"48px\"}\n}";
+
 	private static function isElementPermitted(string $permKey): bool
 	{	$user = rex::getUser();
 		if ($user === null) {
@@ -1288,18 +1290,67 @@ class Gridblock2Builder_Tree
 			return [];
 		}
 
-		$lines = preg_split('/\r\n|\r|\n/', (string) (rex_gridblock2::getConfig('gb_builder_gap_native_fallback') ?? '')) ?: [];
 		$options = [];
-		foreach ($lines as $line) {
+		foreach (self::parseGapNative((string) (rex_gridblock2::getConfig('gb_builder_gap_native_fallback') ?? ''))['options'] as $key => $option) {
+			$options[$key] = ['label' => (rex_i18n::hasMsg($option['label']) ? rex_i18n::msg($option['label']) : $option['label']), 'value' => $option['value']];
+		}
+
+		return $options;
+	}
+
+
+	//Werte fuer den nativen Spalten-Abstand: JSON-Objekt {"md": {"label": "Mittel", "value": "24px"}} oder (aeltere Einstellungen) zeilenweise "schluessel = Bezeichnung = Wert".
+	//Liefert ['options' => [key => [label, value]], 'errors' => [[Code, Argument], ...]]; Fehler gibt es nur beim JSON-Format.
+	public static function parseGapNative(string $text): array
+	{	$text = trim($text);
+		$options = [];
+		$errors = [];
+
+		if ($text !== '' && $text[0] === '{') {
+			$data = json_decode($text, true);
+			if (!is_array($data)) {
+				return ['options' => [], 'errors' => [['json', '']]];
+			}
+
+			foreach ($data as $key => $entry) {
+				$key = (string) $key;
+				if (!preg_match('/^[A-Za-z0-9_-]{1,40}$/', $key)) {
+					$errors[] = ['key', $key];
+					continue;
+				}
+				$label = is_array($entry) && is_string($entry['label'] ?? null) ? trim($entry['label']) : '';
+				$value = is_array($entry) && is_string($entry['value'] ?? null) ? trim($entry['value']) : '';
+				if ($label === '' || $value === '' || preg_match('/[{}<>;]/', $value)) {
+					$errors[] = ['entry', $key];
+					continue;
+				}
+				$options[$key] = ['label' => $label, 'value' => $value];
+			}
+
+			return ['options' => $options, 'errors' => $errors];
+		}
+
+		foreach (preg_split('/\r\n|\r|\n/', $text) ?: [] as $line) {
 			$line = trim($line);
 			if ($line === '' || substr_count($line, '=') < 2) {
 				continue;
 			}
 			[$key, $label, $value] = array_map('trim', explode('=', $line, 3));
-			$options[$key] = ['label' => (rex_i18n::hasMsg($label) ? rex_i18n::msg($label) : $label), 'value' => $value];
+			$options[$key] = ['label' => $label, 'value' => $value];
 		}
 
-		return $options;
+		return ['options' => $options, 'errors' => []];
+	}
+
+
+	//Fehlermeldungen (uebersetzt) zu den Werten fuer den nativen Spalten-Abstand; leer = in Ordnung
+	public static function gapNativeErrors(string $text): array
+	{	$messages = [];
+		foreach (self::parseGapNative($text)['errors'] as [$code, $argument]) {
+			$messages[] = rex_i18n::msg('a2034_gap_err_'.$code, $argument);
+		}
+
+		return $messages;
 	}
 
 	public static function getDefaultGapValue(): string

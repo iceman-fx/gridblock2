@@ -19,7 +19,7 @@ class Gridblock2Builder_VendorRepeater
 
 
 	public static function render(string $name, string|array|null $existing, string $markup, array $options = []): string
-	{	$options = array_merge(['duplicate' => true, 'offline' => true, 'sortable' => true, 'movebuttons' => false, 'collapsible' => false, 'collapsed' => false, 'titleField' => '', 'titleFallback' => 'Eintrag', 'maxRows' => 0], $options);
+	{	$options = array_merge(['duplicate' => true, 'offline' => true, 'sortable' => true, 'movebuttons' => false, 'collapsible' => false, 'collapsed' => false, 'titleField' => '', 'titleFallback' => 'Eintrag', 'maxRows' => 0, 'minRows' => 0], $options);
 
 		$items = self::decodeExisting($existing);
 		//Ausgangswert fuer das versteckte JSON-Feld: ohne ihn ist es bis zur Initialisierung des Repeater-Skripts leer,
@@ -36,6 +36,11 @@ class Gridblock2Builder_VendorRepeater
 			$firstUid = self::makeUid();
 			$rows = [['uid' => $firstUid, 'html' => self::buildRowHtml($markup, $firstUid, []), 'isNew' => true]];
 		endif;
+
+		while (count($rows) < (int) $options['minRows']):
+			$padUid = self::makeUid();
+			$rows[] = ['uid' => $padUid, 'html' => self::buildRowHtml($markup, $padUid, []), 'isNew' => true];
+		endwhile;
 
 		$emptyRowHtml = self::buildRowHtml($markup, self::UID_TOKEN, []);
 

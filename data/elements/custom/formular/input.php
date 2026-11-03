@@ -36,6 +36,7 @@ $groups = [
 	'help' => ['text', 'email', 'tel', 'url', 'textarea', 'number', 'date', 'time', 'select', 'radio', 'checkboxes', 'checkbox', 'file'],
 	'label' => ['text', 'email', 'tel', 'url', 'textarea', 'number', 'date', 'time', 'select', 'radio', 'checkboxes', 'checkbox', 'file', 'step', 'info'],
 	'file' => ['file'],
+	'datemode' => ['date'],
 ];
 $css = '.gbf-row [data-gbf-show]{display:none!important}';
 foreach ($groups as $group => $types) {
@@ -104,6 +105,10 @@ foreach ($groups as $group => $types) {
 			<div class="rex-form-group form-group">
 				<label>Art <span class="text-danger">*</span></label>
 				<select name="type" class="form-control" required>'.$typeOptions.'</select>
+			</div>
+			<div class="rex-form-group form-group" data-gbf-show="datemode">
+				<label>Datumsart</label>
+				<select name="datemode" class="form-control"><option value="date">Datum (Tag)</option><option value="week">Kalenderwoche</option><option value="month">Monat</option></select>
 			</div>
 			<div class="rex-form-group form-group" data-gbf-show="req">
 				<div class="checkbox"><label><input type="checkbox" name="required" value="checked" {{required|checked}}> Pflichtfeld</label></div>

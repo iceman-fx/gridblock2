@@ -25,6 +25,8 @@ endif;
 $form_error = 0;
 $gbPaletteErrors = [];
 $gbPaletteDraft = null;
+$gbGapErrors = [];
+$gbGapDraft = null;
 
 
 //Projektfarben vorab pruefen: bei Fehlern wird nichts gespeichert, die Eingaben bleiben im Formular
@@ -44,11 +46,20 @@ if ($func == "save" && isset($_POST['submit'])):
 	else:
 		$gbPaletteDraft = null;
 	endif;
+
+	//Werte fuer den nativen Spalten-Abstand pruefen (JSON-Format): bei Fehlern wird ebenfalls nichts gespeichert
+	$gbGapDraft = (string) rex_post('gb_builder_gap_native_fallback', 'string', '');
+	$gbGapErrors = Gridblock2Builder_Tree::gapNativeErrors($gbGapDraft);
+	if ($gbGapErrors !== []):
+		echo rex_view::warning($this->i18n('a2034_gap_err_head').'<br>'.implode('<br>', $gbGapErrors));
+	else:
+		$gbGapDraft = null;
+	endif;
 endif;
 
 
 //Formular dieser Seite verarbeiten
-if ($func == "save" && isset($_POST['submit']) && $gbPaletteErrors === []):
+if ($func == "save" && isset($_POST['submit']) && $gbPaletteErrors === [] && $gbGapErrors === []):
 
 	//Modulauswahl aufbereiten
 	$mods = rex_post('modules');
@@ -81,6 +92,7 @@ if ($func == "save" && isset($_POST['submit']) && $gbPaletteErrors === []):
 		'gb_builder_draghandle'					=> rex_post('gb_builder_draghandle'),
 		'gb_builder_columns_quickswitch'		=> rex_post('gb_builder_columns_quickswitch'),
 		'gb_builder_nested_addbutton'			=> rex_post('gb_builder_nested_addbutton'),
+		'gb_builder_between_addbutton'			=> rex_post('gb_builder_between_addbutton'),
 		'gb_builder_offlinetoggle'				=> rex_post('gb_builder_offlinetoggle'),
 		'gb_builder_copypaste'					=> rex_post('gb_builder_copypaste'),
 		'gb_builder_hidelabel'					=> rex_post('gb_builder_hidelabel'),
@@ -421,6 +433,28 @@ if (isset($config) && is_array($config) && !array_key_exists('gb_builder_preview
 									</div>
 								</dd>
 							</dl>
+
+							<dl class="rex-form-group form-group">
+								<dt></dt>
+								<dd>
+									<div class="checkbox toggle">
+										<label for="gb_builder_nested_addbutton">
+											<input type="checkbox" name="gb_builder_nested_addbutton" id="gb_builder_nested_addbutton" value="checked" <?php echo @$config['gb_builder_nested_addbutton']; ?> /> <?php echo $this->i18n('a2034_config_gb_builder_nested_addbutton_info'); ?>
+										</label>
+									</div>
+								</dd>
+							</dl>
+
+							<dl class="rex-form-group form-group">
+								<dt></dt>
+								<dd>
+									<div class="checkbox toggle">
+										<label for="gb_builder_between_addbutton">
+											<input type="checkbox" name="gb_builder_between_addbutton" id="gb_builder_between_addbutton" value="checked" <?php echo @$config['gb_builder_between_addbutton']; ?> /> <?php echo $this->i18n('a2034_config_gb_builder_between_addbutton_info'); ?>
+										</label>
+									</div>
+								</dd>
+							</dl>
 							
 						</div>
 					</div>
@@ -470,11 +504,6 @@ if (isset($config) && is_array($config) && !array_key_exists('gb_builder_preview
 								</label>
 							</div>
 
-							<div class="checkbox toggle">
-								<label for="gb_builder_nested_addbutton">
-									<input type="checkbox" name="gb_builder_nested_addbutton" id="gb_builder_nested_addbutton" value="checked" <?php echo @$config['gb_builder_nested_addbutton']; ?> /> <?php echo $this->i18n('a2034_config_gb_builder_nested_addbutton_info'); ?>
-								</label>
-							</div>
 					
 						</div>
 					</div>
@@ -881,7 +910,7 @@ if (isset($config) && is_array($config) && !array_key_exists('gb_builder_preview
 			<dl class="rex-form-group form-group">
 				<dt><label for="gb_builder_gap_native_fallback"><?php echo $this->i18n('a2034_config_gb_builder_gap_native_fallback'); ?></label></dt>
 				<dd>
-					<textarea name="gb_builder_gap_native_fallback" id="gb_builder_gap_native_fallback" rows="4" class="form-control"><?php echo rex_escape(@$config['gb_builder_gap_native_fallback']); ?></textarea>
+					<textarea name="gb_builder_gap_native_fallback" id="gb_builder_gap_native_fallback" rows="7" class="form-control" spellcheck="false" placeholder="<?php echo rex_escape(Gridblock2Builder_Tree::GAP_NATIVE_EXAMPLE); ?>"><?php echo rex_escape($gbGapDraft !== null ? $gbGapDraft : @$config['gb_builder_gap_native_fallback']); ?></textarea>
 					<span class="infoblock"><?php echo $this->i18n('a2034_config_gb_builder_gap_native_fallback_info'); ?></span>
 				</dd>
 			</dl>

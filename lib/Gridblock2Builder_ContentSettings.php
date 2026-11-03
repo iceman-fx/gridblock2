@@ -487,6 +487,14 @@ class Gridblock2Builder_ContentSettings
                     break;
                 }
             }
+            if ($sMatch === null) {
+                foreach ($aPalette as $aEntry) {
+                    if ((string) $aEntry['class'] !== '' && strcasecmp((string) $aEntry['class'], $sRaw) === 0) {
+                        $sMatch = (string) $aEntry['value'];
+                        break;
+                    }
+                }
+            }
         }
         $bAlt = ($sRaw !== '' && $sMatch === null && Gridblock2Palette::isClassValue($sRaw));
         $bInd = ($sRaw !== '' && $sMatch === null && !$bAlt);
@@ -821,6 +829,9 @@ class Gridblock2Builder_ContentSettings
                                         $sPickerMode = (isset($aOption["mode"]) && in_array($aOption["mode"], array('solid', 'both', 'gradient'), true)) ? $aOption["mode"] : 'solid';
                                         $sPickerInput = '<input data-parsley-excluded="true" data-colorpicker data-colorpicker-mode="' . $sPickerMode . '" type="text" name="REX_INPUT_VALUE[' . $this->iSettingsId . '][' . $sType . '][' . $sKey . ']" ' . $sAttributes . ' value="' . $sValue . '" ' . $sPlaceholder . ' ' . $sClass . ' ' . $sDisabled . ' id="'.$uid.'">';
                                         $aPalette = (!empty($aOption["palette"])) ? Gridblock2Palette::getEntries() : array();
+                                        if ($aPalette && $aOption["palette"] === "colors") {
+                                            $aPalette = Gridblock2Palette::colorEntries($aPalette);
+                                        }
                                         if ($aPalette) {
                                             $sRawValue = isset($aSavedOptions[$sType][$sKey]) ? (string) $aSavedOptions[$sType][$sKey] : ((isset($aOption["default"]) && $aOption["default"] != "") ? (string) $aOption["default"] : '');
                                             $sForm .= '<dd>' . self::renderPaletteField($aPalette, $sRawValue, $sPickerInput) . PHP_EOL;

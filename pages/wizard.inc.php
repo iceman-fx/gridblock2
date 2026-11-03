@@ -196,7 +196,7 @@ $gbSystemElementColumn = Gridblock2Builder_Tree::getSystemElementSourceCode('sys
 						<?php
 						$gbGapNativeFallback = @$wizardConfig['gb_builder_gap_native_fallback'];
 						if (empty($gbGapNativeFallback)) {
-							$gbGapNativeFallback = "sm = Klein = 16px\nmd = Mittel = 24px\nlg = Groß = 40px";
+							$gbGapNativeFallback = Gridblock2Builder_Tree::GAP_NATIVE_EXAMPLE;
 						}
 						?>
 						<div class="gb-wizard-gap-option" data-gap-mode="native">
@@ -204,7 +204,7 @@ $gbSystemElementColumn = Gridblock2Builder_Tree::getSystemElementSourceCode('sys
 							<dt><label for=""><?php echo $this->i18n('a2034_wizard_step_gap_native_info'); ?></label></dt>						
 							<dd>
 						
-								<textarea name="gb_builder_gap_native_fallback" rows="5" class="form-control"><?php echo rex_escape($gbGapNativeFallback); ?></textarea>
+								<textarea name="gb_builder_gap_native_fallback" rows="7" class="form-control" spellcheck="false"><?php echo rex_escape($gbGapNativeFallback); ?></textarea>
 								<span class="infoblock"><?php echo $this->i18n('a2034_wizard_step_gap_native_format_info'); ?></span>
 							</dd>
 						</dl>

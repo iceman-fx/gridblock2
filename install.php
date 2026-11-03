@@ -40,6 +40,8 @@ $configDefaults = [
 		'gb_builder_preview_wrapper_class'	=> '',
 		'gb_elements_css_frontend'				=> '',
 		'gb_builder_preview_visibility_fixes'	=> "[data-aos] { opacity: 1 !important; transform: none !important; }",
+		'gb_builder_palette'					=> '',
+		'gb_builder_preview_mode_modules'		=> '',
 		'gb_builder_preview_media_to_container'	=> 'checked',
 		'gb_builder_preview_block_links'		=> 'checked',
 		'gb_builder_compacttoolbox'				=> 'checked',
@@ -47,6 +49,7 @@ $configDefaults = [
 		'gb_builder_draghandle'					=> 'checked',
 		'gb_builder_columns_quickswitch'		=> 'checked',
 		'gb_builder_nested_addbutton'			=> '',
+		'gb_builder_between_addbutton'			=> '',
 		'gb_builder_offlinetoggle'				=> 'checked',
 		'gb_builder_copypaste'					=> 'checked',
 		'gb_builder_hidelabel'					=> '',		
@@ -58,7 +61,7 @@ $configDefaults = [
 		'gb_builder_module_css_overrides'		=> '',
 		'gb_builder_gap_mode'					=> 'native',
 		'gb_builder_gap_cs_field'				=> '',
-		'gb_builder_gap_native_fallback'		=> "sm = Klein = 5px\nmd = Mittel = 25px\nlg = Groß = 50px\nxl = Sehr groß = 100px",
+		'gb_builder_gap_native_fallback'		=> "{\n  \"sm\": {\"label\": \"Klein\", \"value\": \"5px\"},\n  \"md\": {\"label\": \"Mittel\", \"value\": \"25px\"},\n  \"lg\": {\"label\": \"Groß\", \"value\": \"50px\"},\n  \"xl\": {\"label\": \"Sehr groß\", \"value\": \"100px\"}\n}",
 		'gb_builder_native_grid_css_backend'	=> 'checked',
 		'gb_builder_templates_import_export'	=> '',
 		'gb_builder_synchronizer_enabled'		=> '',
@@ -115,6 +118,19 @@ if (empty($this->getConfig('gb_builder_install'))) {
 
     if (!is_dir($dataSrc) || !rex_dir::copy($dataSrc, $this->getDataPath())) {
         throw new rex_functional_exception('Gridblock: Der Daten-Ordner "'.$dataSrc.'" fehlt oder konnte nicht kopiert werden. Bitte prüfen, ob der Ordner "data/" beim Hochladen/Deployment des Addons vollständig mit übertragen wurde.');
+    }
+
+    //Vorgaben aus install/settings.json nur bei der Erstinstallation uebernehmen (bei einer Neuinstallation ueber vorhandene Einstellungen nicht)
+    $settingsFile = Gridblock2Builder_SettingsFile::load($this->getPath(Gridblock2Builder_SettingsFile::FILE), array_keys($configDefaults));
+    if ($settingsFile['values'] !== []) {
+        $this->setConfig('config', array_merge((array) $this->getConfig('config'), $settingsFile['values']));
+        $this->setConfig('gb_builder_wizard_dismissed', time());
+
+        Gridblock2Builder_Tree::writeNativeGridCssFile();
+        Gridblock2Builder_Tree::writeElementsCssFile();
+    }
+    foreach ($settingsFile['notes'] as $settingsNote) {
+        rex_logger::factory()->log('warning', 'Gridblock²: '.$settingsNote);
     }
 
     $this->setConfig('gb_builder_install', time());

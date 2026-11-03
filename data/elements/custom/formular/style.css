@@ -5,7 +5,7 @@
 .gb-el-form .form-group, .gb-el-form .yform-element { margin-bottom: 14px; }
 .gb-el-form label { display: block; font-weight: 600; margin-bottom: 4px; }
 .gb-el-form input[type="text"], .gb-el-form input[type="email"], .gb-el-form input[type="tel"], .gb-el-form input[type="url"],
-.gb-el-form input[type="number"], .gb-el-form input[type="date"], .gb-el-form input[type="file"], .gb-el-form select, .gb-el-form textarea {
+.gb-el-form input[type="number"], .gb-el-form input[type="date"], .gb-el-form input[type="week"], .gb-el-form input[type="month"], .gb-el-form input[type="time"], .gb-el-form input[type="file"], .gb-el-form select, .gb-el-form textarea {
 	width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid #c4cad1; border-radius: 4px; font: inherit; background: #fff;
 }
 .gb-el-form .radio label, .gb-el-form .checkbox label { font-weight: 400; display: flex; gap: 8px; align-items: baseline; }

@@ -239,6 +239,15 @@ elseif ($func == "wizard_save_settings"):
 		exit;
 	}
 
+	$wizardGapErrors = (rex_post('gb_builder_gap_mode', 'string', 'native') === 'cs') ? [] : Gridblock2Builder_Tree::gapNativeErrors((string) rex_post('gb_builder_gap_native_fallback', 'string', ''));
+	if ($wizardGapErrors !== []) {
+		echo '<div id="gb-wizard-ajax-result">';
+		echo '<div id="gb-wizard-save-status" data-ok="0" style="display:none"></div>';
+		echo '<div class="alert alert-danger">'.$this->i18n('a2034_gap_err_head').'<br>'.implode('<br>', $wizardGapErrors).'</div>';
+		echo '</div>';
+		exit;
+	}
+
 	$old = rex_addon::get('gridblock');
 	$gb1ConfigCopied = false;
 	if (rex_post('gb1_copy', 'string', '') === '1' && $old && $old->isInstalled()) {

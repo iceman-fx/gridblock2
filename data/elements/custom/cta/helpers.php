@@ -56,7 +56,7 @@ if (!class_exists('GbCtaKit')) {
 			if ($hbg !== '' || $hfg !== '') {
 				return [
 					'hbg' => $hbg !== '' ? $hbg : ($fill ? 'var(--cta-bg, linear-gradient(135deg, var(--cta-fill-a), var(--cta-fill-b)))' : 'transparent'),
-					'hfg' => $hfg !== '' ? $hfg : ($fill ? 'var(--cta-fg, #fff)' : 'var(--cta-accent)'),
+					'hfg' => $hfg !== '' ? $hfg : ($fill ? 'var(--cta-fg, #fff)' : (($hbg !== '' && $hbg !== 'transparent') ? (($autoSwap && $fg !== '') ? $fg : 'var(--cta-on-accent)') : 'var(--cta-accent)')),
 					'hbd' => (!$fill && $hbg !== '' && $hbg !== 'transparent') ? $hbg : '',
 					'ring' => false,
 				];

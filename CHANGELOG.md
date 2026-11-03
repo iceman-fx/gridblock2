@@ -3,6 +3,19 @@ Gridblock²
 
 Changelog
 ---------
+<b>Version 1.0.0-beta2</b>
+- Neues Custom-Element "Karten": fünf Darstellungen (Klassisch, Offen, Bildkachel, Bildkachel mit Button, Kompakt), Kartenbreite statt fester Spaltenzahl, Ausrichtung, Bildformat und -größe, Projektfarben, Schatten und Rundung wählbar
+- Hero: Pluspunkte auch zwischen Text und Buttons sowie untereinander darstellbar; Bilder der Infokarten füllen ihre Hülle sauber, Hover-Textfarbe der umrandeten Buttons (auch im Call-to-Action) passt zur gewählten Palettenfarbe
+- Formular: Feldtyp "Datum" mit wählbarer Datumsart (Datum, Kalenderwoche, Monat)
+- Repeater: neue Option <code>minRows</code> (Mindestzahl der Zeilen)
+- Öffentliche API für Templates und Module: <code>rex_gridblock2::getPaletteColors()</code>, <code>getPaletteColor($key)</code>, <code>getNativeGridCssUrl()</code>, <code>getElementsCssUrl()</code>; neues Hilfe-Thema "API"
+- Projektfarben in Contentsettings: neue Option <code>"palette": "colors"</code> liefert immer die Farbe statt der Klasse (für Rahmen- und Trennerfarbe)
+- Werte für den nativen Spalten-Abstand jetzt als JSON-Objekt (<code>{"md": {"label": "Mittel", "value": "24px"}}</code>) mit Prüfung beim Speichern; das bisherige Zeilenformat wird weiterhin gelesen
+- Einstellungen vorgeben: Für vorgefertigte Installationspakete liest das Addon bei der Erstinstallation optional <code>install/settings.json</code> (Vorlage: <code>install/settings.json.example</code>); der Einrichtungsassistent gilt dann als erledigt
+- Builder: neue Einstellung "Hinzufügen-Button zwischen den Elementen" (bei aktiven Layouthilfen), mit Trennlinie und Button zwischen den Elementen, auch auf Touch-Geräten bedienbar
+- Builder: Vollbild bleibt nach einem harten Neuladen der Seite erhalten (Marker als URL-Parameter <code>gbfs</code>, der Anker der Seite bleibt erhalten)
+- Builder: Vollbild sperrt den Seiten-Scroll nach dem Speichern nicht mehr dauerhaft, doppelte Palettenfelder beim Duplizieren von Repeater-Zeilen behoben, Kebab-Menü öffnet bei wenig Platz nach oben, Selbsttest der Palettenfelder im REDAXO-Debug-Modus
+
 <b>Version 1.0.0-beta1</b>
 - Komplett neue Backend-Oberfläche (Builder): eine flache Karten-Liste ersetzt die bisherigen Tabs, mit Live-Vorschau (iframe oder Shadow-DOM), Drag & Drop, Toolbar-Menü, Kopieren/Einfügen, Online/Offline, Vollbild, Sidebar- oder Modal-Bearbeitung und Touch-Bedienung für Tablets
 - Neue Kernelemente "Sektion" und "Spalten" für frei kombinierbare, beliebig tief verschachtelbare Layouts, mit eigener Hintergrund-/Abstands-/Rand-Konfiguration je Element und je Spalte

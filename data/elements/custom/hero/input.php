@@ -35,7 +35,8 @@ $big = !empty($v['heading_big']);
 $round = array_key_exists('round_set', $v) ? !empty($v['round']) : empty($v['noround']);
 $imgShadow = !empty($v['img_shadow']);
 $bulletStyle = GbHeroKit::pick($val('bullet_style'), ['icon', 'text'], 'icon');
-$bulletPos = GbHeroKit::pick($val('bullet_pos'), ['unten', 'oben'], 'unten');
+$bulletPos = GbHeroKit::pick($val('bullet_pos'), ['unten', 'mitte', 'oben'], 'unten');
+$bulletLayout = GbHeroKit::pick($val('bullet_layout'), ['inline', 'stack'], 'inline');
 $vttLang = GbHeroKit::pick($val('vtt_lang'), array_keys(GbHeroKit::SUBTITLE_LANGS), 'de');
 $maxWidth = GbHeroKit::pick($val('maxwidth'), array_map('strval', array_keys(GbHeroKit::MAX_WIDTHS)), '');
 
@@ -230,9 +231,18 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 					<label for="<?php echo $uid; ?>_bullet_pos">Position der Pluspunkte</label>
 					<select name="bullet_pos" id="<?php echo $uid; ?>_bullet_pos" class="form-control">
 						<option value="unten"<?php echo $sel($bulletPos, 'unten'); ?>>Unter den Buttons (Standard)</option>
+						<option value="mitte"<?php echo $sel($bulletPos, 'mitte'); ?>>Zwischen Text und Buttons</option>
 						<option value="oben"<?php echo $sel($bulletPos, 'oben'); ?>>Über der Überschrift (als Dachzeile)</option>
 					</select>
 				</div>
+			</div>
+
+			<div class="rex-form-group form-group" data-gbh-bs="icon">
+				<label for="<?php echo $uid; ?>_bullet_layout">Anordnung der Pluspunkte</label>
+				<select name="bullet_layout" id="<?php echo $uid; ?>_bullet_layout" class="form-control">
+					<option value="inline"<?php echo $sel($bulletLayout, 'inline'); ?>>Nebeneinander (Standard)</option>
+					<option value="stack"<?php echo $sel($bulletLayout, 'stack'); ?>>Untereinander</option>
+				</select>
 			</div>
 
 			<div class="rex-form-group form-group" data-gbh-bs="icon">

@@ -15,7 +15,7 @@ Gridblock² ist der Nachfolger von Gridblock 1.x und läuft parallel dazu, sodas
 
 ## Warum Gridblock²
 
-- 🧩 **Echte Redaxo-Module, keine Nachbauten** - Text, Bild, Slider, eigene Module lassen sich 1:1 verwenden, kombiniert mit Sektion, Spalten und Custom-Elementen wie Hero-Banner, Call-to-Action, Zitat oder Formular.
+- 🧩 **Echte Redaxo-Module, keine Nachbauten** - Text, Bild, Slider, eigene Module lassen sich 1:1 verwenden, kombiniert mit Sektion, Spalten und Custom-Elementen wie Hero-Banner, Call-to-Action, Karten, Zitat oder Formular.
 - 🎨 **Visuell gestalten statt konfigurieren** - Layout direkt im Backend bauen, inklusive Live-Vorschau und Drag&Drop.
 - 📐 **Frei definierbare Spaltenvorlagen** - eigene Aufteilungen und CSS-Klassen.
 - 🧱 **Anpassung der Ausgabe an jedes Grid-System** (Bootstrap, UIKit, eigenes CSS-Grid) über die System-Elemente.

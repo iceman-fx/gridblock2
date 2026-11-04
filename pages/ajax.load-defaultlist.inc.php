@@ -88,9 +88,7 @@ $addPath = "index.php?page=".$page;
 						
 					$preview = rex_gridblock2_helper::generatePreview($preview, $eid, $columns, $title, $desc);
 					
-					$dbu = rex_sql::factory();
-					$dbu->setQuery("SELECT id FROM ".rex::getTable('article_slice')." WHERE value17 like '%selectedTemplate\":\"".$eid."\"%'");
-					$inuse = ($dbu->getRows() > 0) ? '<i class="rex-icon rex-icon-active-true"></i> '.$this->i18n('a2034_yes') : '<i class="rex-icon rex-icon-active-false"></i> '.$this->i18n('a2034_no');;
+					$inuse = Gridblock2ColumnTemplates::isInUse((int) $eid) ? '<i class="rex-icon rex-icon-active-true"></i> '.$this->i18n('a2034_yes') : '<i class="rex-icon rex-icon-active-false"></i> '.$this->i18n('a2034_no');;
 						
 					
 					//Ausgabe

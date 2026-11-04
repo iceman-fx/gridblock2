@@ -81,17 +81,7 @@ if ($func == "save" && (isset($_POST['submit']) || isset($_POST['submit-apply'])
 			echo rex_view::info($this->i18n('a2034_entry_saved'));
 
 			//Prioritäten korrigieren
-			$dbp = rex_sql::factory();
-			$dbp->setQuery("SELECT id, prio FROM ".rex::getTable('2034_gridtemplates')." WHERE id <> '".$lastID."' ORDER BY prio ASC");
-				$i = 1;
-				foreach ($dbp as $row):
-					$i = ($i == rex_post('f_prio', 'int')) ? ($i+1) : $i;
-					
-					$db = rex_sql::factory();
-					$db->setQuery("UPDATE ".rex::getTable('2034_gridtemplates')." SET prio = '".$i."' WHERE id = '".$row->getValue('id')."'");
-					$i++;
-				endforeach;			
-			
+			Gridblock2ColumnTemplates::placeAt((int) $lastID, rex_post('f_prio', 'int'));
 
 		else:
 			//Fehler beim Speichern
@@ -101,19 +91,8 @@ if ($func == "save" && (isset($_POST['submit']) || isset($_POST['submit-apply'])
 
 elseif ($func == "delete" && $id > 0):
 	//Eintrag löschen - mit möglicher Prüfung auf Zuweisung
-	$db = rex_sql::factory();
-	$db->setQuery("SELECT id FROM ".rex::getTable('article_slice')." WHERE value17 like '%selectedTemplate\":\"".$id."\"%'");
-
-	if ($db->getRows() <= 0):
+	if (!Gridblock2ColumnTemplates::isInUse($id)):
 		//löschen
-		$dbp = rex_sql::factory();
-		$dbp->setQuery("SELECT id FROM ".rex::getTable('2034_gridtemplates'));
-		$maxPrio = $dbp->getRows();
-
-		$dbp = rex_sql::factory();
-		$dbp->setQuery("SELECT prio FROM ".rex::getTable('2034_gridtemplates')." WHERE id = '".$id."'");
-		$lastPrio = ($dbp->getRows() > 0) ? $dbp->getValue('prio') : 0;
-
 		$db = rex_sql::factory();
 		$db->setTable(rex::getTable('2034_gridtemplates'));
 		$db->setWhere("id = '".$id."'");
@@ -121,16 +100,10 @@ elseif ($func == "delete" && $id > 0):
 		if ($db->delete()):
 			echo rex_view::info($this->i18n('a2034_entry_deleted'));
 
-			//Prioritäten korrigieren
-			$dbp = rex_sql::factory();
-			$dbp->setQuery("SELECT id FROM ".rex::getTable('2034_gridtemplates')." ORDER BY prio ASC");
-				$i = 1;
-				foreach ($dbp as $row):
-					$db = rex_sql::factory();
-					$db->setQuery("UPDATE ".rex::getTable('2034_gridtemplates')." SET prio = '".$i."' WHERE id = '".$row->getValue('id')."'");
-					$i++;
-				endforeach;
-			
+			//Reste der Vorlage entfernen und Prioritäten korrigieren
+			Gridblock2ColumnTemplates::removeResidues($id);
+			Gridblock2ColumnTemplates::renumber();
+
 		else:
 			echo rex_view::warning($this->i18n('a2034_error_deleted'));
 		endif;
@@ -474,7 +447,7 @@ if ($func == "update" || $func == "insert" || $form_error == 1):
 		<!-- <input type="hidden" name="subpage" value="<?php echo $subpage; ?>" /> -->
 		<input type="hidden" name="func" value="save" />
 		<?php echo $gbCsrf->getHiddenField(); ?>
-		<input type="hidden" name="id" value="<?php echo $dbe[0]['id']; ?>" />
+		<input type="hidden" name="id" value="<?php echo (int) ($dbe[0]['id'] ?? 0); ?>" />
 		<input type="hidden" name="mode" value="<?php echo $func; ?>" />
 
 		<section class="rex-page-section">

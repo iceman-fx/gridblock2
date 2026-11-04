@@ -15,6 +15,7 @@ Changelog
 - Builder: neue Einstellung "Hinzufügen-Button zwischen den Elementen" (bei aktiven Layouthilfen), mit Trennlinie und Button zwischen den Elementen, auch auf Touch-Geräten bedienbar
 - Builder: Vollbild bleibt nach einem harten Neuladen der Seite erhalten (Marker als URL-Parameter <code>gbfs</code>, der Anker der Seite bleibt erhalten)
 - Builder: Vollbild sperrt den Seiten-Scroll nach dem Speichern nicht mehr dauerhaft, doppelte Palettenfelder beim Duplizieren von Repeater-Zeilen behoben, Kebab-Menü öffnet bei wenig Platz nach oben, Selbsttest der Palettenfelder im REDAXO-Debug-Modus
+- Spaltenvorlagen: Die Löschsperre und die Anzeige "in Verwendung" erkennen jetzt auch Vorlagen, die im neuen Builder verwendet werden (bisher nur das alte Gridblock-1-Format); die Reihenfolge wird beim Speichern ohne Lücken neu nummeriert, beim Löschen werden auch die Contentsettings-Ordner der Vorlage entfernt
 
 <b>Version 1.0.0-beta1</b>
 - Komplett neue Backend-Oberfläche (Builder): eine flache Karten-Liste ersetzt die bisherigen Tabs, mit Live-Vorschau (iframe oder Shadow-DOM), Drag & Drop, Toolbar-Menü, Kopieren/Einfügen, Online/Offline, Vollbild, Sidebar- oder Modal-Bearbeitung und Touch-Bedienung für Tablets

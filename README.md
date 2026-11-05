@@ -24,6 +24,7 @@ Gridblock² ist der Nachfolger von Gridblock 1.x und läuft parallel dazu, sodas
 - 🔄 **Sanfte Migration von Gridblock 1.x** - bestehende Inhalte laufen unverändert weiter, bis sie im Builder neu gespeichert werden.
 - 🌈 **Projektfarben-Palette** - Redakteure wählen Farben aus einer vom Projekt definierten Palette statt aus freien Farbfeldern.
 - 🌐 **Multi-Site & Rechte** - je YRewrite-Domain eigene Vorschau-Werte und Element-Auswahl, Elemente zusätzlich je Rolle freigebbar.
+- ⭐ **Favoriten** - Elemente, Sektionen oder ganze Bausteine samt Inhalten speichern und jederzeit über das Hinzufügen-Menü wieder einfügen, wahlweise projektweit, nur für sich oder je Domain.
 
 <br>
 

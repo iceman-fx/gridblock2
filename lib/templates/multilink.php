@@ -7,7 +7,7 @@
 	by Falko Müller @ 2026 (based gridblock 1.x)
 
 	Erwartet im Scope (siehe Gridblock2Builder_VendorMultilink::render()):
-	$name, $uid, $allowedTypes, $activeType, $telValue, $emailValue, $urlValue,
+	$name, $uid, $allowedTypes, $activeType, $telValue, $anchorValue, $emailValue, $urlValue,
 	$linkWidgetHtml, $mediaWidgetHtml, $outputValue
 */
 
@@ -16,6 +16,7 @@
 /** @var array<int, string> $allowedTypes */
 /** @var string $activeType */
 /** @var string $telValue */
+/** @var string $anchorValue */
 /** @var string $emailValue */
 /** @var string $urlValue */
 /** @var string $linkWidgetHtml */
@@ -57,6 +58,8 @@ $hasMultiType = count($allowedTypes) > 1;
 			<div class="fmlink-field" data-type="<?php echo $type; ?>"<?php echo $valueName ? ' data-value-name="'.htmlspecialchars($valueName).'"' : ''; ?><?php echo $isActive ? '' : ' hidden'; ?>>
 				<?php if ($type === 'tel'): ?>
 					<input type="tel" class="fmlink-input form-control" placeholder="+49 89 12345678" value="<?php echo htmlspecialchars($telValue); ?>">
+				<?php elseif ($type === 'anchor'): ?>
+					<input type="text" class="fmlink-input form-control" placeholder="#kontakt" value="<?php echo htmlspecialchars($anchorValue); ?>">
 				<?php elseif ($type === 'email'): ?>
 					<input type="email" class="fmlink-input form-control" placeholder="name@beispiel.de" value="<?php echo htmlspecialchars($emailValue); ?>">
 				<?php elseif ($type === 'url'): ?>

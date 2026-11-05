@@ -95,6 +95,8 @@ if ($func == "save" && isset($_POST['submit']) && $gbPaletteErrors === [] && $gb
 		'gb_builder_between_addbutton'			=> rex_post('gb_builder_between_addbutton'),
 		'gb_builder_offlinetoggle'				=> rex_post('gb_builder_offlinetoggle'),
 		'gb_builder_copypaste'					=> rex_post('gb_builder_copypaste'),
+		'gb_favorites_mode'					=> in_array(rex_post('gb_favorites_mode', 'string', 'project'), Gridblock2Presets::MODES, true) ? rex_post('gb_favorites_mode', 'string', 'project') : 'project',
+		'gb_favorites_cross_domain'				=> rex_post('gb_favorites_cross_domain', 'string', '') === 'checked' ? 'checked' : '',
 		'gb_builder_hidelabel'					=> rex_post('gb_builder_hidelabel'),
 		'gb_builder_maxdepth'					=> rex_post('gb_builder_maxdepth', 'int', 3),
 		'gb_builder_modaledit'					=> rex_post('gb_builder_modaledit'),
@@ -126,10 +128,10 @@ if ($func == "save" && isset($_POST['submit']) && $gbPaletteErrors === [] && $gb
 	//reload Konfig
 	$config = $this->getConfig('config');
 	$config = (is_array($config)) ? $config : [];
-	if (!array_key_exists('gb_builder_slicelist_fullscreen', $config)) { $config['gb_builder_slicelist_fullscreen'] = 'checked'; }
-	if (!array_key_exists('gb_builder_fullscreen_apply', $config)) { $config['gb_builder_fullscreen_apply'] = 'checked'; }
 endif;
 
+if (isset($config) && is_array($config) && !array_key_exists('gb_builder_slicelist_fullscreen', $config)) { $config['gb_builder_slicelist_fullscreen'] = 'checked'; }
+if (isset($config) && is_array($config) && !array_key_exists('gb_builder_fullscreen_apply', $config)) { $config['gb_builder_fullscreen_apply'] = 'checked'; }
 if (isset($config) && is_array($config) && !array_key_exists('gb_builder_viewport_buttons', $config)) { $config['gb_builder_viewport_buttons'] = 'checked'; }
 if (isset($config) && is_array($config) && !array_key_exists('gb_builder_preview_block_links', $config)) { $config['gb_builder_preview_block_links'] = 'checked'; }
 
@@ -435,7 +437,7 @@ if (isset($config) && is_array($config) && !array_key_exists('gb_builder_preview
 							</dl>
 
 							<dl class="rex-form-group form-group">
-								<dt></dt>
+								<dt><label for="gb_builder_nested_addbutton"><?php echo $this->i18n('a2034_config_gb_builder_nested_addbutton'); ?></label></dt>
 								<dd>
 									<div class="checkbox toggle">
 										<label for="gb_builder_nested_addbutton">
@@ -446,7 +448,7 @@ if (isset($config) && is_array($config) && !array_key_exists('gb_builder_preview
 							</dl>
 
 							<dl class="rex-form-group form-group">
-								<dt></dt>
+								<dt><label for="gb_builder_between_addbutton"><?php echo $this->i18n('a2034_config_gb_builder_between_addbutton'); ?></label></dt>
 								<dd>
 									<div class="checkbox toggle">
 										<label for="gb_builder_between_addbutton">
@@ -559,6 +561,31 @@ if (isset($config) && is_array($config) && !array_key_exists('gb_builder_preview
 							</select>
 							
 					
+						</div>
+					</div>
+
+
+					<div class="panel panel-default">
+						<header class="panel-heading"><div class="panel-title"><?php echo $this->i18n('a2034_config_gb_favorites_head'); ?></div></header>
+
+						<div class="panel-body">
+
+							<?php $gbFavMode = in_array((string) (@$config['gb_favorites_mode'] ?? ''), Gridblock2Presets::MODES, true) ? $config['gb_favorites_mode'] : 'project'; ?>
+							<label for="gb_favorites_mode"><?php echo $this->i18n('a2034_config_gb_favorites_mode'); ?></label>
+							<select name="gb_favorites_mode" id="gb_favorites_mode" class="form-control">
+								<?php foreach (Gridblock2Presets::MODES as $gbFavModeKey): ?>
+								<option value="<?php echo $gbFavModeKey; ?>"<?php echo ($gbFavMode === $gbFavModeKey) ? ' selected' : ''; ?>><?php echo $this->i18n('a2034_config_gb_favorites_mode_'.$gbFavModeKey); ?></option>
+								<?php endforeach; ?>
+							</select>
+
+							<dl class="rex-form-group form-group"><dt></dt></dl>
+
+							<div class="checkbox toggle">
+								<label for="gb_favorites_cross_domain">
+									<input type="checkbox" name="gb_favorites_cross_domain" id="gb_favorites_cross_domain" value="checked" <?php echo @$config['gb_favorites_cross_domain']; ?> /> <?php echo $this->i18n('a2034_config_gb_favorites_cross_domain_info'); ?>
+								</label>
+							</div>
+
 						</div>
 					</div>
 

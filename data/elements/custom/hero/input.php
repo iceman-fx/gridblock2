@@ -44,6 +44,9 @@ $buttons = $v['buttons'] ?? '';
 $cards = $v['cards'] ?? '';
 $palette = GbHeroKit::palette();
 $buttonEffect = GbHeroKit::effect($val('effect'));
+$btnRadius = GbHeroKit::pick($val('btn_radius'), array_keys(GbHeroKit::BTN_RADII), 'pille');
+$split = GbHeroKit::pick($val('split'), array_keys(GbHeroKit::SPLITS), '60-40');
+$edge = GbHeroKit::pick($val('edge'), array_keys(GbHeroKit::EDGES), 'gerade');
 if ($isNew) {
 	$buttons = [Gridblock2Builder_Tree::makeRepeaterUid() => ['titel' => '', 'stil' => 'fill']];
 	$cards = [Gridblock2Builder_Tree::makeRepeaterUid() => ['ktext' => '']];
@@ -125,7 +128,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				<?php endforeach; ?>
 			</select>
 		</div>
-		<div class="rex-form-group form-group">
+		<div class="rex-form-group form-group" data-gbh="nebeneinander zentriert vollflaechig karten">
 			<label for="<?php echo $uid; ?>_maxwidth">Maximale Breite</label>
 			<select name="maxwidth" id="<?php echo $uid; ?>_maxwidth" class="form-control">
 				<option value=""<?php echo $sel($maxWidth, ''); ?>>Volle Breite (keine Begrenzung)</option>
@@ -166,50 +169,12 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				</div>
 			</div>
 
-			<div class="gbh-pair">
-				<div class="rex-form-group form-group">
-					<label for="<?php echo $uid; ?>_title_color">Farbe der Überschrift <small class="text-muted">(optional)</small></label>
-					<?php echo GbHeroKit::colorField($palette, 'title_color', $uid.'_title_color', $val('title_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
-				</div>
-				<div class="rex-form-group form-group">
-					<label for="<?php echo $uid; ?>_accent">Hervorhebungsfarbe <small class="text-muted">(optional)</small></label>
-					<?php echo GbHeroKit::colorField($palette, 'accent', $uid.'_accent', $val('accent'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
-				</div>
-			</div>
-
 			<div class="rex-form-group form-group gbh-gap">
 				<label for="<?php echo $uid; ?>_text">Text</label>
 				<textarea name="text" id="<?php echo $uid; ?>_text" rows="4" class="form-control"><?php echo $esc('text'); ?></textarea>
 			</div>
 
-			<div class="rex-form-group form-group">
-				<label for="<?php echo $uid; ?>_text_color">Farbe von Text und Pluspunkten <small class="text-muted">(optional)</small></label>
-				<?php echo GbHeroKit::colorField($palette, 'text_color', $uid.'_text_color', $val('text_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
-			</div>
-
-			<div class="rex-form-group form-group gbh-sub">
-				<label>Buttons <small class="text-muted">(höchstens <?php echo GbHeroKit::MAX_BUTTONS; ?>)</small></label>
-				<?php
-				echo Gridblock2Builder_Tree::renderRepeater('buttons', $buttons, GbHeroKit::buttonRowMarkup($palette), [
-					'collapsible' => true,
-					'titleField' => 'titel',
-					'titleFallback' => 'Button',
-					'collapsed' => true,
-					'maxRows' => GbHeroKit::MAX_BUTTONS,
-				]);
-				?>
-			</div>
-
-			<div class="rex-form-group form-group">
-				<label for="<?php echo $uid; ?>_effect">Hover-Effekt der Buttons</label>
-				<select name="effect" id="<?php echo $uid; ?>_effect" class="form-control">
-					<?php foreach (GbHeroKit::EFFECTS as $key => $label): ?>
-					<option value="<?php echo $key; ?>"<?php echo $sel($buttonEffect, $key); ?>><?php echo rex_escape($label); ?></option>
-					<?php endforeach; ?>
-				</select>
-			</div>
-
-			<div class="gbh-groups">
+			<div class="gbh-groups" style="margin-top:30px">
 			<details class="gbh-group">
 				<summary>Pluspunkte <small class="text-muted">(optional)</small></summary>
 				<div class="gbh-group-body">
@@ -253,10 +218,24 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 
 				</div>
 			</details>
-
-			<details class="gbh-group" data-gbh="zentriert vollflaechig">
-				<summary>Position und Ausrichtung des Textes</summary>
+			</div>
+			<details class="gbh-group">
+				<summary>Farben &amp; Position</summary>
 				<div class="gbh-group-body">
+			<div class="gbh-pair">
+				<div class="rex-form-group form-group">
+					<label for="<?php echo $uid; ?>_title_color">Farbe der Überschrift <small class="text-muted">(optional)</small></label>
+					<?php echo GbHeroKit::colorField($palette, 'title_color', $uid.'_title_color', $val('title_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+				</div>
+				<div class="rex-form-group form-group">
+					<label for="<?php echo $uid; ?>_accent">Hervorhebungsfarbe <small class="text-muted">(optional)</small></label>
+					<?php echo GbHeroKit::colorField($palette, 'accent', $uid.'_accent', $val('accent'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+				</div>
+				<div class="rex-form-group form-group">
+					<label for="<?php echo $uid; ?>_text_color">Farbe von Text und Pluspunkten <small class="text-muted">(optional)</small></label>
+					<?php echo GbHeroKit::colorField($palette, 'text_color', $uid.'_text_color', $val('text_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+				</div>
+			</div>
 			<div class="gbh-pair">
 				<div class="rex-form-group form-group" data-gbh="zentriert vollflaechig">
 					<label for="<?php echo $uid; ?>_blockpos">Position des Textblocks</label>
@@ -275,7 +254,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 					</select>
 				</div>
 			</div>
-			<div class="rex-form-group form-group" data-gbh="vollflaechig">
+			<div class="rex-form-group form-group" data-gbh="vollflaechig geteilt">
 				<label for="<?php echo $uid; ?>_inset">Horizontaler Abstand des Textes zum Rand</label>
 				<select name="inset" id="<?php echo $uid; ?>_inset" class="form-control">
 					<?php foreach (GbHeroKit::INSETS as $key => $label): ?>
@@ -285,6 +264,36 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 			</div>
 				</div>
 			</details>
+
+			<div class="rex-form-group form-group gbh-sub">
+				<label>Buttons <small class="text-muted">(höchstens <?php echo GbHeroKit::MAX_BUTTONS; ?>)</small></label>
+				<?php
+				echo Gridblock2Builder_Tree::renderRepeater('buttons', $buttons, GbHeroKit::buttonRowMarkup($palette), [
+					'collapsible' => true,
+					'titleField' => 'titel',
+					'titleFallback' => 'Button',
+					'collapsed' => true,
+					'maxRows' => GbHeroKit::MAX_BUTTONS,
+				]);
+				?>
+			</div>
+
+			<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_effect">Hover-Effekt der Buttons</label>
+				<select name="effect" id="<?php echo $uid; ?>_effect" class="form-control">
+					<?php foreach (GbHeroKit::EFFECTS as $key => $label): ?>
+					<option value="<?php echo $key; ?>"<?php echo $sel($buttonEffect, $key); ?>><?php echo rex_escape($label); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+
+			<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_btn_radius">Eckenrundung der Buttons</label>
+				<select name="btn_radius" id="<?php echo $uid; ?>_btn_radius" class="form-control">
+					<?php foreach (GbHeroKit::BTN_RADII as $key => $label): ?>
+					<option value="<?php echo $key; ?>"<?php echo $sel($btnRadius, $key); ?>><?php echo rex_escape($label); ?></option>
+					<?php endforeach; ?>
+				</select>
 			</div>
 		</div>
 
@@ -295,18 +304,21 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				<p class="help-block small">Alt-Text wird im Medienpool gepflegt. Sichtbaren Teil über die Ausrichtung festlegen.</p>
 			</div>
 
-			<div class="rex-form-group form-group" data-gbh="nebeneinander zentriert vollflaechig">
-				<label>Video <small class="text-muted">(optional, nur MP4 aus dem Medienpool)</small></label>
+			<details class="gbh-group" data-gbh="nebeneinander zentriert vollflaechig geteilt"<?php echo $val('video') !== '' ? ' open' : ''; ?>>
+				<summary>Video <small class="text-muted">(optional)</small></summary>
+				<div class="gbh-group-body">
+			<div class="rex-form-group form-group">
+				<label>Video <small class="text-muted">(nur MP4 aus dem Medienpool)</small></label>
 				<?php echo rex_var_media::getWidget($uid.'_video', 'video', $val('video'), ['types' => 'mp4']); ?>
 				<p class="help-block small">Ersetzt das Bild, das Bild dient als Standbild. „Vollflächig“: läuft stumm im Hintergrund (mit Pause-Knopf). Sonst im Player ohne Autostart.</p>
 			</div>
 
 			<div class="gbh-pair gbh-pair-wide">
-				<div class="rex-form-group form-group" data-gbh="nebeneinander zentriert">
+				<div class="rex-form-group form-group" data-gbh="nebeneinander zentriert geteilt">
 					<label>Untertitel <small class="text-muted">(optional, VTT-Datei)</small></label>
 					<?php echo rex_var_media::getWidget($uid.'_vtt', 'vtt', $val('vtt'), ['types' => 'vtt']); ?>
 				</div>
-				<div class="rex-form-group form-group" data-gbh="nebeneinander zentriert">
+				<div class="rex-form-group form-group" data-gbh="nebeneinander zentriert geteilt">
 					<label for="<?php echo $uid; ?>_vtt_lang">Sprache der Untertitel</label>
 					<select name="vtt_lang" id="<?php echo $uid; ?>_vtt_lang" class="form-control">
 						<?php foreach (GbHeroKit::SUBTITLE_LANGS as $key => $label): ?>
@@ -316,6 +328,12 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				</div>
 			</div>
 
+				</div>
+			</details>
+
+			<details class="gbh-group">
+				<summary>Sonstiges</summary>
+				<div class="gbh-group-body">
 			<div class="gbh-pair">
 				<div class="rex-form-group form-group">
 					<label for="<?php echo $uid; ?>_ratio">Bildformat</label>
@@ -333,7 +351,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 						<?php endforeach; ?>
 					</select>
 				</div>
-				<div class="rex-form-group form-group" data-gbh="nebeneinander karten">
+				<div class="rex-form-group form-group" data-gbh="nebeneinander karten geteilt">
 					<label for="<?php echo $uid; ?>_media_side">Position des Bildes</label>
 					<select name="media_side" id="<?php echo $uid; ?>_media_side" class="form-control">
 						<option value="links"<?php echo $sel($side, 'links'); ?>>Links vom Text</option>
@@ -359,13 +377,30 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 					<label for="<?php echo $uid; ?>_overlay_color">Farbe der Abdunklung <small class="text-muted">(optional)</small></label>
 					<?php echo GbHeroKit::colorField($palette, 'overlay_color', $uid.'_overlay_color', $val('overlay_color'), 'bg', 'solid', '#rrggbb'); ?>
 				</div>
+				<div class="rex-form-group form-group" data-gbh="geteilt">
+					<label for="<?php echo $uid; ?>_split">Verhältnis von Text und Bild</label>
+					<select name="split" id="<?php echo $uid; ?>_split" class="form-control">
+						<?php foreach (GbHeroKit::SPLITS as $key => $label): ?>
+						<option value="<?php echo $key; ?>"<?php echo $sel($split, $key); ?>><?php echo rex_escape($label); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+				<div class="rex-form-group form-group" data-gbh="geteilt">
+					<label for="<?php echo $uid; ?>_edge">Kante des Bildes</label>
+					<select name="edge" id="<?php echo $uid; ?>_edge" class="form-control">
+						<?php foreach (GbHeroKit::EDGES as $key => $label): ?>
+						<option value="<?php echo $key; ?>"<?php echo $sel($edge, $key); ?>><?php echo rex_escape($label); ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
 			</div>
 			<div class="rex-form-group form-group gbh-checks" data-gbh="nebeneinander zentriert karten">
 				<input type="hidden" name="round_set" value="1">
 				<div class="checkbox"><label><input type="checkbox" name="round" value="checked"<?php echo $round ? ' checked' : ''; ?>> Abgerundete Ecken <small class="text-muted">(Bild und Video)</small></label></div>
 				<div class="checkbox"><label><input type="checkbox" name="img_shadow" value="checked"<?php echo $imgShadow ? ' checked' : ''; ?>> Schatten am Bild <small class="text-muted">(Bild und Video)</small></label></div>
 			</div>
-			<p class="help-block small" data-gbh="vollflaechig">Das Bildformat ist die Mindesthöhe der Fläche, bei viel Text wächst sie nach unten. Ohne Abdunklung oder bei heller Abdunklungsfarbe den Kontrast des weißen Textes prüfen.</p>
+			<p class="help-block small" data-gbh="geteilt">Das Bildformat gilt für die Bildspalte. Der Streifen der Kante hat die Hervorhebungsfarbe (Tab Text &amp; Buttons).</p>
+			<p class="help-block small" data-gbh="vollflaechig">Das Bildformat ist die Mindesthöhe der Fläche. Kontrast des weißen Textes prüfen.</p>
 
 			<div class="gbh-sub" data-gbh="karten">
 				<div class="rex-form-group form-group">
@@ -406,6 +441,8 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 					</div>
 				</div>
 			</div>
+				</div>
+			</details>
 		</div>
 
 	</div>

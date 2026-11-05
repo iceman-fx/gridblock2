@@ -57,11 +57,12 @@ foreach ($rows as $row) {
 	$linkValue = (string) ($linkData['value'] ?? '');
 	$href = match ($linkType) {
 		'tel', 'email', 'url' => (string) ($linkData['href'] ?? ''),
+		'anchor' => preg_match('/^#[A-Za-z0-9_:.-]+$/', (string) ($linkData['href'] ?? '')) ? (string) $linkData['href'] : '',
 		'link' => ((int) $linkValue > 0) ? rex_getUrl((int) $linkValue) : '',
 		'media' => ($linkValue !== '') ? rex_url::media($linkValue) : '',
 		default => '',
 	};
-	$newTab = ($href !== '') && ($legacy ? $linkType === 'url' : !empty($row['newtab']));
+	$newTab = ($href !== '') && !str_starts_with($href, '#') && ($legacy ? $linkType === 'url' : !empty($row['newtab']));
 
 	$stil = (string) ($row['stil'] ?? 'fill');
 	$stil = in_array($stil, ['outline', 'link'], true) ? $stil : 'fill';

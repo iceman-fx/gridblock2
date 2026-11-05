@@ -4,6 +4,11 @@ Gridblock²
 Changelog
 ---------
 <b>Version 1.0.0-beta2</b>
+- Neu: Favoriten. Elemente, Sektionen, Spalten oder alle Elemente eines Bausteins samt Inhalten speichern (Kebab-Menü des Blocks oder Stern-Button neben "Vollbild starten") und über den neuen Reiter "Favoriten" im Fenster "Element hinzufügen" jederzeit wieder einfügen; Suchen, Umbenennen und Löschen direkt im Reiter, der Reiter erscheint erst, wenn es Favoriten gibt
+- Favoriten: eigene Tabelle <code>rex_gridblock2_presets</code> (wird bei Installation/Update und bei Bedarf automatisch angelegt), neues Recht "Favoriten speichern und löschen" (<code>gridblock2[favorites]</code>), Einstellung "Modus" (projektweit, benutzerbasiert oder beim Speichern wählbar) und bei MultiSite Zuordnung je Domain sowie optional domainübergreifend; Administratoren verwalten alle Favoriten unter "Favoriten" im Addon (Suche, Filter, Sortierung, Sammelaktionen)
+- Favoriten: Beim Einfügen werden Elemente, die der Benutzer oder die Domain nicht nutzen darf, übersprungen und in einer Meldung genannt; Meldungen erscheinen als kleiner Hinweis unten mittig, Fehler sind lesbar statt nur "500"
+- Favoriten: gehärtet gegen fremde Zugriffe (Rechte und Sichtbarkeit serverseitig bei jeder Aktion, CSRF-Schutz, Schreibaktionen nur per POST, geprüfte Daten und Größen, Obergrenze je Benutzer, Benutzer ohne Admin-Recht speichern nur für ihre Domain)
+- Builder: Der Button "Vollbild" heißt jetzt "Vollbild starten"
 - Neues Custom-Element "Karten": fünf Darstellungen (Klassisch, Offen, Bildkachel, Bildkachel mit Button, Kompakt), Kartenbreite statt fester Spaltenzahl, Ausrichtung, Bildformat und -größe, Projektfarben, Schatten und Rundung wählbar
 - Hero: Pluspunkte auch zwischen Text und Buttons sowie untereinander darstellbar; Bilder der Infokarten füllen ihre Hülle sauber, Hover-Textfarbe der umrandeten Buttons (auch im Call-to-Action) passt zur gewählten Palettenfarbe
 - Formular: Feldtyp "Datum" mit wählbarer Datumsart (Datum, Kalenderwoche, Monat)
@@ -16,6 +21,12 @@ Changelog
 - Builder: Vollbild bleibt nach einem harten Neuladen der Seite erhalten (Marker als URL-Parameter <code>gbfs</code>, der Anker der Seite bleibt erhalten)
 - Builder: Vollbild sperrt den Seiten-Scroll nach dem Speichern nicht mehr dauerhaft, doppelte Palettenfelder beim Duplizieren von Repeater-Zeilen behoben, Kebab-Menü öffnet bei wenig Platz nach oben, Selbsttest der Palettenfelder im REDAXO-Debug-Modus
 - Spaltenvorlagen: Die Löschsperre und die Anzeige "in Verwendung" erkennen jetzt auch Vorlagen, die im neuen Builder verwendet werden (bisher nur das alte Gridblock-1-Format); die Reihenfolge wird beim Speichern ohne Lücken neu nummeriert, beim Löschen werden auch die Contentsettings-Ordner der Vorlage entfernt
+- Einstellungen: Die beiden Schalter "Hinzufügen in Sektion/Spalten" und "Hinzufügen zwischen Elementen" haben jetzt eine Beschriftung links; "Vollbild-Button in der Slice-Übersicht" und "Vollbild nach Übernehmen" werden auch ohne gespeicherten Wert als aktiv angezeigt (ein Speichern schaltete sie bisher unbemerkt aus)
+- Datepicker: Felder mit <code>data-datepicker</code> in den Bearbeitungsfenstern des Builders starten ohne eigenen Aufruf und bekommen automatisch ein Kalender-Symbol (bei <code>data-mode="time"</code> eine Uhr), analog zum Farbwähler
+- Hero: neue Einstellung "Eckenrundung der Buttons" (Pille, Abgerundet, Eckig) wie beim CTA-Element; die Pluspunkte im Textstil (nur durch Punkte getrennt) sind gegen Listen-Abstände der Projekt-CSS abgesichert
+- Multilink-Feld: neuer Linktyp "Sprunganker" (z. B. <code>#kontakt</code>, ohne Raute eingeben möglich); CTA, Hero und Karten geben ihn als Link auf der gleichen Seite aus (nie im neuen Fenster)
+- Hero: neue Darstellung "Geteilt, Bild bis zum Rand" (Text mit Innenabstand, Bild oder Video bündig am Rand und über die volle Höhe, Verhältnis 70:30 bis 30:70, optional schräge Bildkante mit Akzentstreifen in der Hervorhebungsfarbe; das Bildformat gilt für die Bildspalte, den Hintergrund liefert die Sektion). Der Tab "Bild &amp; Video" hat jetzt die einklappbaren Gruppen "Video" und "Sonstiges", der Tab "Text &amp; Buttons" die Gruppe "Farben &amp; Position"
+- Sektion: neues Contentsettings-Feld "ID (Sprunganker)" (<code>sectionId</code>); die ID wird am äußeren Element der Sektion ausgegeben, bereinigt auf Buchstaben, Ziffern, <code>-</code> und <code>_</code> (muss mit einem Buchstaben beginnen), damit Sprunganker wie <code>#kontakt</code> ihr Ziel finden
 
 <b>Version 1.0.0-beta1</b>
 - Komplett neue Backend-Oberfläche (Builder): eine flache Karten-Liste ersetzt die bisherigen Tabs, mit Live-Vorschau (iframe oder Shadow-DOM), Drag & Drop, Toolbar-Menü, Kopieren/Einfügen, Online/Offline, Vollbild, Sidebar- oder Modal-Bearbeitung und Touch-Bedienung für Tablets

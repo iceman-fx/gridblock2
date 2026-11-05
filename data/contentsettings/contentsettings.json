@@ -1,7 +1,7 @@
 {
 	"section": {
 		"showOptions": [
-			"bgColor", "bgImage", "bgImagePos", "paddingTop", "paddingBottom", "marginTop", "marginBottom", "class"
+			"bgColor", "bgImage", "bgImagePos", "paddingTop", "paddingBottom", "marginTop", "marginBottom", "class", "sectionId"
 		]
 	},
 
@@ -113,6 +113,13 @@
 			"key": "class",
 			"label": "CSS-Klasse",
 			"placeholder": "beispiel-klasse",
+			"type": "text"
+		},
+		{
+			"category": "general",
+			"key": "sectionId",
+			"label": "ID (Sprunganker)",
+			"placeholder": "z. B. kontakt",
 			"type": "text"
 		}
 	]

@@ -8,9 +8,9 @@
 
 class Gridblock2Builder_VendorMultilink
 {
-	private const ALL_TYPES = ['link', 'url', 'media', 'email', 'tel'];
+	private const ALL_TYPES = ['link', 'url', 'media', 'email', 'tel', 'anchor'];
 
-	private const SCHEME_PREFIX = ['tel' => 'tel:', 'email' => 'mailto:'];
+	private const SCHEME_PREFIX = ['tel' => 'tel:', 'email' => 'mailto:', 'anchor' => '#'];
 
 	private const TYPE_META = [
 		'link'  => ['label' => 'CMS-Seite',        'icon' => 'fa-link'],
@@ -18,6 +18,7 @@ class Gridblock2Builder_VendorMultilink
 		'media' => ['label' => 'Medienpool-Datei', 'icon' => 'fa-file'],
 		'email' => ['label' => 'E-Mail',           'icon' => 'fa-envelope'],
 		'tel'   => ['label' => 'Telefon',          'icon' => 'fa-phone'],
+		'anchor' => ['label' => 'Sprunganker',      'icon' => 'fa-anchor'],
 	];
 
 
@@ -39,13 +40,14 @@ class Gridblock2Builder_VendorMultilink
 		$activeType = in_array($storedType, $allowedTypes, true) ? $storedType : $allowedTypes[0];
 		$value      = (string) ($data['value'] ?? '');
 
-		if ($activeType === 'tel' || $activeType === 'email'):
+		if ($activeType === 'tel' || $activeType === 'email' || $activeType === 'anchor'):
 			$value = self::stripPrefix($activeType, $value);
 		endif;
 
 		$uid = self::makeUid();
 
 		$telValue   = $activeType === 'tel'   ? $value : '';
+		$anchorValue = $activeType === 'anchor' ? $value : '';
 		$emailValue = $activeType === 'email' ? $value : '';
 		$urlValue   = $activeType === 'url'   ? $value : '';
 		$linkValue  = $activeType === 'link'  ? $value : '';

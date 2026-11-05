@@ -67,6 +67,7 @@ if (!class_exists('GbCardsKit')) {
 			$value = (string) ($data['value'] ?? '');
 			$href = match ($type) {
 				'tel', 'email', 'url' => trim((string) ($data['href'] ?? '')),
+				'anchor' => preg_match('/^#[A-Za-z0-9_:.-]+$/', trim((string) ($data['href'] ?? ''))) ? trim((string) $data['href']) : '',
 				'link' => ((int) $value > 0) ? rex_getUrl((int) $value) : '',
 				'media' => ($value !== '') ? rex_url::media($value) : '',
 				default => '',

@@ -90,6 +90,7 @@
 						<li data-topic="start" data-group="allgemein"><a href="#start"><i class="rex-icon fa-circle-info"></i> Überblick</a></li>
 						<li data-topic="erste-schritte" data-group="allgemein"><a href="#erste-schritte"><i class="rex-icon fa-flag-checkered"></i> Erste Schritte</a></li>
 						<li data-topic="builder" data-group="allgemein"><a href="#builder"><i class="rex-icon fa-table-columns"></i> Der Builder</a></li>
+						<li data-topic="favoriten" data-group="allgemein"><a href="#favoriten"><i class="rex-icon fa-star"></i> Favoriten</a></li>
 
 						<li class="gb-help-nav-heading" data-group="admin">Admin &amp; Entwickler</li>
 						<li data-topic="migration" data-group="admin"><a href="#migration"><i class="rex-icon fa-right-left"></i> Migration von Gridblock 1.x</a></li>
@@ -243,6 +244,42 @@
 					<p>Braucht die Live-Vorschau eines Elements zusätzliches CSS aus einem Addon (z.&nbsp;B. eine Karten-Bibliothek), trägst du es in der <code>element.yml</code> unter <code>preview_css</code> ein, etwa <code>addon:vector_maps/build/vectormaps.css</code>. Die Pfade werden über REDAXO aufgelöst und nur in der Backend-Vorschau geladen.</p>
 					</section>
 
+
+					<!-- Favoriten -->
+					<section class="gb-help-topic" id="favoriten">
+					<h2>Favoriten</h2>
+
+					<p>Ein Favorit ist eine gespeicherte <strong>Kopie samt Inhalten</strong> eines Elements, einer Sektion, einer Spaltengruppe oder aller Elemente eines Bausteins. Du fügst ihn später jederzeit wieder ein, ohne ihn neu aufzubauen. Texte und Einstellungen werden übernommen, Bilder und Links bleiben so, wie sie gespeichert wurden.</p>
+
+					<h3>Speichern</h3>
+					<ul>
+					  <li><strong>Einzelnes Element, Sektion oder Spalten:</strong> Kebab-Menü (⋮) des Blocks, dann <em>Als Favorit speichern …</em></li>
+					  <li><strong>Alle Elemente des Bausteins:</strong> Stern-Symbol links neben dem Vollbild-Button.</li>
+					  <li>Im Dialog vergibst du den Titel. Je nach Einstellung kannst du den Favoriten auf <em>Nur für mich</em> begrenzen. Bei aktivem MultiSite gilt er für die aktuelle Domain; im Demo-Bereich wählst du die Domain selbst.</li>
+					  <li>Speichern kannst du nur mit dem Recht <em>Gridblock²: Favoriten speichern und löschen</em> (Administratoren immer). Reine Demo-Elemente lassen sich nicht als Favorit speichern.</li>
+					</ul>
+
+					<h3>Einfügen</h3>
+					<p>Im Fenster <strong>"Element hinzufügen"</strong> wechselst du auf den Reiter <em>Favoriten</em>, suchst nach dem Titel und klickst den Eintrag an. Der Favorit wird immer <strong>zusätzlich</strong> an der gewählten Stelle eingefügt, mehrere Elemente nacheinander in der gespeicherten Reihenfolge. Es gelten dieselben Prüfungen wie beim Kopieren und Einfügen (Rechte, Verfügbarkeit, Verschachtelungstiefe).</p>
+
+					<h3>Umbenennen und Löschen</h3>
+					<p>Im Reiter <em>Favoriten</em> stehen an eigenen Favoriten ein Stift (Titel ändern) und ein Papierkorb (löschen). Administratoren dürfen alle Favoriten ändern. Der Inhalt eines Favoriten lässt sich nicht bearbeiten: einfügen, ändern, als neuen Favoriten speichern und den alten löschen.</p>
+
+					<h3>Einstellungen (Admin)</h3>
+					<ul>
+					  <li><strong>Projektweit</strong> (Standard): normale Benutzer speichern immer für alle.</li>
+					  <li><strong>Benutzerbasiert:</strong> normale Benutzer speichern immer nur für sich.</li>
+					  <li><strong>Beim Speichern wählbar:</strong> mit dem Häkchen <em>Nur für mich</em>.</li>
+					  <li>Administratoren wählen immer frei. Ein Moduswechsel ändert die Sichtbarkeit bestehender Favoriten nicht, sie lässt sich in der Verwaltung ändern.</li>
+					  <li><strong>Domainübergreifende Favoriten erlauben</strong> (nur bei aktivem MultiSite): ohne diese Option gilt jeder Favorit nur für seine Domain. Favoriten aus der Zeit vor MultiSite sind auf allen Domains sichtbar und lassen sich in der Verwaltung einer Domain zuweisen.</li>
+					</ul>
+
+					<h3>Verwaltung (nur Administratoren)</h3>
+					<p>Der Menüpunkt <em>Favoriten</em> im Addon zeigt alle Favoriten aller Benutzer und Domains mit Suche und Filtern (Domain, Ersteller, Art, Sichtbarkeit) und der Sortierung <em>Nie genutzt zuerst</em> zum Aufräumen. Mehrere Einträge lassen sich gemeinsam löschen, für alle freigeben oder einer Domain zuweisen. Einträge gelöschter Benutzer oder Domains sind markiert.</p>
+
+					<div class="alert alert-info"><p><strong>Hinweis:</strong> Favoriten gehören zum Projekt, es gibt bewusst keinen Import/Export, weil sie auf Medien und Links des Projekts verweisen.</p></div>
+
+					</section>
 
 					<!-- Migration von GB1 nach GB2 -->
 					<section class="gb-help-topic" id="migration">

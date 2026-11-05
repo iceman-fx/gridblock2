@@ -126,6 +126,9 @@ $labelTruncated = (mb_strlen($label) > 30) ? mb_substr($label, 0, 30).'…' : $l
 					<?php if ($copyPasteEnabled): ?>
 					<li><span role="button" tabindex="0" class="gb-builder-block-copy"><i class="rex-icon fa-copy" aria-hidden="true"></i> <?php echo rex_i18n::msg('a2034_mod_copy_modul'); ?></span></li>
 					<?php endif; ?>
+					<?php if (Gridblock2Presets::canSave()): ?>
+					<li><span role="button" tabindex="0" class="gb-builder-block-favorite"><i class="rex-icon fa-star" aria-hidden="true"></i> <?php echo rex_i18n::msg('a2034_fav_save'); ?></span></li>
+					<?php endif; ?>
 					<li><span role="button" tabindex="0" class="gb-builder-block-moveup"><i class="rex-icon fa-arrow-up" aria-hidden="true"></i> <?php echo rex_i18n::msg('a2034_mod_move_modul_up'); ?></span></li>
 					<li><span role="button" tabindex="0" class="gb-builder-block-movedown"><i class="rex-icon fa-arrow-down" aria-hidden="true"></i> <?php echo rex_i18n::msg('a2034_mod_move_modul_down'); ?></span></li>
 					<?php if ($offlineToggleEnabled): ?>

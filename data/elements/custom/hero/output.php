@@ -41,7 +41,7 @@ if ($heading === '' && $text === '' && $buttonsHtml === '' && !rex::isBackend())
 }
 
 $bild = $val('bild');
-$video = in_array($layout, ['nebeneinander', 'zentriert', 'vollflaechig'], true) ? $val('video') : '';
+$video = in_array($layout, ['nebeneinander', 'zentriert', 'vollflaechig', 'geteilt'], true) ? $val('video') : '';
 $isBe = rex::isBackend();
 $vtt = ($video !== '' && $layout !== 'vollflaechig') ? $val('vtt') : '';
 $vttLang = GbHeroKit::pick($val('vtt_lang'), array_keys(GbHeroKit::SUBTITLE_LANGS), 'de');
@@ -120,11 +120,18 @@ if ($layout === 'karten') {
 
 $rootClass = 'gb-el-hero gb-el-hero-layout-'.$layout.' gb-el-hero-ratio-'.$ratio.' gb-el-hero-align-'.$align.' gb-el-hero-pos-'.$blockPos.(($layout === 'vollflaechig' && $blockVPos !== 'mitte') ? ' gb-el-hero-vpos-'.$blockVPos : '');
 $inset = GbHeroKit::pick($val('inset'), array_keys(GbHeroKit::INSETS), 'standard');
-if ($layout === 'vollflaechig' && $inset !== 'standard') {
+if (($layout === 'vollflaechig' || $layout === 'geteilt') && $inset !== 'standard') {
 	$rootClass .= ' gb-el-hero-inset-'.$inset;
 }
-if ($layout === 'nebeneinander' || $layout === 'karten') {
+if ($layout === 'nebeneinander' || $layout === 'karten' || $layout === 'geteilt') {
 	$rootClass .= ' gb-el-hero-side-'.$side;
+}
+if ($layout === 'geteilt') {
+	$rootClass .= ' gb-el-hero-split-'.GbHeroKit::pick($val('split'), array_keys(GbHeroKit::SPLITS), '60-40');
+	$edge = GbHeroKit::pick($val('edge'), array_keys(GbHeroKit::EDGES), 'gerade');
+	if ($edge !== 'gerade') {
+		$rootClass .= ' gb-el-hero-edge-'.$edge;
+	}
 }
 if ($layout === 'zentriert') {
 	$rootClass .= ' gb-el-hero-stack-'.$stack;
@@ -138,6 +145,10 @@ if (!$rounded) {
 }
 if (!empty($values['img_shadow'])) {
 	$rootClass .= ' gb-el-hero-imgshadow';
+}
+$btnRadius = GbHeroKit::pick($val('btn_radius'), array_keys(GbHeroKit::BTN_RADII), 'pille');
+if ($btnRadius !== 'pille') {
+	$rootClass .= ' gb-el-hero-btnr-'.$btnRadius;
 }
 if ($layout === 'karten') {
 	$rootClass .= ' gb-el-hero-cards-'.$cardPos.' gb-el-hero-cardsv-'.$cardV;

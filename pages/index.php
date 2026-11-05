@@ -25,12 +25,12 @@ $page = (string) preg_replace('#[^A-Za-z0-9_/\-]#', '', $page);
 $gbCsrf = rex_csrf_token::factory('gridblock2_admin');
 $gbCsrfUrl = http_build_query($gbCsrf->getUrlParams());
 $gbCsrfFailed = false;
-if (in_array($func, ['save', 'delete', 'status', 'duplicate', 'insert_default_templates', 'import_templatearchive', 'export_templates', 'wizard_dismiss', 'wizard_save_settings'], true) && !$gbCsrf->isValid()) {
+if (in_array($func, ['save', 'delete', 'status', 'duplicate', 'insert_default_templates', 'import_templatearchive', 'export_templates', 'wizard_dismiss', 'wizard_save_settings', 'fav_rename', 'fav_bulk'], true) && !$gbCsrf->isValid()) {
 	$gbCsrfFailed = true;
 	$func = '';
 }
 
-if (in_array($func, ['wizard_dismiss', 'wizard_save_settings'], true) && !rex::getUser()->isAdmin()) {
+if (in_array($func, ['wizard_dismiss', 'wizard_save_settings', 'fav_rename', 'fav_bulk'], true) && !Gridblock2Presets::isAdmin()) {
 	$func = '';
 }
 
@@ -241,6 +241,10 @@ switch($subpage):
 
 	case "demo":				//Demobereich
 								require_once("demo.inc.php");
+								break;
+
+	case "favorites":			//Favoriten verwalten
+								require_once("favorites.inc.php");
 								break;
 
 	default:					//alle anderen Einbindungen direkt per Rex-Subpath

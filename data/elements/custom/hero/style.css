@@ -35,7 +35,7 @@
 	padding: 24px 0;
 }
 @media (min-width: 768px) {
-	.gb-el-hero:not(.gb-el-hero-layout-vollflaechig) {
+	.gb-el-hero:not(.gb-el-hero-layout-vollflaechig):not(.gb-el-hero-layout-geteilt) {
 		padding-left: var(--gb-hero-pad);
 		padding-right: var(--gb-hero-pad);
 		max-width: calc(var(--gb-hero-max) + 2 * var(--gb-hero-pad));
@@ -97,7 +97,9 @@
 	color: var(--gb-hero-accent);
 }
 
-.gb-el-hero-bullets-icon li::before, .gb-el-hero-bullets-text li::before { content: none; }
+ul.gb-el-hero-bullets { display: flex !important; margin-left: 0 !important; padding: 0 !important; text-indent: 0 !important; list-style: none !important; }
+ul.gb-el-hero-bullets > li { margin: 0 !important; padding: 0 !important; text-indent: 0 !important; list-style: none !important; background: none !important; }
+ul.gb-el-hero-bullets-icon > li::before, ul.gb-el-hero-bullets-text > li::before { content: none !important; display: none !important; }
 .gb-el-hero-bullets-text { column-gap: 12px; }
 .gb-el-hero-bullets-text li:not(:last-child)::after {
 	content: "\2022";
@@ -321,7 +323,7 @@
 	gap: 10px;
 	padding: 10px 26px;
 	border: 2px solid transparent;
-	border-radius: 999px;
+	border-radius: var(--gb-hero-btn-radius, 999px);
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 15px;
@@ -331,6 +333,8 @@
 	text-align: center;
 	transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
+.gb-el-hero-btnr-abgerundet { --gb-hero-btn-radius: 8px; }
+.gb-el-hero-btnr-eckig { --gb-hero-btn-radius: 0; }
 .gb-el-hero-btn-default {
 	background: #2f6a9f;
 	background: linear-gradient(135deg, var(--gb-hero-btn-a), var(--gb-hero-btn-b));
@@ -368,6 +372,71 @@
 		--gb-hero-card-color: #e6edf3;
 	}
 	.gb-el-hero-layout-vollflaechig:not(.gb2-be-light .gb-el-hero-layout-vollflaechig) { color: #fff; --gb-hero-btn-accent: #fff; }
+}
+
+.gb-el-hero.gb-el-hero-layout-geteilt {
+	max-width: none;
+	padding: 0;
+	overflow: hidden;
+	--gb-hero-split-text: 6fr;
+	--gb-hero-split-media: 4fr;
+	--gb-hero-inset: clamp(24px, 6cqw, 96px);
+	--gb-hero-slant: clamp(28px, 6cqw, 110px);
+	--gb-hero-stripe: clamp(8px, 1.2cqw, 16px);
+	--gb-hero-gapin: 32px;
+}
+.gb-el-hero-layout-geteilt.gb-el-hero-inset-gross { --gb-hero-inset: clamp(32px, 10cqw, 160px); }
+.gb-el-hero-layout-geteilt.gb-el-hero-inset-sehr-gross { --gb-hero-inset: clamp(40px, 14cqw, 220px); }
+.gb-el-hero-layout-geteilt.gb-el-hero-split-70-30 { --gb-hero-split-text: 7fr; --gb-hero-split-media: 3fr; }
+.gb-el-hero-layout-geteilt.gb-el-hero-split-50-50 { --gb-hero-split-text: 5fr; --gb-hero-split-media: 5fr; }
+.gb-el-hero-layout-geteilt.gb-el-hero-split-40-60 { --gb-hero-split-text: 4fr; --gb-hero-split-media: 6fr; }
+.gb-el-hero-layout-geteilt.gb-el-hero-split-30-70 { --gb-hero-split-text: 3fr; --gb-hero-split-media: 7fr; }
+.gb-el-hero-layout-geteilt.gb-el-hero-edge-schraeg, .gb-el-hero-layout-geteilt.gb-el-hero-edge-streifen { --gb-hero-gapin: calc(var(--gb-hero-slant) + 28px); }
+.gb-el-hero-layout-geteilt .gb-el-hero-inner {
+	display: grid;
+	grid-template-columns: minmax(0, var(--gb-hero-split-text)) minmax(0, var(--gb-hero-split-media));
+	gap: 0;
+	align-items: stretch;
+}
+.gb-el-hero-layout-geteilt.gb-el-hero-side-links .gb-el-hero-inner { grid-template-columns: minmax(0, var(--gb-hero-split-media)) minmax(0, var(--gb-hero-split-text)); }
+.gb-el-hero-layout-geteilt.gb-el-hero-nomedia .gb-el-hero-inner { grid-template-columns: minmax(0, 1fr); aspect-ratio: auto; }
+.gb-el-hero-layout-geteilt .gb-el-hero-text {
+	position: relative;
+	z-index: 2;
+	align-self: center;
+	padding: 48px var(--gb-hero-gapin) 48px var(--gb-hero-inset);
+}
+.gb-el-hero-layout-geteilt.gb-el-hero-side-links .gb-el-hero-text { padding: 48px var(--gb-hero-inset) 48px var(--gb-hero-gapin); }
+.gb-el-hero-layout-geteilt.gb-el-hero-nomedia .gb-el-hero-text { padding: 48px var(--gb-hero-inset); }
+.gb-el-hero-layout-geteilt .gb-el-hero-media { position: relative; z-index: 1; align-self: stretch; min-height: 240px; aspect-ratio: var(--gb-hero-ratio); }
+.gb-el-hero-layout-geteilt .gb-el-hero-img,
+.gb-el-hero-layout-geteilt .gb-el-hero-video,
+.gb-el-hero-layout-geteilt .gb-el-hero-player { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+.gb-el-hero-edge-schraeg .gb-el-hero-media, .gb-el-hero-edge-streifen .gb-el-hero-media { margin-inline-start: calc(-1 * var(--gb-hero-slant)); }
+.gb-el-hero-edge-schraeg.gb-el-hero-side-links .gb-el-hero-media, .gb-el-hero-edge-streifen.gb-el-hero-side-links .gb-el-hero-media { margin-inline-start: 0; margin-inline-end: calc(-1 * var(--gb-hero-slant)); }
+.gb-el-hero-edge-schraeg .gb-el-hero-img, .gb-el-hero-edge-schraeg .gb-el-hero-video, .gb-el-hero-edge-schraeg .gb-el-hero-player,
+.gb-el-hero-edge-streifen .gb-el-hero-img, .gb-el-hero-edge-streifen .gb-el-hero-video, .gb-el-hero-edge-streifen .gb-el-hero-player { clip-path: polygon(var(--gb-hero-slant) 0, 100% 0, 100% 100%, 0 100%); }
+.gb-el-hero-edge-schraeg.gb-el-hero-side-links .gb-el-hero-img, .gb-el-hero-edge-schraeg.gb-el-hero-side-links .gb-el-hero-video, .gb-el-hero-edge-schraeg.gb-el-hero-side-links .gb-el-hero-player,
+.gb-el-hero-edge-streifen.gb-el-hero-side-links .gb-el-hero-img, .gb-el-hero-edge-streifen.gb-el-hero-side-links .gb-el-hero-video, .gb-el-hero-edge-streifen.gb-el-hero-side-links .gb-el-hero-player { clip-path: polygon(0 0, calc(100% - var(--gb-hero-slant)) 0, 100% 100%, 0 100%); }
+.gb-el-hero-edge-streifen .gb-el-hero-media::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
+	width: calc(var(--gb-hero-slant) + var(--gb-hero-stripe));
+	background: var(--gb-hero-accent);
+	clip-path: polygon(var(--gb-hero-slant) 0, calc(var(--gb-hero-slant) + var(--gb-hero-stripe)) 0, var(--gb-hero-stripe) 100%, 0 100%);
+	pointer-events: none;
+}
+.gb-el-hero-edge-streifen.gb-el-hero-side-links .gb-el-hero-media::after { left: auto; right: 0; transform: scaleX(-1); }
+@container (max-width: 720px) {
+	.gb-el-hero-layout-geteilt .gb-el-hero-inner, .gb-el-hero-layout-geteilt.gb-el-hero-side-links .gb-el-hero-inner { grid-template-columns: minmax(0, 1fr); }
+	.gb-el-hero-layout-geteilt .gb-el-hero-text, .gb-el-hero-layout-geteilt.gb-el-hero-side-links .gb-el-hero-text { padding: 32px var(--gb-hero-inset); }
+	.gb-el-hero-layout-geteilt .gb-el-hero-media { min-height: 0; aspect-ratio: 16 / 9; margin: 0 !important; }
+	.gb-el-hero-layout-geteilt .gb-el-hero-img, .gb-el-hero-layout-geteilt .gb-el-hero-video, .gb-el-hero-layout-geteilt .gb-el-hero-player { clip-path: none !important; }
+	.gb-el-hero-layout-geteilt .gb-el-hero-media::after { display: none !important; }
 }
 
 /* Hover-Effekte der Hero-Buttons: Modifier-Klasse am Wrapper (.gb-el-hero-fx-NAME), nur CSS, kein zusaetzliches Markup (::before/::after). */

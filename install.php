@@ -52,6 +52,8 @@ $configDefaults = [
 		'gb_builder_between_addbutton'			=> '',
 		'gb_builder_offlinetoggle'				=> 'checked',
 		'gb_builder_copypaste'					=> 'checked',
+		'gb_favorites_mode'						=> 'project',
+		'gb_favorites_cross_domain'				=> '',
 		'gb_builder_hidelabel'					=> '',		
 		'gb_builder_maxdepth'					=> '3',
 		'gb_builder_modaledit'					=> 'checked',
@@ -93,6 +95,8 @@ rex_sql_table::get(rex::getTable('2034_gridtemplates'))
 	->ensureGlobalColumns()
 	->setPrimaryKey('id')
 	->ensure();
+
+Gridblock2Presets::ensureTable(true);
 
 
 

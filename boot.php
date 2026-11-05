@@ -18,6 +18,11 @@ $mypage = $this->getProperty('package');
 $isAdmin = ( is_object(rex::getUser()) AND (rex::getUser()->hasPerm($mypage.'[admin]') OR rex::getUser()->isAdmin()) ) ? true : false;
 
 
+if (rex::isBackend()):
+	rex_perm::register('gridblock2[favorites]', rex_i18n::msg('a2034_perm_favorites'), rex_perm::OPTIONS);
+endif;
+
+
 //Addon Einstellungen
 $config = rex_addon::get($mypage)->getConfig('config');			//Addon-Konfig einladen
 

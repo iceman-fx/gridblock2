@@ -18,4 +18,5 @@ $error = ""; $notice = "";
 //Datenbank-Einträge löschen
 $db = rex_sql::factory();
 $db->setQuery("DROP TABLE IF EXISTS ".rex::getTable('2034_gridtemplates'));
+$db->setQuery("DROP TABLE IF EXISTS ".rex::getTable('gridblock2_presets'));
 ?>

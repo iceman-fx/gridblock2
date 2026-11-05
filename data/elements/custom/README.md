@@ -200,7 +200,7 @@ Sektion/Spalten) - keine eigene Konfiguration nötig.
 ## Repeater/Multi-Link-Feld ohne Hard-Dependency auf "_fm_helper"
 
 Für wiederholbare Zeilen (HTML-Repeater) bzw. ein Multi-Link-Feld (Telefon/E-Mail/URL/interner
-Link/Medienpool-Datei in einem Feld) NICHT direkt `\IcemanFx\FmHelper\fmHelper_repeater`/
+Link/Medienpool-Datei/Sprunganker in einem Feld) NICHT direkt `\IcemanFx\FmHelper\fmHelper_repeater`/
 `fmHelper_multilink` aufrufen, sondern immer über die Fassade:
 
 ```php

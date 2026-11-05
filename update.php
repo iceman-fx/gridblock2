@@ -16,4 +16,6 @@ $error = "";
 
 
 //Datenbank-Spalten anlegen, sofern noch nicht verfügbar
+Gridblock2Presets::ensureTable(true);
+
 ?>

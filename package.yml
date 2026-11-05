@@ -10,6 +10,7 @@ page:
     subpages:
         default: { title: 'translate:a2034_default', icon: rex-icon fa-table-columns }
         demo: { title: 'translate:a2034_demo', icon: rex-icon fa-flask }
+        favorites: { title: 'translate:a2034_favorites', icon: rex-icon fa-star, perm: 'admin[]' }
 
         help: { title: 'translate:a2034_help', icon: rex-icon fa-info-circle, itemclass: pull-right }
         config: { title: 'translate:a2034_config', icon: rex-icon fa-wrench, itemclass: pull-right, perm: 'gridblock2[config]' }

@@ -14,6 +14,7 @@ if (!class_exists('GbHeroKit')) {
 			'zentriert' => 'Zentriert, Bild über oder unter dem Text',
 			'vollflaechig' => 'Vollflächiges Bild oder Video',
 			'karten' => 'Text mit Bild & Infokarten',
+			'geteilt' => 'Geteilt, Bild bis zum Rand',
 		];
 
 		public const RATIOS = [
@@ -98,6 +99,26 @@ if (!class_exists('GbHeroKit')) {
 		}
 		public const MAX_CARDS = 3;
 
+		public const SPLITS = [
+			'70-30' => '70 : 30 (Text sehr breit)',
+			'60-40' => '60 : 40',
+			'50-50' => '50 : 50',
+			'40-60' => '40 : 60',
+			'30-70' => '30 : 70 (Bild sehr breit)',
+		];
+
+		public const EDGES = [
+			'gerade' => 'Gerade',
+			'schraeg' => 'Schräg (überdeckt das Bild)',
+			'streifen' => 'Schräg mit Akzentstreifen',
+		];
+
+		public const BTN_RADII = [
+			'pille' => 'Pille',
+			'abgerundet' => 'Abgerundet',
+			'eckig' => 'Eckig',
+		];
+
 		public static function pick(string $value, array $allowed, string $default): string
 		{
 			return in_array($value, $allowed, true) ? $value : $default;
@@ -110,6 +131,7 @@ if (!class_exists('GbHeroKit')) {
 
 			return match ($data['type'] ?? '') {
 				'tel', 'email', 'url' => (string) ($data['href'] ?? ''),
+				'anchor' => preg_match('/^#[A-Za-z0-9_:.-]+$/', (string) ($data['href'] ?? '')) ? (string) $data['href'] : '',
 				'link' => ((int) $value > 0) ? rex_getUrl((int) $value) : '',
 				'media' => ($value !== '') ? rex_url::media($value) : '',
 				default => '',
@@ -342,7 +364,7 @@ if (!class_exists('GbHeroKit')) {
 				}
 
 				$href = self::href((string) ($row['link'] ?? ''));
-				$newTab = ($href !== '') && !empty($row['newtab']);
+				$newTab = ($href !== '') && !str_starts_with($href, '#') && !empty($row['newtab']);
 				$style = self::pick((string) ($row['stil'] ?? 'fill'), ['fill', 'outline', 'link'], 'fill');
 				$icon = trim((string) ($row['icon'] ?? ''));
 				$iconRight = ((string) ($row['iconposition'] ?? 'links')) === 'rechts';

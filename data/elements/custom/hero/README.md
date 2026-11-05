@@ -29,6 +29,7 @@ Das Element braucht kein anderes Element. Optional genutzt werden nur: das Addon
 | Zentriert, Bild über oder unter dem Text | eine Spalte, Textblock links, mittig oder rechts | ja, im Player |
 | Vollflächiges Bild oder Video | Bild oder Video als Hintergrund mit optionaler Abdunklung, Text darüber | ja, stumm im Hintergrund |
 | Text mit Bild & Infokarten | wie "nebeneinander", dazu bis zu 3 halbtransparente Karten auf dem Bild | nein |
+| Geteilt, Bild bis zum Rand | Fläche über die volle Breite des Elements: Text mit Innenabstand in einer Spalte, Bild oder Video bündig am Rand in der anderen, ohne Rundung und Schatten. Die Bildspalte füllt die Höhe der Fläche, auch wenn der Text höher wird. Unter 720 px Breite stehen Text und Bild untereinander | ja, im Player |
 
 Ohne Bild und Video entfällt die Medien-Spalte, der Text nutzt die ganze Breite.
 
@@ -60,6 +61,9 @@ Die Reihenfolge der Felder entspricht der Ausgabe (Überschrift, Text, Buttons, 
 | Text | Freitext, Zeilenumbrüche bleiben erhalten |
 | Buttons | Repeater, höchstens 3 (weitere lassen sich im Editor nicht anlegen). Felder wie beim CTA-Element: Titel, Stil (Gefüllt, Umrandet, Textlink), Link, Linkbeschreibung (Screenreader), neuer Tab, Icon, Farbe (Projektfarbe oder "Individuell", siehe unten), Hover-Farben |
 | Hover-Effekt der Buttons | "- keine -" (Standard-Hover) oder einer der Effekte des CTA-Elements (Vergrößern, Pulsieren, Hüpfen, Gummiband, Schweben, Füllung von links, Glanzstreifen, Welle, Unterstreichung) |
+| Verhältnis von Text und Bild | nur "Geteilt" (Medien-Tab): 70 : 30, 60 : 40 (Standard), 50 : 50, 40 : 60 oder 30 : 70. Die Liste steht in `helpers.php` (`SPLITS`). Steht das Bild links, spiegelt sich das Verhältnis |
+| Kante des Bildes | nur "Geteilt": Gerade (Standard), Schräg (die Textfläche überdeckt einen Teil des Bildes) oder Schräg mit Akzentstreifen (Streifen in der Hervorhebungsfarbe). Der Überhang folgt der Breite des Elements |
+| Eckenrundung der Buttons | Pille (Standard), Abgerundet oder Eckig; wirkt auf alle Buttons des Elements (Variable `--gb-hero-btn-radius`) |
 | Kurze Pluspunkte | eine pro Zeile, erscheinen unter den Buttons (oder über der Überschrift, siehe Position) |
 | Darstellung der Pluspunkte | "Mit Häkchen oder Icon" (Standard) oder "Nur Text, durch Punkte getrennt" (ohne Häkchen/Icon, Trennzeichen • in der Hervorhebungsfarbe) |
 | Position der Pluspunkte | "Unter den Buttons" (Standard), "Zwischen Text und Buttons" oder "Über der Überschrift" als Dachzeile (mit etwas Abstand zur Überschrift) |
@@ -67,7 +71,7 @@ Die Reihenfolge der Felder entspricht der Ausgabe (Überschrift, Text, Buttons, 
 | Icon der Pluspunkte | optional, ein Icon für alle Pluspunkte (Icon-Auswahl wie bei den Buttons). Leer = Häkchen. Nur bei "Mit Häkchen oder Icon" |
 | Position des Textblocks | neun Positionen: Oben, Mitte oder Unten jeweils links, mitte oder rechts (ein Auswahlfeld). Die vertikale Position (oben, unten) wirkt nur bei "Vollflächig", bei "Zentriert" zählt nur die horizontale. Ältere Werte (links, Mitte, rechts) bleiben gültig und entsprechen "Mitte links", "Mitte" und "Mitte rechts" |
 | Textausrichtung | links, Mitte oder rechts (nur "Zentriert" und "Vollflächig") |
-| Horizontaler Abstand des Textes zum Rand | nur "Vollflächig": Standard, Groß oder Sehr groß. Der Abstand ist in Prozent der Breite angegeben und passt sich der Browserbreite an (mit Mindest- und Höchstwert) |
+| Horizontaler Abstand des Textes zum Rand | nur "Vollflächig" und "Geteilt": Standard, Groß oder Sehr groß. Der Abstand ist in Prozent der Breite angegeben und passt sich der Browserbreite an (mit Mindest- und Höchstwert) |
 
 
 ### Farben der Buttons
@@ -91,7 +95,7 @@ Solange weder Bild noch Video gewählt ist, zeigt der Editor (Builder-Vorschau u
 | Ausrichtung des Bildes | welcher Teil des Bildes sichtbar bleibt, wenn das Bildformat es beschneidet: Mitte (Standard) oder eine der acht Randpositionen (links oben bis rechts unten). Gilt auch für Video und Standbild |
 | Abgerundete Ecken | Häkchen, Bild und Video mit abgerundeten Ecken (Standard: an, nicht bei "Vollflächig"). Ohne Häkchen sind sie eckig |
 | Schatten am Bild | Häkchen, Schatten unter Bild und Video (Standard: aus, nicht bei "Vollflächig") |
-| Bildformat | 1:1, 16:9 (Standard), 21:9, 3:1, 4:3, 3:2, 8:5, 5:8, 2:3, 3:4, 4:5. Gilt für alle Darstellungen. Bei "Vollflächig" ist es die Mindesthöhe der Fläche, bei viel Text wächst sie nach unten |
+| Bildformat | 1:1, 16:9 (Standard), 21:9, 3:1, 4:3, 3:2, 8:5, 5:8, 2:3, 3:4, 4:5. Gilt für alle Darstellungen. Bei "Vollflächig" ist es die Mindesthöhe der Fläche, bei viel Text wächst sie nach unten. Bei "Geteilt" gilt es für die Bildspalte (Breite der Spalte : Höhe), nicht für die ganze Fläche; wird der Text höher, wächst die Fläche |
 | Position des Bildes | links oder rechts vom Text (nebeneinander, Infokarten) bzw. über oder unter dem Text (zentriert) |
 | Abdunklung | nur "Vollflächig": Keine, Leicht, Mittel, Stark, Verlauf von unten, Verlauf von links unten (stark in der linken unteren Ecke, läuft bei etwa 70 % der Breite aus), Verlauf von rechts unten (spiegelverkehrt, gleiche Werte) |
 | Farbe der Abdunklung | nur "Vollflächig", optional, sonst Schwarz. Gilt für alle Abdunklungen und Verläufe (Farbwahl mit Deckkraft über die Stufen). Bei heller Farbe den Kontrast des weißen Textes prüfen |

@@ -44,6 +44,8 @@ if (!class_exists('GbHeroKit')) {
 			'mittel' => 'Mittel',
 			'stark' => 'Stark',
 			'verlauf' => 'Verlauf von unten',
+			'verlauf-links' => 'Verlauf von links',
+			'verlauf-rechts' => 'Verlauf von rechts',
 			'verlauf-ecke' => 'Verlauf von links unten',
 			'verlauf-ecke-rechts' => 'Verlauf von rechts unten',
 		];

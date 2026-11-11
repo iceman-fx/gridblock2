@@ -203,7 +203,7 @@
 
 					<p>Hast du eigene Spaltenklassen (z.&nbsp;B. aus Gridblock 1.x, Bootstrap oder UIkit), lass das native Grid-CSS ausgeschaltet und nutze den Abstand über deine Klassen: Dann bestimmen allein deine Klassen die Breite. Die Kombination beider Wege ist nicht empfohlen: Die nativen Breiten (<code>flex-basis</code>) setzen sich gegen die <code>width</code> deiner Klassen durch, und ein Abstand aus Contentsettings-Klassen ist dem nativen CSS unbekannt. Als Notbehelf dürfen die Spalten dann ab 768&nbsp;px schrumpfen, ohne umzubrechen; das gleicht den Abstand aus, scheitert aber, sobald dein CSS <code>flex</code>, <code>flex-shrink: 0</code> oder <code>min-width</code> an den Spalten setzt.</p>
 
-					<p><strong>Frontend:</strong> Das native Grid-CSS liegt als Datei <code>gb-native-grid.generated.css</code> im öffentlichen Assets-Ordner und wird bei jedem Speichern der Einstellungen neu geschrieben. Hast du den Addon-Code aktualisiert, speichere die Einstellungen einmal, damit die Datei den neuen Stand bekommt. Sie enthält auch die Hilfsklassen der System-Elemente für Abstände und Hintergrundbild (aus <code>data/elements/system/column/style.css</code> und, falls vorhanden, <code>section/style.css</code>); ändert sich eine dieser Dateien, wird die Datei beim nächsten Aufruf automatisch neu geschrieben.</p>
+					<p><strong>Frontend:</strong> Das native Grid-CSS liegt als Datei <code>gb-native-grid.generated.css</code> im öffentlichen Assets-Ordner und wird bei jedem Speichern der Einstellungen neu geschrieben. Hast du den Addon-Code aktualisiert, speichere die Einstellungen einmal, damit die Datei den neuen Stand bekommt.</p>
 
 					<h3>CSS der Custom-Elemente (style.css)</h3>
 
@@ -223,7 +223,7 @@
 
 					<h3>Elemente ein-/ausblenden</h3>
 
-					<p>Sektion ist - anders als Spalten - kein zwingend benötigtes System-Element: Spalten rendert seine eigene Box (Hintergrund, Abstände, ...) komplett eigenständig, Sektion ist nur noch ein optionaler, generischer Container drumherum. Brauchst du ihn in einem Projekt nicht, blendest du ihn per <code>status: offline</code> in dessen <code>element.yml</code> (<code>data/elements/system/section/element.yml</code>) aus dem "Hinzufügen"-Menü aus, ohne die Datei zu löschen. Bereits im Artikel platzierte Sektionen bleiben davon unberührt und funktionieren normal weiter.</p>
+					<p>Sektion ist - anders als Spalten - kein zwingend benötigtes System-Element: Spalten rendert seine eigene Box (Hintergrund, Rahmen, Formtrenner, ...) komplett eigenständig, Sektion ist nur noch ein optionaler, generischer Container drumherum. Brauchst du ihn in einem Projekt nicht, blendest du ihn per <code>status: offline</code> in dessen <code>element.yml</code> (<code>data/elements/system/section/element.yml</code>) aus dem "Hinzufügen"-Menü aus, ohne die Datei zu löschen. Bereits im Artikel platzierte Sektionen bleiben davon unberührt und funktionieren normal weiter.</p>
 
 					<p>Dieselbe <code>status: online</code>/<code>status: offline</code>-Angabe funktioniert auch in der <code>element.yml</code> jedes eigenen Custom-Elements - praktisch, um einen Baustein projektweit vorübergehend zu deaktivieren, ohne ihn zu entfernen. Fehlt der Schlüssel, gilt ein Element wie bisher immer als online (sichtbar). Für Spalten selbst gibt es diese Angabe nicht - eine Aufteilung braucht immer mindestens eine aktive <a href="#templates">Spaltenvorlage</a> (siehe oben, "Ein Klick auf 'Spalten' ...").</p>
 
@@ -403,15 +403,11 @@
 
 					<h3>Ebenen (Scopes)</h3>
 					<ul>
-					  <li><strong>section</strong> - Einstellungen für die Sektion (optional, unabhängig vom Inhalt - z.B. Hintergrund oder Abstände um beliebige Inhalte herum).</li>
+					  <li><strong>section</strong> - Einstellungen für die Sektion (optional, unabhängig vom Inhalt - z.B. Hintergrund/Formtrenner um beliebige Inhalte herum).</li>
 					  <li><strong>template</strong> - Einstellungen für die Spalten-Zeile (Box + Zeilen-Einstellungen wie der Abstand zwischen den Spalten).</li>
 					  <li><strong>columns</strong> - Einstellungen für eine einzelne Spalte.</li>
 					  <li><strong>modules</strong> - optional: Blockeinstellungen, die für <em>jeden</em> Block gelten (Inhaltsmodul, Custom-Element, Sektion, Spalten-Zeile) - siehe <a href="#contentsettings-modules">Blockeinstellungen</a>.</li>
 					</ul>
-
-					<h3>Mitgelieferte Einstellungen der System-Elemente</h3>
-
-					<p>Bei einer Neuinstallation legt Gridblock² eine einfache <code>contentsettings.json</code> an (Ordner <code>redaxo/data/addons/gridblock2/contentsettings/</code>). Sie enthält für Sektion und Spalten-Zeile die Felder Hintergrundfarbe, Hintergrundbild mit Position, Innen- und Außenabstand (oben/unten) und CSS-Klasse. Eine vorhandene Datei wird nie überschrieben, bei einer Migration von Gridblock 1.x gelten deine bisherigen Contentsettings. Die Werte sind Klassennamen (z.&nbsp;B. <code>gb-pt-m</code>); ihr CSS steht in <code>data/elements/system/column/style.css</code> und kommt über die generierte Grid-CSS in Vorschau und Frontend (siehe <a href="#builder">Der Builder</a>). Die Ausgabe übernimmt <code>GbOutputKit</code> in <code>data/elements/system/_gbOutputHelper.php</code>. Eigene Felder nimmst du in der <code>contentsettings.json</code> auf und trägst ihren Schlüssel in <code>_gbOutputHelper.php</code> ein; die Dateien im <code>data</code>-Ordner bleiben bei Addon-Updates erhalten.</p>
 
 					<h3>Zwei Dateiebenen</h3>
 					<ul>
@@ -426,7 +422,7 @@
 					<p>Format, an dem du dich orientieren kannst:</p>
 					<pre style="height: 400px;">
 <?php
-$csExamplePath = rex_addon::get('gridblock2')->getPath('data/contentsettings.json.example');
+$csExamplePath = rex_addon::get('gridblock2')->getPath('data/contentsettings/contentsettings.json.example');
 echo (file_exists($csExamplePath)) ? htmlspecialchars(rex_file::get($csExamplePath)) : '';
 ?></pre>
 
@@ -572,7 +568,9 @@ font-size: clamp(24px, 4vw, 2.2rem);
 
 					<p><strong>Parameter</strong> (<code>$ep->getParam('...')</code>): <code>articleId</code>, <code>clangId</code>, <code>sliceId</code> (Artikel, Sprache und Slice des bearbeiteten Inhalts), <code>domainId</code> (YRewrite-ID, 0 ohne YRewrite), <code>domainName</code>, <code>domainUrl</code> und <code>yrewriteDomain</code> (das Domain-Objekt oder <code>null</code>).</p>
 					<ul>
-					  <li><strong><code>:root</code> funktioniert auch im Shadow-DOM:</strong> Dort gibt es kein <code>:root</code>, deshalb setzt Gridblock² es für die Shadow-DOM-Vorschau automatisch zu <code>:host</code> um. CSS-Variablen greifen dadurch in beiden Arten gleich.</li>
+					  <li><strong><code>:root</code> funktioniert auch im Shadow-DOM:</strong> Dort gibt es kein <code>:root</code>, deshalb setzt Gridblock² es für die Shadow-DOM-Vorschau automatisch zu <code>:host</code> um. CSS-Variablen greifen dadurch in beiden Arten gleich. Dasselbe gilt für <code>html:root</code> sowie für Regeln, die nur auf <code>html</code> oder <code>body</code> zielen (z.&nbsp;B. <code>body { font-size: ...; }</code>): Sie wirken im Shadow-DOM auf den Vorschau-Inhalt. Damit der Vorschau-Container transparent und ohne eigenen Rahmen bleibt, werden aus diesen <code>html</code>-/<code>body</code>-Regeln die Eigenschaften <code>background</code>, <code>padding</code>, <code>margin</code>, <code>scroll-padding</code>, <code>overflow</code>, <code>height</code>, <code>min-height</code> und <code>max-height</code> entfernt (jeweils samt Varianten wie <code>background-color</code>; CSS-Variablen bleiben). Die Liste lässt sich über den Extension-Point <code>GRIDBLOCK2_PREVIEW_CSS_HOST_IGNORE</code> ändern: <code>rex_extension::register('GRIDBLOCK2_PREVIEW_CSS_HOST_IGNORE', fn (rex_extension_point $ep) => array_diff($ep->getSubject(), ['padding']));</code>. Steht <code>body</code> in einer Regel zusammen mit anderen Selektoren (<code>body, .card { ... }</code>), gilt der Filter für die ganze Regel. Deine eigenen Frontend-CSS-Dateien aus den Einstellungen sind davon nicht betroffen.</li>
+						  <li><strong>Schriften (<code>@font-face</code>):</strong> <code>@font-face</code>-Regeln in diesem CSS werden für die Shadow-DOM-Vorschau automatisch in die Seite übernommen, weil Schriftregeln im Shadow-DOM selbst nicht wirken.</li>
+						  <li><strong><code>rem</code> im Backend:</strong> Das Backend hat eine eigene Basisgröße (10&nbsp;px), das Frontend meist 16&nbsp;px. Liefert dein Addon Größen in <code>rem</code>, rechne sie in diesem CSS in <code>px</code> um, sonst erscheint die Vorschau kleiner als im Frontend.</li>
 					  <li><strong>Nur CSS, kein JavaScript:</strong> Der Extension-Point nimmt ausschließlich Text für ein <code>&lt;style&gt;</code> entgegen. Ein <code>&lt;</code> im Text wird maskiert, es kann also kein Markup oder Skript eingeschleust werden.</li>
 					  <li><strong>Ohne registrierte Funktion ändert sich nichts.</strong> Platzhalter, die ein Addon sonst per Output-Filter im Frontend ersetzt, laufen in der Vorschau nicht mit - rufe in deiner Funktion stattdessen dieselbe PHP-Funktion auf, die den Platzhalter füllt.</li>
 					  <li>Die Funktion läuft bei jedem Vorschau-Aufruf: kurz halten und bei Bedarf selbst zwischenspeichern (z.&nbsp;B. <code>rex_cache</code>).</li>
@@ -638,12 +636,12 @@ font-size: clamp(24px, 4vw, 2.2rem);
 
 					<h3>Contentsettings</h3>
 
-					<p>In der <code>contentsettings.json</code> bekommt ein Feld vom Typ <code>colorpicker</code> die Option <code>"palette": true</code>, zum Beispiel <code>{"key": "bgColor", "type": "colorpicker", "palette": true, "mode": "both"}</code>. Der Redakteur sieht dann ein Auswahlfeld mit Suche und Farbfeldern: "- keine Farbe -", die Projektfarben und "Individuell". "Individuell" öffnet den normalen Colorpicker. Mit <code>"mode": "both"</code> kann der Picker auch Verläufe (Standard ist nur eine Farbe). Ohne die Option oder ohne Palette bleibt es beim normalen Picker.</p>
+					<p>In der <code>contentsettings.json</code> bekommt ein Feld vom Typ <code>colorpicker</code> die Option <code>"palette": true</code>, zum Beispiel <code>{"key": "bgColorHEX", "type": "colorpicker", "palette": true, "mode": "both"}</code>. Der Redakteur sieht dann ein Auswahlfeld mit Suche und Farbfeldern: "- keine Farbe -", die Projektfarben und "Individuell". "Individuell" öffnet den normalen Colorpicker. Mit <code>"mode": "both"</code> kann der Picker auch Verläufe (Standard ist nur eine Farbe). Ohne die Option oder ohne Palette bleibt es beim normalen Picker.</p>
 					<ul>
 					  <li><strong>Gespeichert</strong> wird der Rückgabewert des Eintrags (Klasse oder <code>color</code>), nicht der Key. Ändert sich eine Klasse später, behalten schon gespeicherte Inhalte die alte Klasse. Ältere Werte werden wiedererkannt, wenn sie einem Rückgabewert entsprechen (z.&nbsp;B. <code>bgCol-primary</code> zu einer Zeile mit dieser Klasse). Ein unbekannter Klassenwert erscheint oben als "Alt: ...", ein anderer Wert (Hex, Verlauf) als "Individuell". Es geht nichts verloren, solange der Redakteur nichts ändert.</li>
 					  <li><strong>Immer die Farbe statt der Klasse:</strong> Mit <code>"palette": "colors"</code> statt <code>true</code> liefert jeder Eintrag seine <code>color</code> (z.&nbsp;B. <code>var(--col-primary)</code>) und nie die Klasse. Das ist für Felder gedacht, deren Wert als echte CSS-Farbe ausgegeben wird, etwa Rahmenfarbe oder Trennerfarbe (<code>borderColorHEX</code>, <code>formDivTopColorHEX</code>): Eine Hintergrundklasse wie <code>bgCol-primary</code> wäre dort wirkungslos. Einträge ohne <code>color</code> erscheinen in solchen Feldern nicht. Bereits gespeicherte Klassenwerte, die zu einem Eintrag gehören, werden in der Auswahl wiedererkannt.</li>
 					  <li><strong>Zentral ändern:</strong> Klassen und Variablen (<code>var(--col-primary)</code>) lassen sich im CSS zentral anpassen. Ein reiner Hex-Wert wird dagegen als Kopie im Inhalt gespeichert: Ändert der Admin ihn später in der Palette, behalten schon gespeicherte Inhalte den alten Wert. Für zentrale Pflege daher Klassen oder Variablen nutzen.</li>
-					  <li><strong>Ausgabe:</strong> Die mitgelieferte Datei <code>data/elements/system/_gbOutputHelper.php</code> (Klasse <code>GbOutputKit</code>) gibt das Feld <code>bgColor</code> der Systemelemente richtig aus: Eine Klasse geht ins <code>class</code>-Attribut, ein Verlauf als <code>background-image</code> und jede andere Farbe als <code>background-color</code> in den Style. Eigene Templates oder Module, die das Feld selbst ausgeben, brauchen dieselbe Unterscheidung.</li>
+					  <li><strong>Ausgabe:</strong> Damit die Systemelemente (Sektion, Spalten-Zeile, Spalte) den Wert richtig ausgeben, nutzen sie <code>rex_gridblock2_helper::getSectionStyles($cs, array('background-auto' => 'bgColorHEX'))</code> und für die Klassen <code>'bgColorHEX|class'</code> in der Klassenliste. Dabei geht eine Klasse ins <code>class</code>-Attribut, ein Verlauf als <code>background-image</code> und jede andere Farbe als <code>background-color</code> in den Style. Eigene Templates oder Module, die das Feld selbst ausgeben, brauchen dieselbe Unterscheidung.</li>
 					  <li>Module, die den Farbwert in PHP weiterverarbeiten (z.&nbsp;B. Hex in RGB), kommen mit Klassen und <code>var(...)</code> nicht klar. Die Palette deshalb nur bei Feldern einschalten, deren Wert direkt in CSS oder als Klasse landet.</li>
 					</ul>
 

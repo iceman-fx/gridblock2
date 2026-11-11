@@ -261,16 +261,75 @@ class Gridblock2Builder_Preview
 
 	//Extension-Point GRIDBLOCK2_PREVIEW_CSS: andere Addons liefern CSS-Text (z. B. dynamische Projektfarben je Domain), der in die Vorschau eingebettet wird.
 	public static function collectExtensionCss(bool $shadow): string
-	{	$css = rex_extension::registerPoint(new rex_extension_point('GRIDBLOCK2_PREVIEW_CSS', '', self::getPreviewContext()));
-		if (!is_string($css) || trim($css) === '') {
-			return '';
+	{	static $raw = null;
+		if ($raw === null) {
+			$css = rex_extension::registerPoint(new rex_extension_point('GRIDBLOCK2_PREVIEW_CSS', '', self::getPreviewContext()));
+			$raw = (is_string($css) && trim($css) !== '') ? str_replace('<', '\\3C ', $css) : '';
 		}
-		$css = str_replace('<', '\\3C ', $css);
-		if ($shadow) {
-			$css = (string) preg_replace('/:root\b/', ':host', $css);
+		if ($raw === '' || !$shadow) {
+			return $raw;
 		}
 
-		return $css;
+		$css = self::stripHostProperties($raw);
+		$css = (string) preg_replace('/(?<![\w.#:\[-])html\s*:root\b/', ':host', $css);
+		$css = (string) preg_replace('/:root\b/', ':host', $css);
+
+		return (string) preg_replace('/(?<![\w.#:\[-])(?:body|html)(?=\s*[,{])/', ':host', $css);
+	}
+
+	public const HOST_IGNORE_PROPERTIES = ['background', 'padding', 'margin', 'scroll-padding', 'overflow', 'height', 'min-height', 'max-height'];
+
+	private static function stripHostProperties(string $css): string
+	{	static $ignore = null;
+		if ($ignore === null) {
+			$list = rex_extension::registerPoint(new rex_extension_point('GRIDBLOCK2_PREVIEW_CSS_HOST_IGNORE', self::HOST_IGNORE_PROPERTIES));
+			$ignore = [];
+			foreach (is_array($list) ? $list : [] as $property) {
+				$property = strtolower(trim((string) $property));
+				if ($property !== '' && $property[0] !== '-') {
+					$ignore[] = $property;
+				}
+			}
+		}
+		if ($ignore === []) {
+			return $css;
+		}
+
+		$isIgnored = static function (string $name) use ($ignore): bool {
+			foreach ($ignore as $property) {
+				if ($name === $property || str_starts_with($name, $property.'-')) {
+					return true;
+				}
+			}
+
+			return false;
+		};
+
+		return (string) preg_replace_callback('/([^{}]+)\{([^{}]*)\}/', static function (array $match) use ($isIgnored): string {
+			if (!preg_match('/(?<![\w.#:\[-])(?:body|html)(?=\s*[,{:])/', $match[1].'{')) {
+				return $match[0];
+			}
+			preg_match_all('/((?:[^;()"\']|\([^)]*\)|"[^"]*"|\'[^\']*\')+)(?:;|$)/', $match[2], $declarations);
+			$kept = '';
+			foreach ($declarations[1] as $declaration) {
+				$name = strtolower(trim((string) strstr($declaration, ':', true)));
+				if ($name !== '' && $name[0] !== '-' && $isIgnored($name)) {
+					continue;
+				}
+				$kept .= trim($declaration).';';
+			}
+
+			return $match[1].'{'.$kept.'}';
+		}, $css);
+	}
+
+	private static function collectExtensionFontFaces(): string
+	{	$css = self::collectExtensionCss(false);
+		if ($css === '' || !preg_match_all('/@font-face\s*\{[^}]*\}/i', $css, $faces)) {
+			return '';
+		}
+
+		return implode("\n", $faces[0]);
 	}
 
 	public static function collectPreviewVisibilityFixes(): string
@@ -474,7 +533,7 @@ class Gridblock2Builder_Preview
 		$hostVars = self::extractHostVariables($varSourceLines).self::collectExtensionCss(true);
 		$visibilityFixes = self::collectPreviewVisibilityFixes();
 		$containerQueryOverrides = self::collectContainerQueryOverrides($varSourceLines);
-		$fontFaces = self::collectFontFaceCss($varSourceLines);
+		$fontFaces = trim(self::collectFontFaceCss($varSourceLines)."\n".self::collectExtensionFontFaces());
 
 		$op = '<style class="gb-preview-css-host-reset">:host{display:var(--gb-preview-display,block)!important}.gb2-preview-content{width:100%;box-sizing:border-box;}.col>div{flex:1 1 auto!important;min-width:0!important;}::slotted(.gb-builder-column-slot){flex:1 1 auto!important;min-width:0!important;width:100%!important;}</style>';
 		$themeClassCombined = trim($themeClass.' '.self::getBackendThemeClass());

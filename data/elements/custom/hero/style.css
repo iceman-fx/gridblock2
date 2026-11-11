@@ -78,6 +78,11 @@
 .gb-el-hero-title-scale { display: inline; font-size: calc(1em * var(--gb-hero-title-scale, 1.6)); line-height: 1.1; }
 .gb-el-hero-accent { color: var(--gb-hero-accent); }
 .gb-el-hero-lead { margin: 0; font-size: 1.15em; line-height: 1.6; }
+.gb-el-hero-eyebrow { margin: 0 0 0.6em; font-size: 0.95em; letter-spacing: 0.04em; line-height: 1.4; overflow-wrap: anywhere; }
+.gb-el-hero-align-links .gb-el-hero-eyebrow { text-align: left; }
+.gb-el-hero-align-mitte .gb-el-hero-eyebrow { text-align: center; }
+.gb-el-hero-align-rechts .gb-el-hero-eyebrow { text-align: right; }
+.gb-el-hero-bold, .gb-el-hero-bold > li { font-weight: 700; }
 
 .gb-el-hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 0; }
 .gb-el-hero-bullets {

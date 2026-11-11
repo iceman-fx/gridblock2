@@ -39,6 +39,10 @@ $bulletPos = GbHeroKit::pick($val('bullet_pos'), ['unten', 'mitte', 'oben'], 'un
 $bulletLayout = GbHeroKit::pick($val('bullet_layout'), ['inline', 'stack'], 'inline');
 $vttLang = GbHeroKit::pick($val('vtt_lang'), array_keys(GbHeroKit::SUBTITLE_LANGS), 'de');
 $maxWidth = GbHeroKit::pick($val('maxwidth'), array_map('strval', array_keys(GbHeroKit::MAX_WIDTHS)), '');
+$textMaxUnit = GbHeroKit::pick($val('text_maxu'), ['px', '%'], 'px');
+$textBold = !empty($v['text_bold']);
+$bulletBold = !empty($v['bullet_bold']);
+$eyebrowBold = !empty($v['eyebrow_bold']);
 
 $buttons = $v['buttons'] ?? '';
 $cards = $v['cards'] ?? '';
@@ -169,19 +173,77 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				</div>
 			</div>
 
+			<div class="rex-form-group form-group" style="margin-top:15px">
+				<label for="<?php echo $uid; ?>_title_color">Farbe der Überschrift <small class="text-muted">(optional)</small></label>
+				<?php echo GbHeroKit::colorField($palette, 'title_color', $uid.'_title_color', $val('title_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+			</div>
+
 			<div class="rex-form-group form-group gbh-gap">
 				<label for="<?php echo $uid; ?>_text">Text</label>
 				<textarea name="text" id="<?php echo $uid; ?>_text" rows="4" class="form-control"><?php echo $esc('text'); ?></textarea>
+			<div class="checkbox gbh-checks"><label><input type="checkbox" name="text_bold" value="checked"<?php echo $textBold ? ' checked' : ''; ?>> Text fett</label></div>
+				<div class="rex-form-group form-group" style="margin-top:15px">
+					<label for="<?php echo $uid; ?>_text_color">Farbe des Textes <small class="text-muted">(optional)</small></label>
+					<?php echo GbHeroKit::colorField($palette, 'text_color', $uid.'_text_color', $val('text_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+				</div>
+		</div>
+
+			<details class="gbh-group" style="margin-top:30px">
+				<summary>Buttons <small class="text-muted">(höchstens <?php echo GbHeroKit::MAX_BUTTONS; ?>)</small></summary>
+				<div class="gbh-group-body">
+			<div class="rex-form-group form-group">
+				<?php
+				echo Gridblock2Builder_Tree::renderRepeater('buttons', $buttons, GbHeroKit::buttonRowMarkup($palette), [
+					'collapsible' => true,
+					'titleField' => 'titel',
+					'titleFallback' => 'Button',
+					'collapsed' => true,
+					'maxRows' => GbHeroKit::MAX_BUTTONS,
+				]);
+				?>
+			</div>
+		<div class="rex-form-group form-group">
+			<label for="<?php echo $uid; ?>_effect">Hover-Effekt der Buttons</label>
+				<select name="effect" id="<?php echo $uid; ?>_effect" class="form-control">
+					<?php foreach (GbHeroKit::EFFECTS as $key => $label): ?>
+					<option value="<?php echo $key; ?>"<?php echo $sel($buttonEffect, $key); ?>><?php echo rex_escape($label); ?></option>
+					<?php endforeach; ?>
+				</select>
 			</div>
 
+			<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_btn_radius">Eckenrundung der Buttons</label>
+				<select name="btn_radius" id="<?php echo $uid; ?>_btn_radius" class="form-control">
+					<?php foreach (GbHeroKit::BTN_RADII as $key => $label): ?>
+					<option value="<?php echo $key; ?>"<?php echo $sel($btnRadius, $key); ?>><?php echo rex_escape($label); ?></option>
+					<?php endforeach; ?>
+				</select>
+			</div>
+			</div>
+		</details>
+
 			<div class="gbh-groups" style="margin-top:30px">
-			<details class="gbh-group">
-				<summary>Pluspunkte <small class="text-muted">(optional)</small></summary>
+		<details class="gbh-group"<?php echo $val('eyebrow') !== '' ? ' open' : ''; ?>>
+			<summary>Dachzeile <small class="text-muted">(optional)</small></summary>
+			<div class="gbh-group-body">
+		<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_eyebrow">Dachzeile <small class="text-muted">(kleine Zeile über der Überschrift)</small></label>
+				<input type="text" name="eyebrow" id="<?php echo $uid; ?>_eyebrow" class="form-control" value="<?php echo $esc('eyebrow'); ?>">
+				<div class="checkbox gbh-checks"><label><input type="checkbox" name="eyebrow_bold" value="checked"<?php echo $eyebrowBold ? ' checked' : ''; ?>> Dachzeile fett</label></div>
+			</div>
+			<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_eyebrow_color">Farbe der Dachzeile <small class="text-muted">(optional)</small></label>
+				<?php echo GbHeroKit::colorField($palette, 'eyebrow_color', $uid.'_eyebrow_color', $val('eyebrow_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+			</div>
+			</div>
+		</details>
+		<details class="gbh-group">
+			<summary>Pluspunkte <small class="text-muted">(optional)</small></summary>
 				<div class="gbh-group-body">
 			<div class="rex-form-group form-group">
 				<label for="<?php echo $uid; ?>_bullets">Kurze Pluspunkte <small class="text-muted">(eine pro Zeile, optional)</small></label>
 				<textarea name="bullets" id="<?php echo $uid; ?>_bullets" rows="3" class="form-control"><?php echo $esc('bullets'); ?></textarea>
-				<p class="help-block small">Erscheinen unter den Buttons, z. B. „Termine auch samstags“.</p>
+				<div class="checkbox gbh-checks"><label><input type="checkbox" name="bullet_bold" value="checked"<?php echo $bulletBold ? ' checked' : ''; ?>> Pluspunkte fett</label></div>
 			</div>
 
 			<div class="gbh-pair">
@@ -197,7 +259,6 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 					<select name="bullet_pos" id="<?php echo $uid; ?>_bullet_pos" class="form-control">
 						<option value="unten"<?php echo $sel($bulletPos, 'unten'); ?>>Unter den Buttons (Standard)</option>
 						<option value="mitte"<?php echo $sel($bulletPos, 'mitte'); ?>>Zwischen Text und Buttons</option>
-						<option value="oben"<?php echo $sel($bulletPos, 'oben'); ?>>Über der Überschrift (als Dachzeile)</option>
 					</select>
 				</div>
 			</div>
@@ -214,27 +275,23 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				<label for="<?php echo $uid; ?>_bullet_icon">Icon der Pluspunkte <small class="text-muted">(optional, gilt für alle Pluspunkte)</small></label>
 				<input type="text" name="bullet_icon" id="<?php echo $uid; ?>_bullet_icon" class="form-control rex-fa-iconpicker" data-fa-add-weight="1" data-fa-preview-weight="S" data-fa-onselect="gb2HeroIconPicked" placeholder="z. B. fas fa-check" value="<?php echo $esc('bullet_icon'); ?>">
 				<p class="help-block small">Leer = Häkchen.</p>
+		</div>
+
+		<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_bullet_color">Farbe der Pluspunkte <small class="text-muted">(optional, leer = Farbe des Textes)</small></label>
+				<?php echo GbHeroKit::colorField($palette, 'bullet_color', $uid.'_bullet_color', $val('bullet_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
 			</div>
 
-				</div>
+			</div>
 			</details>
 			</div>
 			<details class="gbh-group">
-				<summary>Farben &amp; Position</summary>
+				<summary>Sonstiges</summary>
 				<div class="gbh-group-body">
-			<div class="gbh-pair">
-				<div class="rex-form-group form-group">
-					<label for="<?php echo $uid; ?>_title_color">Farbe der Überschrift <small class="text-muted">(optional)</small></label>
-					<?php echo GbHeroKit::colorField($palette, 'title_color', $uid.'_title_color', $val('title_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
-				</div>
-				<div class="rex-form-group form-group">
-					<label for="<?php echo $uid; ?>_accent">Hervorhebungsfarbe <small class="text-muted">(optional)</small></label>
-					<?php echo GbHeroKit::colorField($palette, 'accent', $uid.'_accent', $val('accent'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
-				</div>
-				<div class="rex-form-group form-group">
-					<label for="<?php echo $uid; ?>_text_color">Farbe von Text und Pluspunkten <small class="text-muted">(optional)</small></label>
-					<?php echo GbHeroKit::colorField($palette, 'text_color', $uid.'_text_color', $val('text_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
-				</div>
+			<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_accent">Hervorhebungsfarbe <small class="text-muted">(optional)</small></label>
+				<?php echo GbHeroKit::colorField($palette, 'accent', $uid.'_accent', $val('accent'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+				<p class="help-block small">Für hervorgehobene Wörter der Überschrift (*Wort*), Häkchen, Icons und Trenner der Pluspunkte sowie den Akzentstreifen bei „Geteilt“.</p>
 			</div>
 			<div class="gbh-pair">
 				<div class="rex-form-group form-group" data-gbh="zentriert vollflaechig">
@@ -254,8 +311,22 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 					</select>
 				</div>
 			</div>
-			<div class="rex-form-group form-group" data-gbh="vollflaechig geteilt">
-				<label for="<?php echo $uid; ?>_inset">Horizontaler Abstand des Textes zum Rand</label>
+			<div class="gbh-pair">
+			<div class="rex-form-group form-group">
+				<label for="<?php echo $uid; ?>_text_maxw">Maximale Breite des Textblocks <small class="text-muted">(leer = keine Begrenzung)</small></label>
+				<div style="display:flex;gap:8px">
+					<input type="number" min="1" max="9999" step="1" name="text_maxw" id="<?php echo $uid; ?>_text_maxw" class="form-control" value="<?php echo $esc('text_maxw'); ?>">
+					<span style="flex:0 0 90px">
+						<select name="text_maxu" id="<?php echo $uid; ?>_text_maxu" class="form-control" aria-label="Einheit der maximalen Breite">
+							<option value="px"<?php echo $sel($textMaxUnit, 'px'); ?>>px</option>
+							<option value="%"<?php echo $sel($textMaxUnit, '%'); ?>>%</option>
+						</select>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="rex-form-group form-group" data-gbh="vollflaechig geteilt">
+			<label for="<?php echo $uid; ?>_inset">Horizontaler Abstand des Textes zum Rand</label>
 				<select name="inset" id="<?php echo $uid; ?>_inset" class="form-control">
 					<?php foreach (GbHeroKit::INSETS as $key => $label): ?>
 					<option value="<?php echo $key; ?>"<?php echo $sel($inset, $key); ?>><?php echo rex_escape($label); ?></option>
@@ -264,40 +335,9 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 			</div>
 				</div>
 			</details>
+	</div>
 
-			<div class="rex-form-group form-group gbh-sub">
-				<label>Buttons <small class="text-muted">(höchstens <?php echo GbHeroKit::MAX_BUTTONS; ?>)</small></label>
-				<?php
-				echo Gridblock2Builder_Tree::renderRepeater('buttons', $buttons, GbHeroKit::buttonRowMarkup($palette), [
-					'collapsible' => true,
-					'titleField' => 'titel',
-					'titleFallback' => 'Button',
-					'collapsed' => true,
-					'maxRows' => GbHeroKit::MAX_BUTTONS,
-				]);
-				?>
-			</div>
-
-			<div class="rex-form-group form-group">
-				<label for="<?php echo $uid; ?>_effect">Hover-Effekt der Buttons</label>
-				<select name="effect" id="<?php echo $uid; ?>_effect" class="form-control">
-					<?php foreach (GbHeroKit::EFFECTS as $key => $label): ?>
-					<option value="<?php echo $key; ?>"<?php echo $sel($buttonEffect, $key); ?>><?php echo rex_escape($label); ?></option>
-					<?php endforeach; ?>
-				</select>
-			</div>
-
-			<div class="rex-form-group form-group">
-				<label for="<?php echo $uid; ?>_btn_radius">Eckenrundung der Buttons</label>
-				<select name="btn_radius" id="<?php echo $uid; ?>_btn_radius" class="form-control">
-					<?php foreach (GbHeroKit::BTN_RADII as $key => $label): ?>
-					<option value="<?php echo $key; ?>"<?php echo $sel($btnRadius, $key); ?>><?php echo rex_escape($label); ?></option>
-					<?php endforeach; ?>
-				</select>
-			</div>
-		</div>
-
-		<div role="tabpanel" class="tab-pane" id="<?php echo $uid; ?>_tab_media">
+	<div role="tabpanel" class="tab-pane" id="<?php echo $uid; ?>_tab_media">
 			<div class="rex-form-group form-group">
 				<label>Bild</label>
 				<?php echo rex_var_media::getWidget($uid.'_bild', 'bild', $val('bild'), ['types' => 'jpg,jpeg,png,webp,avif,gif,svg']); ?>

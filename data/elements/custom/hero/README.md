@@ -44,29 +44,35 @@ Ohne Bild und Video entfällt die Medien-Spalte, der Text nutzt die ganze Breite
 
 ## Tab "Text & Buttons"
 
-Die Bereiche "Pluspunkte" und "Position und Ausrichtung des Textes" sind beim Öffnen zugeklappt, damit zuerst Überschrift, Text und Buttons sichtbar sind.
+Die Bereiche "Buttons", "Dachzeile" (zugeklappt, solange leer), "Pluspunkte" und "Sonstiges" sind beim Öffnen zugeklappt, damit zuerst Überschrift, Text und Buttons sichtbar sind.
 
 **Farbfelder mit Projektfarben:** Sind Projektfarben gepflegt, hat jedes Farbfeld (Überschrift, Hervorhebung, Text, Abdunklung, Kartenhintergrund, Kartentext) ein Auswahlfeld mit den Projektfarben, "- keine Farbe -" und "Individuell" (öffnet den Colorpicker). Je Feld wird das passende Feld des Eintrags genutzt: Überschrift, Hervorhebung, Text, Abdunklung und Kartenhintergrund nehmen `color`, der Kartentext `text_color`. Klassen spielen bei diesen Feldern keine Rolle. Gespeichert wird der Key des Eintrags (`@key`), die Farbe wird erst bei der Ausgabe eingesetzt, eine Änderung der Palette wirkt also auf alle Heros. Schon gespeicherte freie Farben bleiben als "Individuell" erhalten.
 
-Die Reihenfolge der Felder entspricht der Ausgabe (Überschrift, Text, Buttons, Pluspunkte; die Pluspunkte können über die Position auch zwischen Text und Buttons oder vor die Überschrift wandern).
+Die Reihenfolge der Felder entspricht der Ausgabe (Dachzeile, Überschrift, Text, Buttons, Pluspunkte; die Pluspunkte können über die Position auch zwischen Text und Buttons wandern).
 
 | Feld | Wirkung |
 |---|---|
 | Überschrift | Pflicht. Ein Wort in `*Sternchen*` wird hervorgehoben |
 | Typ der Überschrift | H1, H2, H3 oder Normal (einfacher Text ohne Überschrift-Tag). Pro Seite sollte es nur eine H1 geben, weitere Heros besser als H2 oder H3. Eine H1, H2 oder H3 erhält keine eigene Schriftgröße, Zeilenhöhe oder Schriftstärke und übernimmt die Darstellung der jeweiligen Überschrift deines Projekts. "Normal" nutzt die festen Werte aus der `style.css`, die du je Projekt anpassen kannst |
 | Hervorhebungsfarbe | optional, sonst Standard aus dem CSS (`--gb-hero-accent`). Gilt für die hervorgehobenen Wörter in der Überschrift sowie für Häkchen, Icons und Trenner der Pluspunkte |
-| Farbe der Überschrift | optional, sonst die Textfarbe der Seite (bei "Vollflächig" Weiß) |
-| Farbe von Text und Pluspunkten | optional, wie oben |
+| Farbe der Überschrift | optional (steht unter "Typ der Überschrift"), sonst die Textfarbe der Seite (bei "Vollflächig" Weiß) |
+| Farbe des Textes | optional (steht unter dem Text), wie oben. Gilt für den Text; die Pluspunkte übernehmen sie, solange keine eigene Pluspunktfarbe gesetzt ist |
+| Dachzeile | optional, kleine Zeile (`p.gb-el-hero-eyebrow`) direkt über der Überschrift. Eigene Farbe (Feld "Farbe der Dachzeile") und Haken "Dachzeile fett". Leer = keine Ausgabe |
+| Text fett | Haken, setzt den Text (`p.gb-el-hero-lead`) fett (Klasse `gb-el-hero-bold`) |
+| Farbe der Pluspunkte | optional; leer = Farbe des Textes (wie bisher). Häkchen, Icons und Trenner behalten die Hervorhebungsfarbe |
+| Pluspunkte fett | Haken, setzt die Pluspunkte fett (Klasse `gb-el-hero-bold`) |
+| Maximale Breite des Textblocks | optional, Zahl (1 bis 9999) mit Einheit px oder % (bei % höchstens 100). Leer = keine Begrenzung. Wirkt als `max-width` auf `.gb-el-hero-text`; ungültige Eingaben werden ignoriert. Unabhängig von der "Maximalen Breite" des ganzen Heros |
 | Große Überschrift | Häkchen, größere Schrift. Bei H1 bis H3 wächst die Schrift um den Faktor `--gb-hero-title-scale` (Standard 1,6) auf Basis der jeweiligen Überschrift deines Projekts (der Text steckt dafür in einem eigenen Inline-Element `<gb-hero-scale>`, damit keine Projekt-Regeln für `span` greifen), bei "Normal" gilt ein fester großer Wert aus der `style.css` |
 | Text | Freitext, Zeilenumbrüche bleiben erhalten |
 | Buttons | Repeater, höchstens 3 (weitere lassen sich im Editor nicht anlegen). Felder wie beim CTA-Element: Titel, Stil (Gefüllt, Umrandet, Textlink), Link, Linkbeschreibung (Screenreader), neuer Tab, Icon, Farbe (Projektfarbe oder "Individuell", siehe unten), Hover-Farben |
+| Buttons | Klappbox mit dem Buttons-Repeater sowie Hover-Effekt und Eckenrundung |
 | Hover-Effekt der Buttons | "- keine -" (Standard-Hover) oder einer der Effekte des CTA-Elements (Vergrößern, Pulsieren, Hüpfen, Gummiband, Schweben, Füllung von links, Glanzstreifen, Welle, Unterstreichung) |
 | Verhältnis von Text und Bild | nur "Geteilt" (Medien-Tab): 70 : 30, 60 : 40 (Standard), 50 : 50, 40 : 60 oder 30 : 70. Die Liste steht in `helpers.php` (`SPLITS`). Steht das Bild links, spiegelt sich das Verhältnis |
 | Kante des Bildes | nur "Geteilt": Gerade (Standard), Schräg (die Textfläche überdeckt einen Teil des Bildes) oder Schräg mit Akzentstreifen (Streifen in der Hervorhebungsfarbe). Der Überhang folgt der Breite des Elements |
 | Eckenrundung der Buttons | Pille (Standard), Abgerundet oder Eckig; wirkt auf alle Buttons des Elements (Variable `--gb-hero-btn-radius`) |
 | Kurze Pluspunkte | eine pro Zeile, erscheinen unter den Buttons (oder über der Überschrift, siehe Position) |
 | Darstellung der Pluspunkte | "Mit Häkchen oder Icon" (Standard) oder "Nur Text, durch Punkte getrennt" (ohne Häkchen/Icon, Trennzeichen • in der Hervorhebungsfarbe) |
-| Position der Pluspunkte | "Unter den Buttons" (Standard), "Zwischen Text und Buttons" oder "Über der Überschrift" als Dachzeile (mit etwas Abstand zur Überschrift) |
+| Position der Pluspunkte | "Unter den Buttons" (Standard), oder "Zwischen Text und Buttons". Die frühere Position "Über der Überschrift" gibt es nicht mehr (dafür die Dachzeile); bereits gespeicherte Heros mit dieser Position werden unverändert ausgegeben, das Auswahlfeld zeigt dann "Unter den Buttons" und übernimmt das beim nächsten Speichern |
 | Anordnung der Pluspunkte | "Nebeneinander" (Standard, umbrechend) oder "Untereinander" als Liste. Nur bei "Mit Häkchen oder Icon" |
 | Icon der Pluspunkte | optional, ein Icon für alle Pluspunkte (Icon-Auswahl wie bei den Buttons). Leer = Häkchen. Nur bei "Mit Häkchen oder Icon" |
 | Position des Textblocks | neun Positionen: Oben, Mitte oder Unten jeweils links, mitte oder rechts (ein Auswahlfeld). Die vertikale Position (oben, unten) wirkt nur bei "Vollflächig", bei "Zentriert" zählt nur die horizontale. Ältere Werte (links, Mitte, rechts) bleiben gültig und entsprechen "Mitte links", "Mitte" und "Mitte rechts" |

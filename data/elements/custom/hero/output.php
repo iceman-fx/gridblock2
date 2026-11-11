@@ -198,10 +198,22 @@ if ($titleIsHeading && $titleBig) {
 }
 $titleStyle = ($color('title_color') !== '') ? ' style="color:'.rex_escape($color('title_color')).';"' : '';
 $textStyle = ($color('text_color') !== '') ? ' style="color:'.rex_escape($color('text_color')).';"' : '';
+$bulletColor = ($color('bullet_color') !== '') ? $color('bullet_color') : $color('text_color');
+$bulletStyleAttr = ($bulletColor !== '') ? ' style="color:'.rex_escape($bulletColor).';"' : '';
+$eyebrow = $val('eyebrow');
+$eyebrowStyle = ($color('eyebrow_color') !== '') ? ' style="color:'.rex_escape($color('eyebrow_color')).';"' : '';
+$eyebrowClass = 'gb-el-hero-eyebrow'.(!empty($values['eyebrow_bold']) ? ' gb-el-hero-bold' : '');
+$leadClass = 'gb-el-hero-lead'.(!empty($values['text_bold']) ? ' gb-el-hero-bold' : '');
+$textBoxStyle = '';
+$textMaxWidth = $val('text_maxw');
+$textMaxUnit = GbHeroKit::pick($val('text_maxu'), ['px', '%'], 'px');
+if (preg_match('/^\d{1,4}$/', $textMaxWidth) === 1 && (int) $textMaxWidth > 0 && ($textMaxUnit === 'px' || (int) $textMaxWidth <= 100)) {
+	$textBoxStyle = ' style="max-width:'.(int) $textMaxWidth.$textMaxUnit.';"';
+}
 $bulletsHtml = '';
 if ($bullets !== []) {
-	$bulletsClass = 'gb-el-hero-bullets'.($bulletText ? ' gb-el-hero-bullets-text' : '').(($bulletIcon !== '') ? ' gb-el-hero-bullets-icon' : '').($bulletTop ? ' gb-el-hero-bullets-top' : '').($bulletStack ? ' gb-el-hero-bullets-stack' : '');
-	$bulletsHtml = '<ul class="'.$bulletsClass.'"'.$textStyle.'>';
+	$bulletsClass = 'gb-el-hero-bullets'.($bulletText ? ' gb-el-hero-bullets-text' : '').(($bulletIcon !== '') ? ' gb-el-hero-bullets-icon' : '').($bulletTop ? ' gb-el-hero-bullets-top' : '').($bulletStack ? ' gb-el-hero-bullets-stack' : '').(!empty($values['bullet_bold']) ? ' gb-el-hero-bold' : '');
+	$bulletsHtml = '<ul class="'.$bulletsClass.'"'.$bulletStyleAttr.'>';
 	foreach ($bullets as $bullet) {
 		$bulletsHtml .= '<li>'.(($bulletIcon !== '') ? '<i class="'.rex_escape($bulletIcon).'" aria-hidden="true"></i> ' : '').rex_escape($bullet).'</li>';
 	}
@@ -213,13 +225,16 @@ if ($bullets !== []) {
 	<div class="gb-el-hero-media"><?php echo $mediaHtml; ?><?php echo ($overlay !== 'keine') ? '<span class="gb-el-hero-overlay" aria-hidden="true"></span>' : ''; ?></div>
 	<?php endif; ?>
 	<div class="gb-el-hero-inner">
-		<div class="gb-el-hero-text">
+		<div class="gb-el-hero-text"<?php echo $textBoxStyle; ?>>
 			<?php echo $bulletTop ? $bulletsHtml : ''; ?>
+			<?php if ($eyebrow !== ''): ?>
+			<p class="<?php echo $eyebrowClass; ?>"<?php echo $eyebrowStyle; ?>><?php echo rex_escape($eyebrow); ?></p>
+			<?php endif; ?>
 			<?php if ($heading !== ''): ?>
 			<<?php echo $titleTag; ?> class="<?php echo $titleClass; ?>"<?php echo $titleStyle; ?>><?php echo $titleHtml; ?></<?php echo $titleTag; ?>>
 			<?php endif; ?>
 			<?php if ($text !== ''): ?>
-			<p class="gb-el-hero-lead"<?php echo $textStyle; ?>><?php echo nl2br(rex_escape($text)); ?></p>
+			<p class="<?php echo $leadClass; ?>"<?php echo $textStyle; ?>><?php echo nl2br(rex_escape($text)); ?></p>
 			<?php endif; ?>
 			<?php echo ($bulletPos === 'mitte') ? $bulletsHtml : ''; ?>
 			<?php if ($buttonsHtml !== ''): ?>

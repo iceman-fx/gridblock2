@@ -173,7 +173,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				</div>
 			</div>
 
-			<div class="rex-form-group form-group" style="margin-top:15px">
+			<div class="rex-form-group form-group">
 				<label for="<?php echo $uid; ?>_title_color">Farbe der Überschrift <small class="text-muted">(optional)</small></label>
 				<?php echo GbHeroKit::colorField($palette, 'title_color', $uid.'_title_color', $val('title_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
 			</div>

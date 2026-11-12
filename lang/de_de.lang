@@ -453,6 +453,7 @@ a2034_builder_fullscreen_locked = Zum Beenden zuerst die Seitenleiste schließen
 a2034_builder_edit_locked = Zuerst die Seitenleiste schließen (speichern oder abbrechen)
 a2034_builder_fullscreen_apply_locked = Zum Speichern zuerst die Seitenleiste schließen
 a2034_builder_fullscreen_apply_title = Speichert den Block und öffnet das Vollbild danach wieder
+a2034_builder_fullscreen_save_title = Block speichern und schließen
 a2034_builder_modal_width = Fensterbreite ändern
 a2034_builder_preview_loading = Vorschau wird geladen …
 a2034_builder_columns_ratio = Spaltenvorlage

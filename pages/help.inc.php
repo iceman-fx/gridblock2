@@ -939,7 +939,7 @@ document.addEventListener('gb2:beforeCancel', function (e) {
 
 					<h3>Builder - Vollbild-Modus</h3>
 					<ul>
-					  <li><strong>Speichern-Button im Vollbild:</strong> zeigt in der Vollbild-Leiste den Button "Block übernehmen" (Original-Button von REDAXO, Standard: an). Er speichert den Slice und öffnet das Vollbild an der bisherigen Scrollposition erneut.</li>
+					  <li><strong>Speichern-Button im Vollbild:</strong> zeigt in der Vollbild-Leiste den Button "Block übernehmen" (Original-Button von REDAXO, Standard: an). Er speichert den Slice und öffnet das Vollbild an der bisherigen Scrollposition erneut. Daneben sitzt ein Button mit Speichern-Symbol ("Block speichern und schließen"): Er speichert den Slice und verlässt den Editiermodus, ohne dass das Vollbild vorher beendet werden muss.</li>
 					  <li><strong>Sidebar Live-Edit-Vorschau:</strong> (Standard bei Neuinstallation: an) Nur mit Darstellung "Sidebar": Die Vorschau wird kurz nach jeder Änderung in der Sidebar neu aufgebaut. Im Vollbild und ab 1100 px Fensterbreite sitzt die Sidebar zusätzlich rechts neben der Fläche, statt sie abzudunkeln. Abbrechen stellt Werte und Vorschau wieder her. Bei schmaleren Fenstern gilt das normale Verhalten.</li>
 					</ul>
 

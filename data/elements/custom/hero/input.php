@@ -223,7 +223,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 		</details>
 
 			<div class="gbh-groups" style="margin-top:30px">
-		<details class="gbh-group"<?php echo $val('eyebrow') !== '' ? ' open' : ''; ?>>
+		<details class="gbh-group">
 			<summary>Dachzeile <small class="text-muted">(optional)</small></summary>
 			<div class="gbh-group-body">
 		<div class="rex-form-group form-group">

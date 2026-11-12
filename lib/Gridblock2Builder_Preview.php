@@ -338,7 +338,7 @@ class Gridblock2Builder_Preview
 
 
 	public static function collectPreviewBodyCss(): string
-	{	$css = self::collectFiles(Gridblock2Builder_MultiSite::getValue('gb_builder_content_stylesheets'));
+	{	$css = self::collectFiles(Gridblock2Builder_MultiSite::getValue('gb_builder_content_stylesheets')).' '.preg_replace('~/\*.*?\*/~s', '', self::collectExtensionCss(false));
 		if (trim($css) === '' || !preg_match_all('/([^{}]+)\{([^}]*)\}/s', $css, $blocks, PREG_SET_ORDER)):
 			return '';
 		endif;

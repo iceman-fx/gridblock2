@@ -44,7 +44,7 @@ Ohne Bild und Video entfällt die Medien-Spalte, der Text nutzt die ganze Breite
 
 ## Tab "Text & Buttons"
 
-Die Bereiche "Buttons", "Dachzeile" (zugeklappt, solange leer), "Pluspunkte" und "Sonstiges" sind beim Öffnen zugeklappt, damit zuerst Überschrift, Text und Buttons sichtbar sind.
+Die Bereiche "Buttons", "Dachzeile", "Pluspunkte" und "Sonstiges" sind beim Öffnen zugeklappt, damit zuerst Überschrift, Text und Buttons sichtbar sind.
 
 **Farbfelder mit Projektfarben:** Sind Projektfarben gepflegt, hat jedes Farbfeld (Überschrift, Hervorhebung, Text, Abdunklung, Kartenhintergrund, Kartentext) ein Auswahlfeld mit den Projektfarben, "- keine Farbe -" und "Individuell" (öffnet den Colorpicker). Je Feld wird das passende Feld des Eintrags genutzt: Überschrift, Hervorhebung, Text, Abdunklung und Kartenhintergrund nehmen `color`, der Kartentext `text_color`. Klassen spielen bei diesen Feldern keine Rolle. Gespeichert wird der Key des Eintrags (`@key`), die Farbe wird erst bei der Ausgabe eingesetzt, eine Änderung der Palette wirkt also auf alle Heros. Schon gespeicherte freie Farben bleiben als "Individuell" erhalten.
 

@@ -8,6 +8,8 @@
 	justify-content: flex-start;
 	gap: var(--gb-cards-gap, 24px);
 }
+ul.gb-el-cards { margin: 0 auto !important; padding: 0 !important; list-style: none !important; }
+ul.gb-el-cards > li.gb-el-cards-item { margin: 0 !important; padding: 0 !important; list-style: none !important; }
 .gb-el-cards-ca-mitte { justify-content: center; }
 .gb-el-cards-ca-rechts { justify-content: flex-end; }
 .gb-el-cards-w-schmal { --gb-cards-w: 220px; }

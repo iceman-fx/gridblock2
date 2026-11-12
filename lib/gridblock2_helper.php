@@ -613,5 +613,76 @@ class rex_gridblock2_helper
         return trim($op);
     }
 	
+	public const MEDIA_ALT_FIELD = 'med_alt';
+	public const MEDIA_DECORATIVE_FIELD = 'med_decorative';
+
+	public static function getMediaAltFieldStatus(): array
+	{
+		$status = ['metainfo' => false, 'alt' => false, 'decorative' => false];
+		if (!rex_addon::exists('metainfo') || !rex_addon::get('metainfo')->isAvailable()) {
+			return $status;
+		}
+		$status['metainfo'] = true;
+
+		$sql = rex_sql::factory();
+		$sql->setQuery('SELECT name FROM '.rex::getTable('metainfo_field').' WHERE name IN (:alt, :decorative)', ['alt' => self::MEDIA_ALT_FIELD, 'decorative' => self::MEDIA_DECORATIVE_FIELD]);
+		foreach ($sql->getArray() as $row) {
+			if ($row['name'] === self::MEDIA_ALT_FIELD) {
+				$status['alt'] = true;
+			} elseif ($row['name'] === self::MEDIA_DECORATIVE_FIELD) {
+				$status['decorative'] = true;
+			}
+		}
+
+		return $status;
+	}
+
+	public static function createMediaAltFields(): array
+	{
+		$result = ['created' => [], 'errors' => []];
+		$status = self::getMediaAltFieldStatus();
+		if (!$status['metainfo']) {
+			return $result;
+		}
+		require_once rex_path::addon('metainfo', 'functions/function_metainfo.php');
+
+		$fields = [];
+		if (!$status['alt']) {
+			$fields[self::MEDIA_ALT_FIELD] = ['Alternativer Text', rex_metainfo_default_type::TEXT];
+		}
+		if (!$status['decorative']) {
+			$fields[self::MEDIA_DECORATIVE_FIELD] = ['Bild ist dekorativ (keinen Alt-Text ausgeben)', rex_metainfo_default_type::CHECKBOX];
+		}
+		foreach ($fields as $name => $definition) {
+			$added = rex_metainfo_add_field($definition[0], $name, 0, '', $definition[1], '', '', '', '');
+			if ($added === true) {
+				$result['created'][] = $name;
+			} else {
+				$result['errors'][] = $name.': '.(is_string($added) ? $added : 'Fehler');
+			}
+		}
+
+		return $result;
+	}
+
+	public static function copyMediaTitlesToAlt(): int
+	{
+		$status = self::getMediaAltFieldStatus();
+		if (!$status['metainfo'] || !$status['alt']) {
+			return 0;
+		}
+
+		$sql = rex_sql::factory();
+		$files = $sql->getArray('SELECT filename FROM '.rex::getTable('media').' WHERE (med_alt IS NULL OR med_alt = "") AND title IS NOT NULL AND title <> ""');
+		if ($files === []) {
+			return 0;
+		}
+		$sql->setQuery('UPDATE '.rex::getTable('media').' SET med_alt = title WHERE (med_alt IS NULL OR med_alt = "") AND title IS NOT NULL AND title <> ""');
+		foreach ($files as $row) {
+			rex_media_cache::delete((string) $row['filename']);
+		}
+
+		return count($files);
+	}
 }
 ?>

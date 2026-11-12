@@ -290,6 +290,13 @@ elseif ($func == "wizard_save_settings"):
 			try {
 				$gbTemplateColumns = 'id, prio, cat, title, description, columns, template, preview, status, createdate, createuser, updatedate, updateuser';
 				rex_sql::factory()->setQuery('INSERT IGNORE INTO '.rex::getTable('2034_gridtemplates').' ('.$gbTemplateColumns.') SELECT '.$gbTemplateColumns.' FROM '.rex::getTable('1620_gridtemplates'));
+				$gbMigrateFile = $this->getPath('install/_migrate_gridtemplate_cssclass.php');
+				if (is_file($gbMigrateFile)) {
+					try {
+						(static function (string $file): void { include $file; })($gbMigrateFile);
+					} catch (\Throwable $e) {
+					}
+				}
 				echo '<div class="alert alert-success">'.$this->i18n('a2034_wizard_templates_copied').'</div>';
 			} catch (rex_sql_exception $e) {
 				echo '<div class="alert alert-danger">'.$this->i18n('a2034_wizard_templates_copy_error').' '.rex_escape($e->getMessage()).'</div>';
@@ -387,6 +394,19 @@ elseif ($func == "wizard_save_settings"):
 		} else {
 			echo '<div class="alert alert-info">'.$this->i18n('a2034_wizard_default_templates_skipped').'</div>';
 		}
+	}
+
+	if (rex_post('gb_create_alt_fields', 'string', '') === '1') {
+		$gbAltResult = rex_gridblock2_helper::createMediaAltFields();
+		if ($gbAltResult['created'] !== []) {
+			echo '<div class="alert alert-success">'.$this->i18n('a2034_wizard_alt_fields_created', rex_escape(implode(', ', $gbAltResult['created']))).'</div>';
+		}
+		if ($gbAltResult['errors'] !== []) {
+			echo '<div class="alert alert-danger">'.$this->i18n('a2034_wizard_alt_fields_error', rex_escape(implode(', ', $gbAltResult['errors']))).'</div>';
+		}
+	}
+	if (rex_post('gb_copy_titles_to_alt', 'string', '') === '1') {
+		echo '<div class="alert alert-success">'.$this->i18n('a2034_wizard_alt_titles_copied', (string) rex_gridblock2_helper::copyMediaTitlesToAlt()).'</div>';
 	}
 
 	echo '</div>';

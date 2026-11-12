@@ -31,6 +31,15 @@ $gbPreviewModeCurrent = (@$wizardConfig['gb_builder_preview_mode'] === 'shadowdo
 $gbCsFieldChoices = Gridblock2Builder_Tree::getCsFieldChoices();
 $gbCsFieldScopeLabels = ['template' => $this->i18n('a2034_config_gb_builder_gap_cs_field_scope_template'), 'columns' => $this->i18n('a2034_config_gb_builder_gap_cs_field_scope_columns'), 'section' => $this->i18n('a2034_config_gb_builder_gap_cs_field_scope_section')];
 
+$gbAltStatus = rex_gridblock2_helper::getMediaAltFieldStatus();
+$gbAltMissing = [];
+if ($gbAltStatus['metainfo'] && !$gbAltStatus['alt']) {
+	$gbAltMissing[] = rex_gridblock2_helper::MEDIA_ALT_FIELD;
+}
+if ($gbAltStatus['metainfo'] && !$gbAltStatus['decorative']) {
+	$gbAltMissing[] = rex_gridblock2_helper::MEDIA_DECORATIVE_FIELD;
+}
+
 $gbSystemElementSection = Gridblock2Builder_Tree::getSystemElementSourceCode('system/section', 'output.php');
 $gbSystemElementColumnsrow = Gridblock2Builder_Tree::getSystemElementSourceCode('system/column', 'columnsrow.php');
 $gbSystemElementColumn = Gridblock2Builder_Tree::getSystemElementSourceCode('system/column', 'column.php');
@@ -250,6 +259,32 @@ $gbSystemElementColumn = Gridblock2Builder_Tree::getSystemElementSourceCode('sys
 						</dl>
 
 					</div>
+					<?php if ($gbAltStatus['metainfo'] && ($gbAltMissing !== [] || $gbAltStatus['alt'])): ?>
+					<div class="gb-wizard-step" data-step="alt-fields">
+						<h4><?php echo $this->i18n('a2034_wizard_step_alt_head'); ?></h4>
+						<p><?php echo $this->i18n('a2034_wizard_step_alt_intro'); ?></p>
+
+						<?php if ($gbAltMissing !== []): ?>
+						<dl class="rex-form-group form-group">
+							<dt>
+								<div class="checkbox toggle">
+									<label><input type="checkbox" name="gb_create_alt_fields" value="1" checked="checked" /> <?php echo $this->i18n('a2034_wizard_action_create_alt_fields', rex_escape(implode(', ', $gbAltMissing))); ?></label>
+								</div>
+							</dt>
+						</dl>
+						<?php endif; ?>
+
+						<dl class="rex-form-group form-group">
+							<dt>
+								<div class="checkbox toggle">
+									<label><input type="checkbox" name="gb_copy_titles_to_alt" value="1" /> <?php echo $this->i18n('a2034_wizard_action_copy_titles'); ?></label>
+								</div>
+							</dt>
+						</dl>
+						<span class="infoblock"><?php echo $this->i18n('a2034_wizard_step_alt_copyinfo'); ?></span>
+					</div>
+					<?php endif; ?>
+
 					<div class="gb-wizard-step" data-step="preview">
 						<h4><?php echo $this->i18n('a2034_wizard_step_preview_head'); ?></h4>
 						<p><?php echo $this->i18n('a2034_wizard_step_preview_intro'); ?></p>

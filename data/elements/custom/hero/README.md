@@ -95,7 +95,7 @@ Solange weder Bild noch Video gewählt ist, zeigt der Editor (Builder-Vorschau u
 
 | Feld | Wirkung |
 |---|---|
-| Bild | aus dem Medienpool, mindestens 1600 px breit. Alt-Text aus der Medienpool-Beschreibung (`med_description`), leer = dekorativ |
+| Bild | aus dem Medienpool, mindestens 1600 px breit. Alt-Text aus dem Medienfeld `med_alt`, ist es leer, aus dem Titel des Mediums. Ist am Medium der Haken `med_decorative` gesetzt, bleibt der Alt-Text leer (dekorativ) |
 | Video | optional, nur MP4 aus dem Medienpool. Ersetzt das Bild, das Bild dient als Standbild |
 | Untertitel | optional, VTT-Datei aus dem Medienpool plus Sprache (Deutsch, English, Français, Italiano, Español, Slovenščina). Nur bei "Nebeneinander" und "Zentriert" (Player); das stumme Hintergrundvideo bei "Vollflächig" hat keine Untertitel. Im Player standardmäßig eingeschaltet |
 | Ausrichtung des Bildes | welcher Teil des Bildes sichtbar bleibt, wenn das Bildformat es beschneidet: Mitte (Standard) oder eine der acht Randpositionen (links oben bis rechts unten). Gilt auch für Video und Standbild |

@@ -86,16 +86,12 @@ if (!class_exists('GbCardsKit')) {
 
 		public static function mediaAlt(string $file): string
 		{
-			if ($file === '' || !class_exists('rex_media')) {
+			$media = ($file !== '' && class_exists('rex_media')) ? rex_media::get($file) : null;
+			if (!$media || trim((string) $media->getValue('med_decorative'), '|0 ') !== '') {
 				return '';
 			}
-			$media = rex_media::get($file);
-			if (!$media) {
-				return '';
-			}
-			$alt = trim((string) $media->getValue('med_alt'));
 
-			return $alt !== '' ? $alt : trim((string) $media->getTitle());
+			return trim((string) $media->getValue('med_alt')) ?: trim((string) $media->getTitle());
 		}
 
 		public static function palette(): array

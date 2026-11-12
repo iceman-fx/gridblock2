@@ -142,6 +142,14 @@ a2034_wizard_step_gap_native_info = Native Spaltenabstände
 a2034_wizard_step_gap_native_format_info = Format: JSON-Objekt, je Abstufung ein Eintrag mit Bezeichnung (label) und Wert (value), z.B. {"md": {"label": "Mittel", "value": "24px"}}. Das ältere Zeilenformat (schlüssel = Bezeichnung = Wert) wird weiterhin gelesen.
 a2034_wizard_step_gap_cs = Contentsettings-Feld zuordnen
 a2034_wizard_step_gap_cs_info = Auswahl des Contentsettings-Feldes, welches in Ihrem Gridblock 1.x-Projekt für die Spaltenaufteilung bisher genutzt wurde.
+a2034_wizard_step_alt_head = Alt-Text der Bilder
+a2034_wizard_step_alt_intro = Die Elemente von Gridblock² geben als Alt-Text zuerst das Medienfeld "med_alt" aus, ist es leer, den Titel des Mediums. Ist der Haken "med_decorative" gesetzt, bleibt der Alt-Text leer (dekoratives Bild). Die Felder werden im Medienpool angelegt (Addon "metainfo").
+a2034_wizard_action_create_alt_fields = Fehlende Felder im Medienpool anlegen: {0}
+a2034_wizard_action_copy_titles = Titel einmalig in leere Alt-Text-Felder (med_alt) kopieren
+a2034_wizard_step_alt_copyinfo = Füllt nur Medien, deren Feld "med_alt" noch leer ist und die einen Titel haben. Bereits gepflegte Alt-Texte bleiben unverändert.
+a2034_wizard_alt_fields_created = Felder im Medienpool angelegt: {0}
+a2034_wizard_alt_fields_error = Felder konnten nicht angelegt werden: {0}
+a2034_wizard_alt_titles_copied = Titel nach "med_alt" kopiert (Medien: {0})
 a2034_wizard_step_preview_head = Live-Vorschau
 a2034_wizard_step_preview_intro = Legen Sie fest, wie Inhaltsmodule im Builder als Vorschau angezeigt werden sollen und welche Frontend-CSS dafür eingebunden werden.
 a2034_wizard_step_preview_question = Auswahl Vorschaumodus

@@ -147,12 +147,12 @@ if (!class_exists('GbHeroKit')) {
 
 		public static function mediaAlt(string $file): string
 		{
-			if ($file === '' || !class_exists('rex_media')) {
+			$media = ($file !== '' && class_exists('rex_media')) ? rex_media::get($file) : null;
+			if (!$media || trim((string) $media->getValue('med_decorative'), '|0 ') !== '') {
 				return '';
 			}
-			$media = rex_media::get($file);
 
-			return $media ? trim((string) $media->getValue('med_description')) : '';
+			return trim((string) $media->getValue('med_alt')) ?: trim((string) $media->getTitle());
 		}
 
 		//*Wort* in der Ueberschrift hervorheben; $color optional (Farbwert), sonst Standard aus dem CSS

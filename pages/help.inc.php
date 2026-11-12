@@ -99,6 +99,7 @@
 						<li data-topic="vorschau" data-group="admin"><a href="#vorschau"><i class="rex-icon fa-eye"></i> Vorschau-Technik</a></li>
 						<li data-topic="projektfarben" data-group="admin"><a href="#projektfarben"><i class="rex-icon fa-palette"></i> Projektfarben</a></li>
 						<li data-topic="spaltenabstand" data-group="admin"><a href="#spaltenabstand"><i class="rex-icon fa-arrows-left-right"></i> Spalten-Abstand</a></li>
+						<li data-topic="alt-text" data-group="admin"><a href="#alt-text"><i class="rex-icon fa-image"></i> Alt-Text der Bilder</a></li>
 						<li data-topic="modul" data-group="admin"><a href="#modul"><i class="rex-icon fa-puzzle-piece"></i> Modul &amp; Platzhalter</a></li>
 						<li data-topic="edit-events" data-group="admin"><a href="#edit-events"><i class="rex-icon fa-bolt"></i> Events für Tools</a></li>
 						<li data-topic="import-export" data-group="admin"><a href="#import-export"><i class="rex-icon fa-file-import"></i> Import &amp; Export</a></li>
@@ -707,6 +708,26 @@ font-size: clamp(24px, 4vw, 2.2rem);
 					  <li><strong>Bezeichnung</strong> (<code>label</code>) - nur die sichtbare Beschriftung im Auswahlfeld. Statt festem Text kann sie auch ein <code>rex_i18n</code>-Sprachschlüssel aus einem eigenen Sprachpaket sein - dann erscheint automatisch die Übersetzung in der jeweiligen Backend-Sprache; ohne passenden Schlüssel wird der Text unverändert angezeigt.</li>
 					  <li><strong>Wert</strong> (<code>value</code>) - eine gültige CSS-<code>gap</code>-Einheit (<code>px</code>, <code>%</code>, <code>vw</code>, ...), aber <strong>nur für die Editor-Vorschau</strong> (Shadow-DOM-Annäherung im Backend). Die echte Ausgabe im Frontend hängt allein von deinem eigenen CSS ab, das auf die Schlüssel-Klasse reagiert - trägst du hier z.B. 24px ein, dein CSS für <code>.gb-el-columns-gap-md</code> setzt aber 32px, zeigt die Website 32px, nur die Vorschau im Backend würde mit 24px leicht abweichen.</li>
 					</ul>
+					</section>
+
+
+					<!-- Alt-Text -->
+					<section class="gb-help-topic" id="alt-text">
+					<h2>Alt-Text der Bilder</h2>
+
+					<p>Die Custom-Elemente von Gridblock² (Hero, Karten, Bildercollage) ermitteln den Alt-Text eines Medienpool-Bildes nach dieser Reihenfolge:</p>
+					<ol>
+					  <li>Ist am Medium der Haken <code>med_decorative</code> gesetzt, bleibt der Alt-Text leer (<code>alt=""</code>, dekoratives Bild).</li>
+					  <li>Sonst gilt das Feld <code>med_alt</code>, sofern es gepflegt ist.</li>
+					  <li>Sonst gilt der Titel des Mediums.</li>
+					</ol>
+					<p>Die beiden Felder gehören zum Addon "metainfo" (Medienpool) und können vom <a href="index.php?page=<?php echo rex_escape($mypage); ?>/default">Einrichtungs-Assistenten</a> angelegt werden, wenn sie fehlen. Fehlen sie, arbeitet alles wie bisher mit dem Titel, es entstehen keine Fehler. Die Einstellung gilt für das Medium, also an jeder Stelle gleich.</p>
+
+					<p><strong>Eigene Module:</strong> Diese drei Zeilen lassen sich in ein Modul kopieren (<code>$file</code> ist der Dateiname aus dem Medienpool) und liefern dasselbe Ergebnis. Sie brauchen weder Gridblock² noch eines der beiden Felder:</p>
+					<pre>$media = rex_media::get($file);
+$deko = $media ? trim((string) $media->getValue('med_decorative'), '|0 ') : '';
+$alt  = ($media && $deko === '') ? (trim((string) $media->getValue('med_alt')) ?: trim((string) $media->getTitle())) : '';</pre>
+					<p>Das Ergebnis steht in <code>$alt</code> und gehört escaped ins Attribut: <code>alt="&lt;?php echo rex_escape($alt); ?&gt;"</code>.</p>
 					</section>
 
 

@@ -4,6 +4,7 @@ Gridblock²
 Changelog
 ---------
 <b>Version 1.0.0</b>
+- Builder: Der Vollbildmodus bleibt nach "Block übernehmen" zuverlässig erhalten. Bisher galt nur ein Merker im Browser, der nach 15 Sekunden verfiel (bei langsamer Antwort des Servers blieb der Vollbildmodus danach aus); jetzt wird der Marker <code>gbfs</code> beim Absenden zusätzlich an die Adresse des Formulars gehängt (der Merker im Browser gilt 60 Sekunden)
 - Neu: Favoriten. Elemente, Sektionen, Spalten oder alle Elemente eines Bausteins samt Inhalten speichern (Kebab-Menü des Blocks oder Stern-Button neben "Vollbild starten") und über den neuen Reiter "Favoriten" im Fenster "Element hinzufügen" jederzeit wieder einfügen; Suchen, Umbenennen und Löschen direkt im Reiter, der Reiter erscheint erst, wenn es Favoriten gibt
 - Favoriten: eigene Tabelle <code>rex_gridblock2_presets</code> (wird bei Installation/Update und bei Bedarf automatisch angelegt), neues Recht "Favoriten speichern und löschen" (<code>gridblock2[favorites]</code>), Einstellung "Modus" (projektweit, benutzerbasiert oder beim Speichern wählbar) und bei MultiSite Zuordnung je Domain sowie optional domainübergreifend; Administratoren verwalten alle Favoriten unter "Favoriten" im Addon (Suche, Filter, Sortierung, Sammelaktionen)
 - Favoriten: Beim Einfügen werden Elemente, die der Benutzer oder die Domain nicht nutzen darf, übersprungen und in einer Meldung genannt; Meldungen erscheinen als kleiner Hinweis unten mittig, Fehler sind lesbar statt nur "500"

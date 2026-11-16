@@ -3,6 +3,10 @@ Gridblock²
 
 Changelog
 ---------
+<b>Version 1.0.1</b>
+- Bugfixing: Farbwähler: Bei leerem Feld zeigt die Farbvorschau jetzt "keine Farbe" an
+- Paket: Beim Hochladen in den Installer werden die Ordner <code>.git</code> und <code>docs</code> ausgeschlossen (<code>installer_ignore</code>)
+
 <b>Version 1.0.0</b>
 - Synchronizer: Der Abgleich läuft im Backend nur noch, wenn er aktiviert ist, höchstens alle 10 Sekunden und nie parallel (nicht blockierende Sperre über eine Stempeldatei im Daten-Ordner). Außerdem startet GB² bei Frontend- und Medien-Requests keine Session mehr: bisher wurde bei jedem Request mit Backend-Cookie die Session gestartet und gesperrt, auch bei ausgeschaltetem Synchronizer, wodurch sich parallele Requests (z. B. viele Vorschaubilder im Backend) gegenseitig blockieren konnten
 - Builder: Der Vollbildmodus bleibt nach "Block übernehmen" zuverlässig erhalten. Bisher galt nur ein Merker im Browser, der nach 15 Sekunden verfiel (bei langsamer Antwort des Servers blieb der Vollbildmodus danach aus); jetzt wird der Marker <code>gbfs</code> beim Absenden zusätzlich an die Adresse des Formulars gehängt (der Merker im Browser gilt 60 Sekunden)

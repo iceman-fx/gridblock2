@@ -17,3 +17,7 @@ page:
 
 requires:
     redaxo: '^5.20.0'
+
+installer_ignore:
+    - .git
+    - docs

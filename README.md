@@ -1,8 +1,3 @@
-> [!WARNING]
-> **BETA – noch nicht für den Produktiveinsatz geeignet!**
-
-
-
 # Gridblock²
 
 Page- bzw. Contentbuilder für Redaxo.<br>

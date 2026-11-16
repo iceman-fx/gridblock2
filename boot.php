@@ -209,8 +209,8 @@ if (rex::isBackend()):
 endif;
 
 
-if (rex_backend_login::hasSession() && rex::getUser() && rex::getUser()->isAdmin() && (@$config['gb_builder_synchronizer_enabled'] === 'checked')):
-	Gridblock2Synchronizer::sync();
+if (rex::isBackend() && 'cli' !== PHP_SAPI && (@$config['gb_builder_synchronizer_enabled'] === 'checked') && rex::getUser() && rex::getUser()->isAdmin()):
+	Gridblock2Synchronizer::syncThrottled();
 endif;
 
 

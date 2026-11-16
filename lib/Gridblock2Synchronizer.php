@@ -82,6 +82,35 @@ class Gridblock2Synchronizer
         return true;
     }
 
+    public static function syncThrottled($iMinInterval = 10)
+    {
+        $sStamp = self::getAddon()->getDataPath('.sync_stamp');
+        $hHandle = @fopen($sStamp, 'c+');
+        if (false === $hHandle) {
+            return false;
+        }
+
+        $bRan = false;
+        if (flock($hHandle, LOCK_EX | LOCK_NB)) {
+            $iLastSync = (int) trim((string) stream_get_contents($hHandle));
+            if (time() - $iLastSync >= (int) $iMinInterval) {
+                try {
+                    self::sync();
+                    $bRan = true;
+                } finally {
+                    ftruncate($hHandle, 0);
+                    rewind($hHandle);
+                    fwrite($hHandle, (string) time());
+                    fflush($hHandle);
+                }
+            }
+            flock($hHandle, LOCK_UN);
+        }
+        fclose($hHandle);
+
+        return $bRan;
+    }
+
     public static function sync()
     {
         array_push(self::$aLogs, "Gridblock2Synchronizer START");

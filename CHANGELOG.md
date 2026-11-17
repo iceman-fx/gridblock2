@@ -3,6 +3,11 @@ Gridblock²
 
 Changelog
 ---------
+<b>Version 1.0.2</b>
+- Builder: Deutlich schnelleres Laden des Builders bei Seiten mit vielen Blöcken. Auf einer Seite mit rund 40 Blöcken blockierte der Browser bis zu 100 Sekunden, weil beim Laden alle Auswahlfelder (rund 490), Slider und Farbwähler der versteckten Einstellungs-Formulare initialisiert wurden (je Auswahlfeld ein Neuberechnen der gesamten Seite). Jetzt werden sie erst beim Öffnen des jeweiligen Fensters aufgebaut (Ladezeit der Seite dort von über 100 auf etwa 4 Sekunden), beim Aufbau wird die Block-Liste kurz eingefroren, damit das Öffnen schnell bleibt
+- Builder: Slider mit Einheit werden nicht mehr per Inline-Skript beim Laden, sondern über das Attribut <code>data-gb-slider-unit</code> beim Öffnen initialisiert
+- Builder: Die Farbvorschau der Paletten-Auswahl (Hero, Karten, CTA) wird beim Öffnen zuverlässig aufgebaut
+
 <b>Version 1.0.1</b>
 - Bugfixing: Farbwähler: Bei leerem Feld zeigt die Farbvorschau jetzt "keine Farbe" an
 - Paket: Beim Hochladen in den Installer werden die Ordner <code>.git</code> und <code>docs</code> ausgeschlossen (<code>installer_ignore</code>)

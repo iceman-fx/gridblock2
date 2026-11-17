@@ -1068,17 +1068,7 @@ class Gridblock2Builder_ContentSettings
                                         //$iRand = rand(0, 1000000) * rand(0, 100000);
 
 
-                                        $sForm .= '<dd><input id="gridblockcontentsettings-slider-' . $uid . '" name="REX_INPUT_VALUE[' . $this->iSettingsId . '][' . $sType . '][' . $sKey . ']" type="text" ' . $sClass . ' value="' . $sValue . '" ' . $sSliderTooltipSplit . ' ' . $sSliderMin . ' ' . $sSliderMax . ' ' . $sSliderRange . ' ' . $sSliderStep . ' ' . $sSliderValue . ' ' . $sSliderShowTooltip . ' ' . $sDisabled . '>';
-                                        if (isset($aOption["slider-unit"])) {
-                                            $sForm .= "<script>
-
-                                        $('#gridblockcontentsettings-slider-" . $uid . "').slider({
-                                            formatter: function(value) {
-                                                return value + ' ' + " . json_encode((string) $aOption["slider-unit"], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) . ";
-                                            }
-                                        });
-                                        </script>";
-                                        }
+                                        $sForm .= '<dd><input id="gridblockcontentsettings-slider-' . $uid . '" name="REX_INPUT_VALUE[' . $this->iSettingsId . '][' . $sType . '][' . $sKey . ']" type="text" ' . $sClass . ' value="' . $sValue . '" ' . $sSliderTooltipSplit . ' ' . $sSliderMin . ' ' . $sSliderMax . ' ' . $sSliderRange . ' ' . $sSliderStep . ' ' . $sSliderValue . ' ' . $sSliderShowTooltip . ' ' . $sDisabled . (isset($aOption["slider-unit"]) ? ' data-gb-slider-unit="' . rex_escape((string) $aOption["slider-unit"]) . '"' : '') . '>';
                                         $sForm .= '</dd>' . PHP_EOL;
                                         break;
                                 }

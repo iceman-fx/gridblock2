@@ -31,7 +31,7 @@ $settingsFormHtml = (string) $this->settingsFormHtml;
     </g>
 		</svg>
 	</span>
-	<div class="gb-builder-column-slot-settingsform" style="display:none;"><?php echo $settingsFormHtml; ?></div>
+	<div class="gb-builder-column-slot-settingsform" style="display:none;"><?php echo Gridblock2Builder_Tree::lazyPickers($settingsFormHtml); ?></div>
 	<?php endif; ?>
 	<?php echo $listHtml; ?>
 </div>

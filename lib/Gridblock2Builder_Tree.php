@@ -1683,6 +1683,26 @@ class Gridblock2Builder_Tree
 		return (string) ($oSettings->getGridblock2ContentSettingsForm([$sType => $currentValues], 0, $scopeSlot, $rootScope) ?? '');
 	}
 
+	public static function lazyPickers(string $html): string
+	{	if ($html === '' || strpos($html, 'selectpicker') === false) {
+			return $html;
+		}
+
+		$result = preg_replace_callback('/<select\b[^>]*>/i', static function (array $tag): string {
+			if (strpos($tag[0], 'selectpicker') === false) {
+				return $tag[0];
+			}
+
+			$replaced = preg_replace_callback('/\bclass\s*=\s*(["\'])(.*?)\1/is', static function (array $attr): string {
+				return 'class='.$attr[1].preg_replace('/(?<![\w-])selectpicker(?![\w-])/', 'gb-lazy-picker', $attr[2]).$attr[1];
+			}, $tag[0]);
+
+			return is_string($replaced) ? $replaced : $tag[0];
+		}, $html);
+
+		return is_string($result) ? $result : $html;
+	}
+
 	public static function renderBlockSettingsForm(string $nodeUid, array $currentValues, array $context): string
 	{	if (!Gridblock2Builder_ContentSettings::hasModulesScope()) {
 			return '';

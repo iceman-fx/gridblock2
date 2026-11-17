@@ -146,20 +146,20 @@ $labelTruncated = (mb_strlen($label) > 30) ? mb_substr($label, 0, 30).'…' : $l
 	<div class="gb-builder-block-preview" data-builder-preview data-loading-label="<?php echo rex_i18n::msg('a2034_builder_preview_loading'); ?>"></div>
 	<div class="gb-builder-block-body gb-builder-block-form" style="display:none;">
 		<div class="gb-builder-block-modulename"><span class="gb-builder-block-modulename-text"><?php echo rex_escape($label); ?></span><?php if ($settingsFormHtml !== ''): ?><button type="button" class="btn btn-primary btn-xs gb-builder-block-modulename-settings" title="<?php echo rex_i18n::msg('a2034_builder_settings'); ?>" aria-label="<?php echo rex_i18n::msg('a2034_builder_settings'); ?>"><i class="rex-icon fa-cog" aria-hidden="true"></i></button><?php endif; ?></div>
-		<?php echo $formHtml; ?>
+		<?php echo Gridblock2Builder_Tree::lazyPickers($formHtml); ?>
 	</div>
 	<div class="gb-builder-block-editfooter" style="display:none;">
 		<button type="button" class="btn btn-default gb-builder-block-cancelbtn"><?php echo rex_i18n::msg('a2034_builder_cancel_element'); ?></button>
 		<button type="button" class="btn btn-primary gb-builder-block-savebtn"><i class="rex-icon fa-check" aria-hidden="true"></i> <?php echo rex_i18n::msg('a2034_builder_save_element'); ?></button>
 	</div>
 	<?php if ($settingsFormHtml !== ''): ?>
-	<div class="gb-builder-block-settingsform" style="display:none;"><?php echo $settingsFormHtml; ?></div>
+	<div class="gb-builder-block-settingsform" style="display:none;"><?php echo Gridblock2Builder_Tree::lazyPickers($settingsFormHtml); ?></div>
 	<?php endif; ?>
 	<?php if ($settingsKeepHtml !== ''): ?>
 	<div class="gb-builder-block-settingskeep" style="display:none;"><?php echo $settingsKeepHtml; ?></div>
 	<?php endif; ?>
 	<?php else: ?>
-	<div class="gb-builder-block-settingsform" style="display:none;"><?php echo $formHtml; ?></div>
+	<div class="gb-builder-block-settingsform" style="display:none;"><?php echo Gridblock2Builder_Tree::lazyPickers($formHtml); ?></div>
 	<?php if ($type === 'section'): ?>
 	<div class="gb-builder-block-container-body">
 		<?php echo $childrenHtml; ?>

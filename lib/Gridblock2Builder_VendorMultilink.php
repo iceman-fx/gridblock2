@@ -3,6 +3,9 @@
 	Redaxo-Addon Gridblock²
 	Builder-Engine: Multilink-Vendor
 	v1.0
+
+	VENDOR-KOPIE: Quelle ist lib/fmHelper_multilink.php im Addon _fm_helper. Aenderungen zuerst dort machen
+	und hierher spiegeln. Abgleich: node _fm_helper/build/fm-tools.js check
 	by Falko Müller @ 2026 (based gridblock 1.x)
 */
 

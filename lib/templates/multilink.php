@@ -6,6 +6,9 @@
 	v1.0
 	by Falko Müller @ 2026 (based gridblock 1.x)
 
+	VENDOR-KOPIE: Quelle ist fragments/fm_helper/multilink.php im Addon _fm_helper. Aenderungen zuerst dort machen
+	und hierher spiegeln. Abgleich: node _fm_helper/build/fm-tools.js check
+
 	Erwartet im Scope (siehe Gridblock2Builder_VendorMultilink::render()):
 	$name, $uid, $allowedTypes, $activeType, $telValue, $anchorValue, $emailValue, $urlValue,
 	$linkWidgetHtml, $mediaWidgetHtml, $outputValue

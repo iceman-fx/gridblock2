@@ -3,6 +3,11 @@ Gridblock²
 
 Changelog
 ---------
+<b>Version 1.0.3</b>
+- Repeater (HTML-Repeater-Werkzeug): Wird der Repeater in einer MBlock-Zeile eingesetzt, werden gespeicherte Zeilen jetzt beim Laden aus dem gespeicherten JSON aufgebaut. Bisher zeigte er nur eine leere Zeile, und beim Speichern gingen die Daten verloren.
+- Repeater: Das Hinzufügen über die Leerzeile eines verschachtelten Repeaters wirkt nur noch im eigenen Repeater; neue Option <code>minRows</code> (Mindestzeilenzahl, Entfernen gesperrt)
+- Die mitgelieferten FM-Helper-Werkzeuge (Datumswähler, MultiDevice-Input/-Select, Multi-Link, Repeater, Farbwähler) sind mit dem Addon _fm_helper abgeglichen; die .min-Dateien tragen einen Kopf mit Version und Quelle
+
 <b>Version 1.0.2</b>
 - Builder: Deutlich schnelleres Laden des Builders bei Seiten mit vielen Blöcken. Auf einer Seite mit rund 40 Blöcken blockierte der Browser bis zu 100 Sekunden, weil beim Laden alle Auswahlfelder (rund 490), Slider und Farbwähler der versteckten Einstellungs-Formulare initialisiert wurden (je Auswahlfeld ein Neuberechnen der gesamten Seite). Jetzt werden sie erst beim Öffnen des jeweiligen Fensters aufgebaut (Ladezeit der Seite dort von über 100 auf etwa 4 Sekunden), beim Aufbau wird die Block-Liste kurz eingefroren, damit das Öffnen schnell bleibt
 - Builder: Slider mit Einheit werden nicht mehr per Inline-Skript beim Laden, sondern über das Attribut <code>data-gb-slider-unit</code> beim Öffnen initialisiert

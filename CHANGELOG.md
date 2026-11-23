@@ -3,6 +3,10 @@ Gridblock²
 
 Changelog
 ---------
+<b>Version 1.0.5</b>
+- Multi-Link: Die Felder für E-Mail, Telefon und URL sind jetzt normale Textfelder (mit passender Tastatur auf Mobilgeräten) statt <code>type="email|tel|url"</code>. Ein ungültiger Wert in einem ausgeblendeten Feld (z. B. nach dem Wechsel des Linktyps) blockierte sonst das Speichern des Blocks im Vollbild.
+- Die generierten CSS-Dateien (<code>gb-elements.generated.css</code>, <code>gb-native-grid.generated.css</code>) werden minimiert geschrieben (Kommentare und überflüssige Leerzeichen entfallen); die <code>style.css</code> der Elemente bleibt unverändert
+
 <b>Version 1.0.4</b>
 - Vorschau: Variablen mit verschachtelten Klammern (z. B. <code>clamp(24px, 4vw, calc(var(--x) * 2.2))</code>) gingen verloren, wenn ein anderes Addon sie über <code>GRIDBLOCK2_PREVIEW_CSS</code> in einem Block für <code>html</code>/<code>body</code> lieferte (Folge: Überschriften fielen in der Vorschau auf die Browsergröße zurück). Die Deklarationen werden jetzt klammer- und anführungszeichenbewusst getrennt.
 

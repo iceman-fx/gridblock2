@@ -309,9 +309,8 @@ class Gridblock2Builder_Preview
 			if (!preg_match('/(?<![\w.#:\[-])(?:body|html)(?=\s*[,{:])/', $match[1].'{')) {
 				return $match[0];
 			}
-			preg_match_all('/((?:[^;()"\']|\([^)]*\)|"[^"]*"|\'[^\']*\')+)(?:;|$)/', $match[2], $declarations);
 			$kept = '';
-			foreach ($declarations[1] as $declaration) {
+			foreach (self::splitDeclarations($match[2]) as $declaration) {
 				$name = strtolower(trim((string) strstr($declaration, ':', true)));
 				if ($name !== '' && $name[0] !== '-' && $isIgnored($name)) {
 					continue;
@@ -321,6 +320,45 @@ class Gridblock2Builder_Preview
 
 			return $match[1].'{'.$kept.'}';
 		}, $css);
+	}
+
+	//Deklarationen eines Regelblocks am Semikolon trennen; Semikolons in Klammern (beliebig verschachtelt) und in Anführungszeichen trennen nicht.
+	private static function splitDeclarations(string $body): array
+	{	$parts = [];
+		$current = '';
+		$depth = 0;
+		$quote = '';
+		$length = strlen($body);
+		for ($i = 0; $i < $length; $i++) {
+			$char = $body[$i];
+			if ($quote !== '') {
+				if ($char === '\\' && $i + 1 < $length) {
+					$current .= $char.$body[++$i];
+					continue;
+				}
+				if ($char === $quote) {
+					$quote = '';
+				}
+			} elseif ($char === '"' || $char === "'") {
+				$quote = $char;
+			} elseif ($char === '(') {
+				$depth++;
+			} elseif ($char === ')' && $depth > 0) {
+				$depth--;
+			} elseif ($char === ';' && $depth === 0) {
+				if (trim($current) !== '') {
+					$parts[] = $current;
+				}
+				$current = '';
+				continue;
+			}
+			$current .= $char;
+		}
+		if (trim($current) !== '') {
+			$parts[] = $current;
+		}
+
+		return $parts;
 	}
 
 	private static function collectExtensionFontFaces(): string

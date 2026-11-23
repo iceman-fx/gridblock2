@@ -3,6 +3,9 @@ Gridblock²
 
 Changelog
 ---------
+<b>Version 1.0.4</b>
+- Vorschau: Variablen mit verschachtelten Klammern (z. B. <code>clamp(24px, 4vw, calc(var(--x) * 2.2))</code>) gingen verloren, wenn ein anderes Addon sie über <code>GRIDBLOCK2_PREVIEW_CSS</code> in einem Block für <code>html</code>/<code>body</code> lieferte (Folge: Überschriften fielen in der Vorschau auf die Browsergröße zurück). Die Deklarationen werden jetzt klammer- und anführungszeichenbewusst getrennt.
+
 <b>Version 1.0.3</b>
 - Repeater (HTML-Repeater-Werkzeug): Wird der Repeater in einer MBlock-Zeile eingesetzt, werden gespeicherte Zeilen jetzt beim Laden aus dem gespeicherten JSON aufgebaut. Bisher zeigte er nur eine leere Zeile, und beim Speichern gingen die Daten verloren.
 - Repeater: Das Hinzufügen über die Leerzeile eines verschachtelten Repeaters wirkt nur noch im eigenen Repeater; neue Option <code>minRows</code> (Mindestzeilenzahl, Entfernen gesperrt)

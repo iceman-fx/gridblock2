@@ -1441,9 +1441,32 @@ class Gridblock2Builder_Tree
 
 	public const NATIVE_GRID_CSS_ASSET_PATH = 'css/gb-native-grid.generated.css';
 
+	public static function minifyCss(string $css): string
+	{	$saved = [];
+		$css = (string) preg_replace_callback(
+			'~/\*.*?\*/|"(?:[^"\\\\\r\n]|\\\\.)*"|\'(?:[^\'\\\\\r\n]|\\\\.)*\'|url\(\s*[^\s"\')][^)]*\)|\\\\.~is',
+			static function (array $m) use (&$saved): string {
+				if (strncmp($m[0], '/*', 2) === 0) {
+					return ' ';
+				}
+				$saved[] = $m[0];
+				return "\x01".(count($saved) - 1)."\x02";
+			},
+			$css
+		);
+		$css = (string) preg_replace('~\s+~', ' ', $css);
+		$css = (string) preg_replace('~ ?([{};,]) ?~', '$1', $css);
+		$css = str_replace([': ', ';}'], [':', '}'], $css);
+		$css = trim($css);
+
+		return (string) preg_replace_callback('~\x01(\d+)\x02~', static function (array $m) use ($saved): string {
+			return $saved[(int) $m[1]];
+		}, $css);
+	}
+
 	public static function writeNativeGridCssFile(): bool
 	{	$path = rex_addon::get('gridblock2')->getAssetsPath(self::NATIVE_GRID_CSS_ASSET_PATH);
-		return rex_file::put($path, self::buildNativeGridCss());
+		return rex_file::put($path, self::minifyCss(self::buildNativeGridCss()));
 	}
 
 	public static function getNativeGridCssUrl(): string
@@ -1467,7 +1490,7 @@ class Gridblock2Builder_Tree
 
 	public static function writeElementsCssFile(): bool
 	{	$path = rex_addon::get('gridblock2')->getAssetsPath(self::ELEMENTS_CSS_ASSET_PATH);
-		return rex_file::put($path, self::buildElementsCss());
+		return rex_file::put($path, self::minifyCss(self::buildElementsCss()));
 	}
 
 	//true, wenn die generierte Datei fehlt oder aelter als eine der style.css-Dateien ist

@@ -60,13 +60,13 @@ $hasMultiType = count($allowedTypes) > 1;
 			?>
 			<div class="fmlink-field" data-type="<?php echo $type; ?>"<?php echo $valueName ? ' data-value-name="'.htmlspecialchars($valueName).'"' : ''; ?><?php echo $isActive ? '' : ' hidden'; ?>>
 				<?php if ($type === 'tel'): ?>
-					<input type="tel" class="fmlink-input form-control" placeholder="+49 89 12345678" value="<?php echo htmlspecialchars($telValue); ?>">
+					<input type="text" inputmode="tel" class="fmlink-input form-control" placeholder="+49 89 12345678" value="<?php echo htmlspecialchars($telValue); ?>">
 				<?php elseif ($type === 'anchor'): ?>
 					<input type="text" class="fmlink-input form-control" placeholder="#kontakt" value="<?php echo htmlspecialchars($anchorValue); ?>">
 				<?php elseif ($type === 'email'): ?>
-					<input type="email" class="fmlink-input form-control" placeholder="name@beispiel.de" value="<?php echo htmlspecialchars($emailValue); ?>">
+					<input type="text" inputmode="email" spellcheck="false" class="fmlink-input form-control" placeholder="name@beispiel.de" value="<?php echo htmlspecialchars($emailValue); ?>">
 				<?php elseif ($type === 'url'): ?>
-					<input type="url" class="fmlink-input form-control" placeholder="https://beispiel.de" value="<?php echo htmlspecialchars($urlValue); ?>">
+					<input type="text" inputmode="url" spellcheck="false" class="fmlink-input form-control" placeholder="https://beispiel.de" value="<?php echo htmlspecialchars($urlValue); ?>">
 				<?php elseif ($type === 'link'): ?>
 					<?php echo $linkWidgetHtml; ?>
 				<?php elseif ($type === 'media'): ?>

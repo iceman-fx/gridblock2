@@ -1056,6 +1056,18 @@ if ($primary !== null) {
 echo '&lt;link rel="stylesheet" href="'.rex_escape(rex_gridblock2::getNativeGridCssUrl()).'"&gt;';
 echo '&lt;link rel="stylesheet" href="'.rex_escape(rex_gridblock2::getElementsCssUrl()).'"&gt;';</pre>
 
+					<h3>Palettenfeld in eigenen Modulen</h3>
+					<p>Mit <code>Gridblock2Palette::field()</code> erzeugt ein Modul das Farbfeld mit der Projektfarben-Auswahl (Palette plus "Individuell"). Das JavaScript und CSS dafür sind eigenständig (<code>gb-palette.js</code>) und werden nur geladen, wenn ein Modul das Feld ausgibt. Innerhalb von Gridblock² lädt der Builder sie bei Bedarf selbst nach. Ohne Palette liefert die Funktion nur das normale Eingabefeld (Farbwähler).</p>
+					<pre>&lt;?php
+echo Gridblock2Palette::field('REX_INPUT_VALUE[6]', 'mein-farbfeld', $gespeichert, ['role' =&gt; 'bg']);
+
+// Ausgabe: den gespeicherten Wert (z. B. "@primary") in eine Farbe auflösen
+$farbe = Gridblock2Palette::resolve($gespeichert, 'bg');</pre>
+					<ul>
+					  <li><code>field($name, $id, $wert, $optionen)</code> - Optionen: <code>role</code> (<code>bg</code> = Hintergrund- oder <code>fg</code> = Textfarbe der Palette, Standard <code>bg</code>), <code>mode</code> (<code>solid</code> oder <code>both</code> für den Farbwähler, Standard <code>solid</code>), <code>placeholder</code>, <code>format</code> (<code>key</code> speichert <code>@schluessel</code> und folgt späteren Änderungen der Palette, <code>value</code> speichert den Farbwert bzw. die Klasse; Standard <code>key</code>), <code>entries</code> (eigene Auswahl der Palette-Einträge) und <code>input</code> (eigenes Eingabefeld statt des Standardfelds).</li>
+					  <li><code>resolve($wert, $role)</code> - löst <code>@schluessel</code> in den Farbwert auf; alle anderen Werte gibt sie unverändert zurück. Das Ergebnis vor der Ausgabe als Farbe prüfen (<code>Gridblock2Palette::normalizeValue()</code>).</li>
+					</ul>
+
 					<h3>Weitere öffentliche Stellen</h3>
 					<ul>
 					  <li><strong>Kontext:</strong> <code>rex_gridblock2::isBuilderEdit()</code>, <code>isBuilderPreview()</code> und <code>isBackend()</code> - Module können damit in der Builder-Vorschau anders rendern als im Frontend (siehe <a href="#modul">Modul &amp; Platzhalter</a>).</li>

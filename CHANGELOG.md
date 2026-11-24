@@ -3,6 +3,10 @@ Gridblock²
 
 Changelog
 ---------
+<b>Version 1.0.6</b>
+- Projektfarben-Auswahl zentral: Neue Funktionen <code>Gridblock2Palette::field()</code> (Farbfeld mit Palette), <code>select()</code> (Auswahl für Button-Farben), <code>resolve()</code> und <code>assets()</code>. Hero, CTA, Karten und die Contentsettings nutzen sie statt eigener Kopien, eigene Module können das Feld ebenfalls ausgeben (siehe Hilfe, "Palettenfeld in eigenen Modulen").
+- Das JavaScript und CSS der Palette-Auswahl ist ausgelagert (<code>gb-palette.js</code>, <code>gb-palette.css</code>). Es wird nur noch geladen, wenn ein Palettenfeld ausgegeben wird; der Builder lädt es bei Bedarf nach und bindet den Palette-Code nicht mehr im Builder-JS mit ein.
+
 <b>Version 1.0.5</b>
 - Multi-Link: Die Felder für E-Mail, Telefon und URL sind jetzt normale Textfelder (mit passender Tastatur auf Mobilgeräten) statt <code>type="email|tel|url"</code>. Ein ungültiger Wert in einem ausgeblendeten Feld (z. B. nach dem Wechsel des Linktyps) blockierte sonst das Speichern des Blocks im Vollbild.
 - Die generierten CSS-Dateien (<code>gb-elements.generated.css</code>, <code>gb-native-grid.generated.css</code>) werden minimiert geschrieben (Kommentare und überflüssige Leerzeichen entfallen); die <code>style.css</code> der Elemente bleibt unverändert

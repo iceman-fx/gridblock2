@@ -80,11 +80,6 @@ $rowCount =is_array($rows) ? count($rows) : count((array) json_decode((string) $
 .gbc-hoverbox>summary small{font-weight:400}
 .gbc-hoverbox>summary:hover,.gbc-hoverbox>summary:focus-visible{color:#337ab7;text-decoration:underline}
 .gbc-hoverbox>summary:focus-visible{outline:2px solid #337ab7;outline-offset:2px;border-radius:2px}
-.gb-pal-sw{display:inline-flex;flex:none;align-items:center;justify-content:center;width:24px;height:24px;margin-right:8px;border-radius:6px;font:600 11px/1 sans-serif;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
-.bootstrap-select .text:has(>.gb-pal-sw),.bootstrap-select .filter-option-inner-inner:has(>.gb-pal-sw){display:flex;align-items:center}
-.gb-pal-sw-t{background-image:repeating-conic-gradient(#c8c8c8 0 25%,#fff 0 50%);background-size:8px 8px}
-.gb-pal-sw-ind{background:#fff;color:#444;font-size:13px}
-.bootstrap-select>select[data-gb-palette]{display:none!important}
 .gbc-pair{display:flex;flex-wrap:wrap;gap:0 20px}
 .gbc-pair>.rex-form-group{flex:1 1 200px;min-width:0}
 .gbc-checks .checkbox{margin-top:0;margin-bottom:0}
@@ -172,18 +167,13 @@ window.gb2CtaIconPicked = window.gb2CtaIconPicked || function (name, removed, fi
 	if ($palette === []) {
 		$colorMarkup = $ownColors.'<details class="gbc-hoverbox" data-gbc-show="fill outline"><summary>Hover-Farben <small class="text-muted">(optional)</small></summary>'.$hoverFields.'</details>';
 	} else {
-		$options = '';
-		foreach ($palette as $entry) {
-			$options .= '<option value="'.rex_escape($entry['key']).'" data-gb-bg="'.rex_escape($entry['bg']).'" data-gb-fg="'.rex_escape($entry['fg']).'">'.rex_escape($entry['label']).'</option>';
-		}
-		$options .= '<option value="ind" data-gb-ind="1">Individuell</option>';
 		$colorMarkup = '<div class="gbc-pair"><div class="rex-form-group form-group"><label>Farbe</label>'
-			.'<select name="farbe" class="selectpicker form-control" data-gb-palette data-live-search="true" data-width="100%">'.$options.'</select></div></div>'
+			.Gridblock2Palette::select('farbe', ['entries' => $palette]).'</div></div>'
 			.'<div data-gbc-ind>'.$ownColors.'<div data-gbc-show="fill outline">'.$hoverFields.'</div></div>';
 	}
 	$rowMarkup = str_replace('<!--GBC_COLORS-->', $colorMarkup, $rowMarkup);
 	if ($palette !== []) {
-		echo '<script type="application/json" class="gb-pal-vars">'.json_encode(['css' => Gridblock2Palette::previewVarsCss()], JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE).'</script>';
+		echo Gridblock2Palette::assets();
 	}
 	echo Gridblock2Builder_Tree::renderRepeater('buttons', $rows, $rowMarkup, [
 		'collapsible' => true,

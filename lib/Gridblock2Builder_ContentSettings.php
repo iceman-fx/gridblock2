@@ -472,55 +472,6 @@ class Gridblock2Builder_ContentSettings
         return $aData;
     }
 
-    private static function renderPaletteField(array $aPalette, string $sRaw, string $sInput): string
-    {
-        static $sVarsJson = null;
-        if ($sVarsJson === null) {
-            $sVarsJson = json_encode(array('css' => Gridblock2Palette::previewVarsCss()), JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
-        }
-
-        $sMatch = null;
-        if ($sRaw !== '') {
-            foreach ($aPalette as $aEntry) {
-                if (strcasecmp((string) $aEntry['value'], $sRaw) === 0) {
-                    $sMatch = (string) $aEntry['value'];
-                    break;
-                }
-            }
-            if ($sMatch === null) {
-                foreach ($aPalette as $aEntry) {
-                    if ((string) $aEntry['class'] !== '' && strcasecmp((string) $aEntry['class'], $sRaw) === 0) {
-                        $sMatch = (string) $aEntry['value'];
-                        break;
-                    }
-                }
-            }
-        }
-        $bAlt = ($sRaw !== '' && $sMatch === null && Gridblock2Palette::isClassValue($sRaw));
-        $bInd = ($sRaw !== '' && $sMatch === null && !$bAlt);
-
-        $sOptions = '<option value=""' . ($sRaw === '' ? ' selected="selected"' : '') . '>- keine Farbe -</option>';
-        if ($bAlt) {
-            $sOptions .= '<option value="' . rex_escape($sRaw) . '" data-gb-alt="1" selected="selected">Alt: ' . rex_escape($sRaw) . '</option>';
-        }
-        $bSelected = false;
-        foreach ($aPalette as $aEntry) {
-            $sSelected = '';
-            if ($sMatch !== null && !$bSelected && (string) $aEntry['value'] === $sMatch) {
-                $sSelected = ' selected="selected"';
-                $bSelected = true;
-            }
-            $sOptions .= '<option value="' . rex_escape((string) $aEntry['value']) . '" data-gb-bg="' . rex_escape((string) $aEntry['bg']) . '" data-gb-fg="' . rex_escape((string) $aEntry['fg']) . '"' . $sSelected . '>' . rex_escape((string) $aEntry['label']) . '</option>';
-        }
-        $sOptions .= '<option value="__ind__" data-gb-ind="1"' . ($bInd ? ' selected="selected"' : '') . '>Individuell</option>';
-
-        return '<div data-gb-palette-wrap>'
-            . '<select class="selectpicker form-control" data-gb-palette data-gb-palette-field data-live-search="true" data-width="100%">' . $sOptions . '</select>'
-            . '<script type="application/json" class="gb-pal-vars">' . $sVarsJson . '</script>'
-            . '<div data-gb-palette-ind' . ($bInd ? '' : ' style="display:none"') . '>' . $sInput . '</div>'
-            . '</div>';
-    }
-
     public static function hasModulesScope()
     {
         $addon = rex_addon::get('gridblock2');
@@ -834,7 +785,7 @@ class Gridblock2Builder_ContentSettings
                                         }
                                         if ($aPalette) {
                                             $sRawValue = isset($aSavedOptions[$sType][$sKey]) ? (string) $aSavedOptions[$sType][$sKey] : ((isset($aOption["default"]) && $aOption["default"] != "") ? (string) $aOption["default"] : '');
-                                            $sForm .= '<dd>' . self::renderPaletteField($aPalette, $sRawValue, $sPickerInput) . PHP_EOL;
+                                            $sForm .= '<dd>' . Gridblock2Palette::field('', '', $sRawValue, ['format' => 'value', 'entries' => $aPalette, 'input' => $sPickerInput]) . PHP_EOL;
                                         } else {
                                             $sForm .= '<dd>' . $sPickerInput . PHP_EOL;
                                         }

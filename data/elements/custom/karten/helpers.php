@@ -115,45 +115,7 @@ if (!class_exists('GbCardsKit')) {
 
 		public static function resolveColor(string $value, string $role = 'bg'): string
 		{
-			$value = trim($value);
-			if ($value !== '' && $value[0] === '@') {
-				$entry = self::palette()[substr($value, 1)] ?? null;
-				$value = $entry ? (string) ($entry[$role] ?? '') : '';
-			}
-
-			return self::cssValue($value);
-		}
-
-		public static function colorField(array $palette, string $name, string $id, string $value, string $role, string $mode, string $placeholder): string
-		{
-			$input = '<input type="text" name="'.rex_escape($name).'" id="'.rex_escape($id).'" class="form-control" data-colorpicker'.($mode !== 'solid' ? ' data-colorpicker-mode="'.rex_escape($mode).'"' : '').' placeholder="'.rex_escape($placeholder).'" value="'.rex_escape($value).'">';
-			if ($palette === []) {
-				return $input;
-			}
-
-			$other = ($role === 'fg') ? 'bg' : 'fg';
-			$options = '';
-			$matched = false;
-			foreach ($palette as $entry) {
-				$cell = (string) $entry[$role];
-				if ($cell === '') {
-					continue;
-				}
-				$optionValue = '@'.$entry['key'];
-				$selected = (!$matched && $value === $optionValue) ? ' selected="selected"' : '';
-				$matched = $matched || $selected !== '';
-				$options .= '<option value="'.rex_escape($optionValue).'" data-gb-bg="'.rex_escape($cell).'" data-gb-fg="'.rex_escape((string) $entry[$other]).'"'.$selected.'>'.rex_escape((string) $entry['label']).'</option>';
-			}
-			$alt = ($value !== '' && $value[0] === '@' && !$matched);
-			$ind = ($value !== '' && $value[0] !== '@');
-			$head = '<option value=""'.($value === '' ? ' selected="selected"' : '').'>- keine Farbe -</option>';
-			if ($alt) {
-				$head .= '<option value="'.rex_escape($value).'" data-gb-alt="1" selected="selected">Alt: '.rex_escape(substr($value, 1)).'</option>';
-			}
-			$options .= '<option value="__ind__" data-gb-ind="1"'.($ind ? ' selected="selected"' : '').'>Individuell</option>';
-
-			return '<div data-gb-palette-wrap><select class="selectpicker form-control" data-gb-palette data-gb-palette-field data-live-search="true" data-width="100%">'.$head.$options.'</select>'
-				.'<div data-gb-palette-ind'.($ind ? '' : ' style="display:none"').'>'.$input.'</div></div>';
+			return self::cssValue(class_exists('Gridblock2Palette') ? Gridblock2Palette::resolve($value, $role) : trim($value));
 		}
 	}
 }

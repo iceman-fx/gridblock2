@@ -243,6 +243,7 @@ endif;
 //GB2 Builder-Engine
 rex_view::addCssFile(rex_gridblock2_helper::getTimebuster($this->getAssetsUrl('css/gb-builder.min.css')));
 rex_view::addJsFile(rex_gridblock2_helper::getTimebuster($this->getAssetsUrl('js/gridblock_builder.min.js')));
+rex_view::setJsProperty('gb2_palette', Gridblock2Palette::assetUrls());
 if (rex_be_controller::getCurrentPage() === 'content/edit'):
 	rex_extension::register('SLICE_BE_PREVIEW', [rex_gridblock2_helper::class, 'injectSliceFullscreenButton']);
 endif;

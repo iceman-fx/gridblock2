@@ -259,4 +259,149 @@ class Gridblock2Palette
 	public static function previewVarsCss(): string
 	{	return Gridblock2Builder_Preview::collectHostVariables().Gridblock2Builder_Preview::collectExtensionCss(true);
 	}
+
+	private static bool $jsQueued = false;
+
+	private static bool $cssEmitted = false;
+
+	private static bool $varsEmitted = false;
+
+	private static ?string $varsJson = null;
+
+	public static function assetUrls(): array
+	{	$addon = rex_addon::get('gridblock2');
+
+		return [
+			'js' => rex_gridblock2_helper::getTimebuster($addon->getAssetsUrl('js/gb-palette.min.js')),
+			'css' => rex_gridblock2_helper::getTimebuster($addon->getAssetsUrl('css/gb-palette.min.css')),
+		];
+	}
+
+	private static function queueJs(): array
+	{	$urls = self::assetUrls();
+		if (!self::$jsQueued) {
+			self::$jsQueued = true;
+			if (class_exists('rex_view')) {
+				rex_view::addJsFile($urls['js']);
+			}
+		}
+
+		return $urls;
+	}
+
+	private static function queueJsOnly(): string
+	{	self::queueJs();
+
+		return '';
+	}
+
+	public static function assets(): string
+	{	if (self::$varsJson === null) {
+			self::$varsJson = (string) json_encode(['css' => self::previewVarsCss()], JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+		}
+		self::$varsEmitted = true;
+		$markup = '<script type="application/json" class="gb-pal-vars">'.self::$varsJson.'</script>';
+		$urls = self::queueJs();
+		if (!self::$cssEmitted) {
+			self::$cssEmitted = true;
+			$markup = '<link rel="stylesheet" href="'.rex_escape($urls['css']).'" data-gb-palette-css="1">'.$markup;
+		}
+
+		return $markup;
+	}
+
+	public static function resolve(string $value, string $role = 'bg'): string
+	{	$value = trim($value);
+		if ($value === '' || $value[0] !== '@') {
+			return $value;
+		}
+		$entry = self::getEntries()[substr($value, 1)] ?? null;
+
+		return $entry ? (string) ($entry[$role] ?? '') : '';
+	}
+
+	public static function select(string $name, array $options = []): string
+	{	$entries = (isset($options['entries']) && is_array($options['entries'])) ? $options['entries'] : self::getEntries();
+		$indValue = (string) ($options['ind'] ?? 'ind');
+		self::queueJs();
+		$optionsHtml = '';
+		foreach ($entries as $entry) {
+			$optionsHtml .= '<option value="'.rex_escape((string) $entry['key']).'" data-gb-bg="'.rex_escape((string) $entry['bg']).'" data-gb-fg="'.rex_escape((string) $entry['fg']).'">'.rex_escape((string) $entry['label']).'</option>';
+		}
+		$optionsHtml .= '<option value="'.rex_escape($indValue).'" data-gb-ind="1">Individuell</option>';
+
+		return '<select name="'.rex_escape($name).'" class="selectpicker form-control" data-gb-palette data-live-search="true" data-width="100%">'.$optionsHtml.'</select>';
+	}
+
+	public static function field(string $name, string $id, string $value, array $options = []): string
+	{	$role = (string) ($options['role'] ?? 'bg');
+		$mode = (string) ($options['mode'] ?? 'solid');
+		$placeholder = (string) ($options['placeholder'] ?? '#rrggbb oder rgba(…)');
+		$byValue = (($options['format'] ?? 'key') === 'value');
+		$entries = (isset($options['entries']) && is_array($options['entries'])) ? $options['entries'] : self::getEntries();
+		$input = (isset($options['input']) && is_string($options['input']))
+			? $options['input']
+			: '<input type="text" name="'.rex_escape($name).'" id="'.rex_escape($id).'" class="form-control" data-colorpicker'.($mode !== 'solid' ? ' data-colorpicker-mode="'.rex_escape($mode).'"' : '').' placeholder="'.rex_escape($placeholder).'" value="'.rex_escape($value).'">';
+		if ($entries === []) {
+			return $input;
+		}
+
+		$optionsHtml = '';
+		$head = '<option value=""'.($value === '' ? ' selected="selected"' : '').'>- keine Farbe -</option>';
+		$matched = false;
+		if ($byValue) {
+			$match = null;
+			if ($value !== '') {
+				foreach ($entries as $entry) {
+					if (strcasecmp((string) $entry['value'], $value) === 0) {
+						$match = (string) $entry['value'];
+						break;
+					}
+				}
+				if ($match === null) {
+					foreach ($entries as $entry) {
+						if ((string) $entry['class'] !== '' && strcasecmp((string) $entry['class'], $value) === 0) {
+							$match = (string) $entry['value'];
+							break;
+						}
+					}
+				}
+			}
+			$alt = ($value !== '' && $match === null && self::isClassValue($value));
+			$ind = ($value !== '' && $match === null && !$alt);
+			if ($alt) {
+				$head .= '<option value="'.rex_escape($value).'" data-gb-alt="1" selected="selected">Alt: '.rex_escape($value).'</option>';
+			}
+			foreach ($entries as $entry) {
+				$selected = '';
+				if ($match !== null && !$matched && (string) $entry['value'] === $match) {
+					$selected = ' selected="selected"';
+					$matched = true;
+				}
+				$optionsHtml .= '<option value="'.rex_escape((string) $entry['value']).'" data-gb-bg="'.rex_escape((string) $entry['bg']).'" data-gb-fg="'.rex_escape((string) $entry['fg']).'"'.$selected.'>'.rex_escape((string) $entry['label']).'</option>';
+			}
+		} else {
+			$other = ($role === 'fg') ? 'bg' : 'fg';
+			foreach ($entries as $entry) {
+				$cell = (string) $entry[$role];
+				if ($cell === '') {
+					continue;
+				}
+				$optionValue = '@'.$entry['key'];
+				$selected = (!$matched && $value === $optionValue) ? ' selected="selected"' : '';
+				$matched = $matched || $selected !== '';
+				$optionsHtml .= '<option value="'.rex_escape($optionValue).'" data-gb-bg="'.rex_escape($cell).'" data-gb-fg="'.rex_escape((string) $entry[$other]).'"'.$selected.'>'.rex_escape((string) $entry['label']).'</option>';
+			}
+			$alt = ($value !== '' && $value[0] === '@' && !$matched);
+			$ind = ($value !== '' && $value[0] !== '@');
+			if ($alt) {
+				$head .= '<option value="'.rex_escape($value).'" data-gb-alt="1" selected="selected">Alt: '.rex_escape(substr($value, 1)).'</option>';
+			}
+		}
+		$optionsHtml .= '<option value="__ind__" data-gb-ind="1"'.($ind ? ' selected="selected"' : '').'>Individuell</option>';
+
+		return '<div data-gb-palette-wrap><select class="selectpicker form-control" data-gb-palette data-gb-palette-field data-live-search="true" data-width="100%">'.$head.$optionsHtml.'</select>'
+			.(self::$varsEmitted ? self::queueJsOnly() : self::assets())
+			.'<div data-gb-palette-ind'.($ind ? '' : ' style="display:none"').'>'.$input.'</div></div>';
+	}
 }

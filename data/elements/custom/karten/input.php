@@ -48,17 +48,9 @@ foreach (array_keys(GbCardsKit::STYLES) as $key) {
 .gbk-group[open]>summary::before{transform:rotate(45deg);margin-top:-3px}
 .gbk-group[open]>summary{border-bottom:1px solid rgba(128,128,128,.35)}
 .gbk-group-body{padding:14px 14px 0}
-.gb-pal-sw{display:inline-flex;flex:none;align-items:center;justify-content:center;width:24px;height:24px;margin-right:8px;border-radius:6px;font:600 11px/1 sans-serif;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25)}
-.bootstrap-select .text:has(>.gb-pal-sw),.bootstrap-select .filter-option-inner-inner:has(>.gb-pal-sw){display:flex;align-items:center}
-.gb-pal-sw-t{background-image:repeating-conic-gradient(#c8c8c8 0 25%,#fff 0 50%);background-size:8px 8px}
-.gb-pal-sw-ind{background:#fff;color:#444;font-size:13px}
-.bootstrap-select>select[data-gb-palette]{display:none!important}
 </style>
 
 <div class="gbk-root gbc-root">
-	<?php if ($palette !== []): ?>
-	<script type="application/json" class="gb-pal-vars"><?php echo json_encode(['css' => Gridblock2Palette::previewVarsCss()], JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE); ?></script>
-	<?php endif; ?>
 
 	<div class="gbk-pair">
 		<div class="rex-form-group form-group">
@@ -121,21 +113,21 @@ foreach (array_keys(GbCardsKit::STYLES) as $key) {
 				<div class="gbk-pair">
 					<div class="rex-form-group form-group" data-gbk="klassisch kachel kachelbtn kompakt">
 						<label for="<?php echo $uid; ?>_card_bg">Farbe der Karte <small class="text-muted">(optional)</small></label>
-						<?php echo GbCardsKit::colorField($palette, 'card_bg', $uid.'_card_bg', $val('card_bg'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+						<?php echo Gridblock2Palette::field('card_bg', $uid.'_card_bg', $val('card_bg'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_card_color">Farbe des Textes <small class="text-muted">(optional)</small></label>
-						<?php echo GbCardsKit::colorField($palette, 'card_color', $uid.'_card_color', $val('card_color'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+						<?php echo Gridblock2Palette::field('card_color', $uid.'_card_color', $val('card_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 				</div>
 				<div class="gbk-pair">
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_accent">Akzentfarbe <small class="text-muted">(Label, Button, Pfeil, Streifen)</small></label>
-						<?php echo GbCardsKit::colorField($palette, 'accent', $uid.'_accent', $val('accent'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+						<?php echo Gridblock2Palette::field('accent', $uid.'_accent', $val('accent'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_accent_text">Textfarbe auf Akzentfarbe <small class="text-muted">(optional)</small></label>
-						<?php echo GbCardsKit::colorField($palette, 'accent_text', $uid.'_accent_text', $val('accent_text'), 'bg', 'solid', '#rrggbb oder rgba(…)'); ?>
+						<?php echo Gridblock2Palette::field('accent_text', $uid.'_accent_text', $val('accent_text'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 				</div>
 			</div>

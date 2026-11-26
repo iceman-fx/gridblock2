@@ -19,6 +19,8 @@ $sectionId = (preg_match('/^[A-Za-z]/', $sectionId) && (rex::isFrontend() || rex
 
 <div class="<?= rex_escape($_gb->nativeClass); ?>"<?= $sectionId; ?>>
 	<div class="gb-el-section-box<?= ($a['class'] !== '') ? ' '.$a['class'] : ''; ?>"<?= ($a['style'] !== '') ? ' style="'.rex_escape($a['style']).'"' : ''; ?>>
-		<?= @$_gb->content; ?>
+		<div class="gb-el-section-content" style="position:relative;z-index:5;">
+			<?= @$_gb->content; ?>
+		</div>
 	</div>
 </div>

@@ -113,9 +113,27 @@ if (!class_exists('GbCardsKit')) {
 			return (preg_match('/^(?:linear|radial|conic)-gradient\([#(),.%\sA-Za-z0-9-]{1,300}\)$/', $raw) && stripos($raw, 'url') === false) ? $raw : '';
 		}
 
+		public static function colorField(string $name, string $id, string $value, array $options = []): string
+		{
+			if (method_exists('Gridblock2Palette', 'field')) {
+				return Gridblock2Palette::field($name, $id, $value, $options);
+			}
+			$mode = (string) ($options['mode'] ?? 'solid');
+
+			return '<input type="text" name="'.rex_escape($name).'" id="'.rex_escape($id).'" class="form-control" data-colorpicker'.($mode !== 'solid' ? ' data-colorpicker-mode="'.rex_escape($mode).'"' : '').' placeholder="'.rex_escape((string) ($options['placeholder'] ?? '')).'" value="'.rex_escape($value).'">';
+		}
+
 		public static function resolveColor(string $value, string $role = 'bg'): string
 		{
-			return self::cssValue(class_exists('Gridblock2Palette') ? Gridblock2Palette::resolve($value, $role) : trim($value));
+			if (method_exists('Gridblock2Palette', 'resolve')) {
+				return self::cssValue(Gridblock2Palette::resolve($value, $role));
+			}
+			$value = trim($value);
+			if ($value !== '' && $value[0] === '@') {
+				$value = (string) (self::palette()[substr($value, 1)][$role] ?? '');
+			}
+
+			return self::cssValue($value);
 		}
 	}
 }

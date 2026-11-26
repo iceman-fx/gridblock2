@@ -231,6 +231,38 @@ echo Gridblock2Builder_Tree::renderRepeater('cards', $v['cards'] ?? '', $rowMark
 - `maxRows`: höchste Zeilenzahl (0 oder ohne Angabe = unbegrenzt). Ist die Grenze erreicht, sind "Hinzufügen" und "Duplizieren" gesperrt und ein Hinweis erscheint unter der Liste. Bereits vorhandene Zeilen bleiben erhalten. Die Ausgabe sollte trotzdem selbst begrenzen (z. B. `array_slice`), falls ältere Daten mehr Zeilen enthalten.
 - `minRows`: kleinste Zeilenzahl (0 oder ohne Angabe = keine Vorgabe). Fehlende Zeilen werden beim Öffnen leer ergänzt, "Entfernen" ist gesperrt, solange nur so viele Zeilen vorhanden sind.
 
+## Farbfelder mit Projektfarben
+
+Ab Gridblock² 1.0.6 kommt das Farbfeld mit Projektfarben-Auswahl (Palette plus "Individuell") aus dem Kern. Eigene
+Elemente bauen kein eigenes Palettenfeld.
+
+```php
+// input.php: Farbfeld. Gespeichert wird "@schluessel" oder die eigene Farbe
+echo Gridblock2Palette::field('title_color', $uid.'_title_color', (string) @$v['title_color'], ['role' => 'bg']);
+
+// output.php: Wert aufloesen und vor der Ausgabe als Farbe pruefen
+$color = Gridblock2Palette::normalizeValue(Gridblock2Palette::resolve((string) @$v['title_color'], 'bg'));
+```
+
+- `field($name, $id, $wert, $optionen)`: Optionen `role` (`bg` oder `fg`, Standard `bg`), `mode` (`solid` oder `both` für
+  Farbverläufe), `placeholder`. Ohne gepflegte Projektfarben entsteht ein normales Farbwähler-Feld.
+- `select('farbe', ['entries' => Gridblock2Palette::getEntries()])`: nur die Auswahl, z. B. in Repeater-Zeilen. Gespeichert
+  wird der Schlüssel der Projektfarbe oder `ind`. Dazu einmal außerhalb des Zeilenmarkups `echo Gridblock2Palette::assets();`.
+
+Soll ein Element auch auf älteren Versionen laufen, vor dem Aufruf mit `method_exists('Gridblock2Palette', 'field')` prüfen
+und sonst ein normales Textfeld mit `data-colorpicker` ausgeben (Beispiel: `GbHeroKit::colorField()` in `hero/helpers.php`).
+
+
+## Feldprüfung im Builder
+
+Beim Klick auf "Übernehmen" (Bearbeiten und Einstellungen) prüft der Builder die Felder mit der Prüfung des Browsers
+(`required`, Feldtyp, `min`/`max`/`step`, `pattern`). Ist ein Wert ungültig, bleibt das Fenster offen und die Meldung
+erscheint am Feld. Also passende Feldtypen und Grenzen verwenden; `output.php` sollte die Werte trotzdem prüfen.
+
+Steckt der ungültige Wert in einem gerade ausgeblendeten Zahlen-, E-Mail- oder URL-Feld (z. B. abhängig von einer Auswahl),
+wird dieses Feld geleert, weil es sich sonst nicht korrigieren ließe.
+
+
 ## Dark Mode in `style.css`
 
 Die Vorschau bekommt im Backend automatisch die Klasse `gb2-be-dark` bzw. `gb2-be-light` (je nach REDAXO-Profil,

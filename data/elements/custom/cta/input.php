@@ -164,15 +164,16 @@ window.gb2CtaIconPicked = window.gb2CtaIconPicked || function (name, removed, fi
 			</div>
 		</div>
 		HTML;
-	if ($palette === []) {
-		$colorMarkup = $ownColors.'<details class="gbc-hoverbox" data-gbc-show="fill outline"><summary>Hover-Farben <small class="text-muted">(optional)</small></summary>'.$hoverFields.'</details>';
+	$usePalette = ($palette !== [] && method_exists('Gridblock2Palette', 'select'));
+	if (!$usePalette) {
+		$colorMarkup = (($palette !== []) ? '<input type="hidden" name="farbe" value="{{farbe}}">' : '').$ownColors.'<details class="gbc-hoverbox" data-gbc-show="fill outline"><summary>Hover-Farben <small class="text-muted">(optional)</small></summary>'.$hoverFields.'</details>';
 	} else {
 		$colorMarkup = '<div class="gbc-pair"><div class="rex-form-group form-group"><label>Farbe</label>'
 			.Gridblock2Palette::select('farbe', ['entries' => $palette]).'</div></div>'
 			.'<div data-gbc-ind>'.$ownColors.'<div data-gbc-show="fill outline">'.$hoverFields.'</div></div>';
 	}
 	$rowMarkup = str_replace('<!--GBC_COLORS-->', $colorMarkup, $rowMarkup);
-	if ($palette !== []) {
+	if ($usePalette) {
 		echo Gridblock2Palette::assets();
 	}
 	echo Gridblock2Builder_Tree::renderRepeater('buttons', $rows, $rowMarkup, [

@@ -113,21 +113,21 @@ foreach (array_keys(GbCardsKit::STYLES) as $key) {
 				<div class="gbk-pair">
 					<div class="rex-form-group form-group" data-gbk="klassisch kachel kachelbtn kompakt">
 						<label for="<?php echo $uid; ?>_card_bg">Farbe der Karte <small class="text-muted">(optional)</small></label>
-						<?php echo Gridblock2Palette::field('card_bg', $uid.'_card_bg', $val('card_bg'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+						<?php echo GbCardsKit::colorField('card_bg', $uid.'_card_bg', $val('card_bg'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_card_color">Farbe des Textes <small class="text-muted">(optional)</small></label>
-						<?php echo Gridblock2Palette::field('card_color', $uid.'_card_color', $val('card_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+						<?php echo GbCardsKit::colorField('card_color', $uid.'_card_color', $val('card_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 				</div>
 				<div class="gbk-pair">
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_accent">Akzentfarbe <small class="text-muted">(Label, Button, Pfeil, Streifen)</small></label>
-						<?php echo Gridblock2Palette::field('accent', $uid.'_accent', $val('accent'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+						<?php echo GbCardsKit::colorField('accent', $uid.'_accent', $val('accent'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_accent_text">Textfarbe auf Akzentfarbe <small class="text-muted">(optional)</small></label>
-						<?php echo Gridblock2Palette::field('accent_text', $uid.'_accent_text', $val('accent_text'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+						<?php echo GbCardsKit::colorField('accent_text', $uid.'_accent_text', $val('accent_text'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 				</div>
 			</div>

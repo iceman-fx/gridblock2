@@ -367,7 +367,7 @@ body.rex-theme-dark .gbcol-panel { background: #333f4d; border-color: #4a5666; }
 
 				var bind = (selector, event, handler) => { this.panel.querySelector(selector).addEventListener(event, handler); };
 
-				bind('.gbcol-z', 'change', (e) => { item.z = Math.max(0, Math.min(999, parseInt(e.target.value, 10) || 0)); this.updateItem(index); this.commit(); });
+				bind('.gbcol-z', 'change', (e) => { item.z = Math.max(0, Math.min(999, parseInt(e.target.value, 10) || 0)); e.target.value = item.z; this.updateItem(index); this.commit(); });
 				bind('.gbcol-w', 'change', (e) => { item.width = parseInt(e.target.value, 10) || 50; this.updateItem(index); this.commit(); });
 				bind('.gbcol-f', 'change', (e) => { item.format = e.target.value; this.updateItem(index); this.commit(); });
 				bind('.gbcol-r', 'change', (e) => { item.radius = e.target.value; this.updateItem(index); this.commit(); });

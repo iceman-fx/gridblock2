@@ -182,9 +182,27 @@ if (!class_exists('GbHeroKit')) {
 			'unten-rechts' => ['Unten rechts', 'rechts', 'unten'],
 		];
 
+		public static function colorField(string $name, string $id, string $value, array $options = []): string
+		{
+			if (method_exists('Gridblock2Palette', 'field')) {
+				return Gridblock2Palette::field($name, $id, $value, $options);
+			}
+			$mode = (string) ($options['mode'] ?? 'solid');
+
+			return '<input type="text" name="'.rex_escape($name).'" id="'.rex_escape($id).'" class="form-control" data-colorpicker'.($mode !== 'solid' ? ' data-colorpicker-mode="'.rex_escape($mode).'"' : '').' placeholder="'.rex_escape((string) ($options['placeholder'] ?? '')).'" value="'.rex_escape($value).'">';
+		}
+
 		public static function resolveColor(string $value, string $role): string
 		{
-			return class_exists('Gridblock2Palette') ? Gridblock2Palette::resolve($value, $role) : trim($value);
+			if (method_exists('Gridblock2Palette', 'resolve')) {
+				return Gridblock2Palette::resolve($value, $role);
+			}
+			$value = trim($value);
+			if ($value !== '' && $value[0] === '@') {
+				$value = (string) (self::palette()[substr($value, 1)][$role] ?? '');
+			}
+
+			return $value;
 		}
 
 		public static function palette(): array
@@ -406,8 +424,10 @@ if (!class_exists('GbHeroKit')) {
 				.'<input type="text" name="hbgcolor" value="{{hbgcolor}}" class="form-control" data-colorpicker placeholder="#rrggbb oder rgba(…)"></div>'
 				.'<div class="rex-form-group form-group"><label>Hover-Text <small class="text-muted">(optional)</small></label>'
 				.'<input type="text" name="htextcolor" value="{{htextcolor}}" class="form-control" data-colorpicker placeholder="#rrggbb oder rgba(…)"></div></div>';
-			if ($palette === []) {
-				return $own.'<details class="gbh-hoverbox" data-gbh-row="fill outline"><summary>Hover-Farben <small class="text-muted">(optional)</small></summary>'.$hover.'</details>';
+			if ($palette === [] || !method_exists('Gridblock2Palette', 'select')) {
+				$keep = ($palette !== []) ? '<input type="hidden" name="farbe" value="{{farbe}}">' : '';
+
+				return $keep.$own.'<details class="gbh-hoverbox" data-gbh-row="fill outline"><summary>Hover-Farben <small class="text-muted">(optional)</small></summary>'.$hover.'</details>';
 			}
 
 			return '<div class="gbh-pair gbh-colorpair"><div class="rex-form-group form-group"><label>Farbe</label>'

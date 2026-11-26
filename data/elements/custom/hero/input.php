@@ -167,7 +167,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 
 			<div class="rex-form-group form-group">
 				<label for="<?php echo $uid; ?>_title_color">Farbe der Überschrift <small class="text-muted">(optional)</small></label>
-				<?php echo Gridblock2Palette::field('title_color', $uid.'_title_color', $val('title_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+				<?php echo GbHeroKit::colorField('title_color', $uid.'_title_color', $val('title_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 			</div>
 
 			<div class="rex-form-group form-group gbh-gap">
@@ -176,7 +176,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 			<div class="checkbox gbh-checks"><label><input type="checkbox" name="text_bold" value="checked"<?php echo $textBold ? ' checked' : ''; ?>> Text fett</label></div>
 				<div class="rex-form-group form-group" style="margin-top:15px">
 					<label for="<?php echo $uid; ?>_text_color">Farbe des Textes <small class="text-muted">(optional)</small></label>
-					<?php echo Gridblock2Palette::field('text_color', $uid.'_text_color', $val('text_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+					<?php echo GbHeroKit::colorField('text_color', $uid.'_text_color', $val('text_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 				</div>
 		</div>
 
@@ -225,7 +225,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 			</div>
 			<div class="rex-form-group form-group">
 				<label for="<?php echo $uid; ?>_eyebrow_color">Farbe der Dachzeile <small class="text-muted">(optional)</small></label>
-				<?php echo Gridblock2Palette::field('eyebrow_color', $uid.'_eyebrow_color', $val('eyebrow_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+				<?php echo GbHeroKit::colorField('eyebrow_color', $uid.'_eyebrow_color', $val('eyebrow_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 			</div>
 			</div>
 		</details>
@@ -271,7 +271,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 
 		<div class="rex-form-group form-group">
 				<label for="<?php echo $uid; ?>_bullet_color">Farbe der Pluspunkte <small class="text-muted">(optional, leer = Farbe des Textes)</small></label>
-				<?php echo Gridblock2Palette::field('bullet_color', $uid.'_bullet_color', $val('bullet_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+				<?php echo GbHeroKit::colorField('bullet_color', $uid.'_bullet_color', $val('bullet_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 			</div>
 
 			</div>
@@ -282,7 +282,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				<div class="gbh-group-body">
 			<div class="rex-form-group form-group">
 				<label for="<?php echo $uid; ?>_accent">Hervorhebungsfarbe <small class="text-muted">(optional)</small></label>
-				<?php echo Gridblock2Palette::field('accent', $uid.'_accent', $val('accent'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+				<?php echo GbHeroKit::colorField('accent', $uid.'_accent', $val('accent'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 				<p class="help-block small">Für hervorgehobene Wörter der Überschrift (*Wort*), Häkchen, Icons und Trenner der Pluspunkte sowie den Akzentstreifen bei „Geteilt“.</p>
 			</div>
 			<div class="gbh-pair">
@@ -407,7 +407,7 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				</div>
 				<div class="rex-form-group form-group" data-gbh="vollflaechig">
 					<label for="<?php echo $uid; ?>_overlay_color">Farbe der Abdunklung <small class="text-muted">(optional)</small></label>
-					<?php echo Gridblock2Palette::field('overlay_color', $uid.'_overlay_color', $val('overlay_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb']); ?>
+					<?php echo GbHeroKit::colorField('overlay_color', $uid.'_overlay_color', $val('overlay_color'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'solid', 'placeholder' => '#rrggbb']); ?>
 				</div>
 				<div class="rex-form-group form-group" data-gbh="geteilt">
 					<label for="<?php echo $uid; ?>_split">Verhältnis von Text und Bild</label>
@@ -450,11 +450,11 @@ window.gb2HeroIconPicked = window.gb2HeroIconPicked || function (name, removed, 
 				<div class="gbh-pair">
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_card_bg">Kartenhintergrund</label>
-						<?php echo Gridblock2Palette::field('card_bg', $uid.'_card_bg', $val('card_bg'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'both', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+						<?php echo GbHeroKit::colorField('card_bg', $uid.'_card_bg', $val('card_bg'), ['entries' => $palette, 'role' => 'bg', 'mode' => 'both', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_card_color">Kartentext</label>
-						<?php echo Gridblock2Palette::field('card_color', $uid.'_card_color', $val('card_color'), ['entries' => $palette, 'role' => 'fg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
+						<?php echo GbHeroKit::colorField('card_color', $uid.'_card_color', $val('card_color'), ['entries' => $palette, 'role' => 'fg', 'mode' => 'solid', 'placeholder' => '#rrggbb oder rgba(…)']); ?>
 					</div>
 					<div class="rex-form-group form-group">
 						<label for="<?php echo $uid; ?>_card_pos">Position der Karten</label>
